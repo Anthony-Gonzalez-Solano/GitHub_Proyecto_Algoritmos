@@ -34,6 +34,8 @@ private static DoublyLinkedList list= new DoublyLinkedList();
     private TextField textFieldDescription;
     @FXML
     private TextField textFieldId;
+    @FXML
+    private Text txtId;
 
     /**
      * Initializes the controller class.
@@ -52,7 +54,8 @@ private static DoublyLinkedList list= new DoublyLinkedList();
         util.Utility.getCarreras().remove(new Career(this.textFieldDescription.getText(),Integer.parseInt(this.textFieldId.getText())));
                      this.txtMessage.setVisible(true);
                      this.txtMessage.setText("La carrera fue eliminada correctamente");
-                     txtDesciption.setText("");
+                     textFieldDescription.setText("");
+                     textFieldId.setText("");
                 }catch(Exception e){
                     this.txtMessage.setVisible(true);
                     this.txtMessage.setText("La lista no está llena");

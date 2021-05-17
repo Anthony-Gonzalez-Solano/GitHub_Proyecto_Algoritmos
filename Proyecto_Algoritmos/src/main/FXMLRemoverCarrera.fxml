@@ -12,6 +12,7 @@
       <Text fx:id="txtDesciption" layoutX="14.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion" wrappingWidth="137.13671875" />
       <Text fx:id="txtMessage" layoutX="14.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="228.13671875" />
       <Button fx:id="btnRemover" layoutX="182.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnRemover" prefHeight="57.0" prefWidth="121.0" text="Remover" />
-      <TextField fx:id="textFieldId" layoutX="168.0" layoutY="160.0" visible="false" />
+      <TextField fx:id="textFieldId" layoutX="168.0" layoutY="160.0" />
+      <Text fx:id="txtId" layoutX="8.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="149.0" />
    </children>
 </AnchorPane>
