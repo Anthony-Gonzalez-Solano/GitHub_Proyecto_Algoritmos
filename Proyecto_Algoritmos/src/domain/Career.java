@@ -7,7 +7,7 @@ package domain;
 
 /**
  *
- * @author Dell 7470
+ * @author hhh
  */
 public class Career {
     
