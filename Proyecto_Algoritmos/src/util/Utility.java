@@ -5,6 +5,9 @@
  */
 package util;
 
+import Lists.CircularDoublyLinkedList;
+import Lists.DoublyLinkedList;
+import Lists.SinglyLinkedList;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +20,23 @@ import java.util.Locale;
  * @author Profesor Lic. Gilberth Chaves Avila
  */
 public class Utility {
+    
+    private static DoublyLinkedList listCarreras = new DoublyLinkedList();
+    private static SinglyLinkedList listEstudiantes = new SinglyLinkedList(); 
+    private static CircularDoublyLinkedList listCursos = new CircularDoublyLinkedList();
+    private static SinglyLinkedList listHorarios = new SinglyLinkedList();
+    private static CircularDoublyLinkedList listMatricula = new CircularDoublyLinkedList(); 
+    
+    public DoublyLinkedList getCarreras(){ return listCarreras;}
+    public void setCarreras(DoublyLinkedList list){listCarreras=list;}
+    public SinglyLinkedList getEstudiantes(){ return listEstudiantes;}
+    public void setEstudiantes(SinglyLinkedList list){listEstudiantes=list;}
+    public CircularDoublyLinkedList getCursos(){ return listCursos;}
+    public void setCursos(CircularDoublyLinkedList list){listCursos=list;}
+    public SinglyLinkedList getHorarios(){ return listHorarios;}
+    public void setHorarios(SinglyLinkedList list){listHorarios=list;}
+    public CircularDoublyLinkedList getMatriculas(){ return listMatricula;}
+    public void setMatriculas(CircularDoublyLinkedList list){listMatricula=list;}
 
     public static String dateFormat(Date date){
         
