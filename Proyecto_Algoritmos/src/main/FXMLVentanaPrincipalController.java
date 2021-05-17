@@ -61,6 +61,8 @@ public class FXMLVentanaPrincipalController implements Initializable {
     private BorderPane bp;
     @FXML
     private AnchorPane ap;
+    @FXML
+    private MenuItem MI_Carreras_Suprimir;
 
     /**
      * Initializes the controller class.
@@ -74,75 +76,80 @@ public class FXMLVentanaPrincipalController implements Initializable {
     private void MI_Carreras_Agregar(ActionEvent event) {
         loadPage("FXMLAgregarCarrera");
     }
+    
+        @FXML
+    private void MI_Carreras_Suprimir(ActionEvent event) {
+        loadPage("FXMLRemoverCarrera");
+    }
 
     @FXML
     private void MI_Carreras_Modificar(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Carreras_Mostrar(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Estudiante_Agregar(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Estudiante_Modificarr(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Estudiante_Suprimir(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Estudiante_Mostrar(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Cursos_Agregar(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Cursos_Modificar(ActionEvent event) {
-        loadPage(null);
+       // loadPage(null);
     }
 
     @FXML
     private void MI_Cursos_Suprimir(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Cursos_Mostrar(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Matricula_Nueva(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void Mi_Matricula_Retiro(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Reportes_Matricula(ActionEvent event) {
-        loadPage(null);
+        //loadPage(null);
     }
 
     @FXML
     private void MI_Reportes_Retiros(ActionEvent event) {
-        loadPage(null);
+       // loadPage(null);
     }
     
     
@@ -156,4 +163,6 @@ public class FXMLVentanaPrincipalController implements Initializable {
         }
          this.bp.setCenter(root);   
     }
+
+
 }

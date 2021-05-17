@@ -16,7 +16,7 @@
             <items>
               <MenuItem fx:id="MI_Carreras_Agregar" mnemonicParsing="false" onAction="#MI_Carreras_Agregar" text="Agregar Carrera" />
                   <MenuItem fx:id="MI_Carreras_Modificar" mnemonicParsing="false" onAction="#MI_Carreras_Modificar" text="Modificar Carrera" />
-                  <MenuItem fx:id="MI_Carreras_Suprimir" mnemonicParsing="false" onAction="#MI_Carreras_Modificar" text="Suprimir Carrera" />
+                  <MenuItem fx:id="MI_Carreras_Suprimir" mnemonicParsing="false" onAction="#MI_Carreras_Suprimir" text="Suprimir Carrera" />
                   <MenuItem fx:id="MI_Carreras_Mostrar" mnemonicParsing="false" onAction="#MI_Carreras_Mostrar" text="Mostrar Carreras" />
             </items>
           </Menu>
