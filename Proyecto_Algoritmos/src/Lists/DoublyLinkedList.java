@@ -119,44 +119,37 @@ public class DoublyLinkedList {
     }
 
     public void remove(Object element) throws ListException {
-        if(isEmpty()){
-            throw new ListException("SinglyLinkedList is empty");
-        }
-        //CASO 0. ELIMINAR EL UNICO ELEMENTO DEL ARREGLO    
-        if(size()==1){
-            first=null;
+       if (isEmpty()) {
+            throw new ListException("List is empty : SinglyLinkedList");
         }
         //CASO 1. EL ELEMENTO A SUPRIMIR ES EL PRIMERO DE LA LISTA
-        if(util.Utility.equals(first.data, element)){
+        if (util.Utility.equals(first.data, element)) {
             first = first.next;
-        }else{
-        //CASO 2. EL ELEMENTO A SUPRIMIR ESTA EN CUALQUIER OTRO NODO
-            Node prev = first; //para dejar rastro, apunta al anterior de aux
+        } else {
+            //CASO 2. EL ELEMENTO A SUPRIMIR ESTA EN CUALQUIER OTRA POSICION
+            Node prev = first; //esto es para dejar rastro, apunta al anterior de aux
             Node aux = first.next;
-            while(aux!=null&&!util.Utility.equals(aux.data, element)){
+
+            while (aux.next != null && !util.Utility.equals(aux.data, element)) {
                 prev = aux; //un nodo atras de aux
                 aux = aux.next;
             }
-            //se sale del while cuando alcanza nulo
-            //o cuando encuentra el elemento a suprimir
-            if(aux!=null&&util.Utility.equals(aux.data, element)){
-                //desenlazo o desconecto el nodo
+            //sale del while cuando alcanza null o cuando encuentra el elemento a suprimir
+            if (aux.next != null && util.Utility.equals(aux.data, element)) {
+                //desenlazo el nodo
                 prev.next = aux.next;
-                if(aux.next!=null){
-                    aux.next.prev = prev;
-                }
             }
         }
     }
 
     public Object removeFirst() throws ListException {
-        if(isEmpty()){
-            throw new ListException("SinglyLinkedList is empty");
+          if(isEmpty()){
+             throw new ListException("List is empty");
         }
-        Object element = first.data;
-        first = first.next; //muevo el apuntador al sgte nodo
-        first.prev = null;
-        return element;
+        
+    Object element=first.data;
+    first=first.next; // muevo el apuntador al siguiente nodo
+    return element;
     }
 
     public Object removeLast() throws ListException {

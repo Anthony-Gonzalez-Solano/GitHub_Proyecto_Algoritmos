@@ -72,7 +72,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Carreras_Agregar(ActionEvent event) {
-        loadPage(null);
+        loadPage("FXMLAgregarCarrera");
     }
 
     @FXML

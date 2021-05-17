@@ -5,6 +5,7 @@
  */
 package util;
 
+import domain.Career;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,7 +61,10 @@ public class Utility {
             case "string":
                 String s1 =(String)a; String s2 = (String)b;
                //return s1.compareTo(s2)==0; //OPCION 1
-               return s1.equalsIgnoreCase(s2); //OPCION 2              
+               return s1.equalsIgnoreCase(s2); //OPCION 2   
+                  case "Career":
+                Career career=(Career)a;Career career2=(Career)b;
+                return career.getDescription().equalsIgnoreCase(career2.getDescription())&&career.getId()==career2.getId() ;
         }
         
         return false; //en cualquier otro caso
@@ -69,6 +73,7 @@ public class Utility {
     private static String instanceOf(Object a, Object b) {
         if(a instanceof Integer && b instanceof Integer) return "integer";
         if(a instanceof String && b instanceof String) return "string";
+          if(a instanceof Career && b instanceof Career)return "Career";
         return "unknown"; //desconocido
     }
     
@@ -80,6 +85,7 @@ public class Utility {
             case "string":
                 String s1 =(String)a; String s2 = (String)b;
                return s1.compareToIgnoreCase(s2)<0;
+              
         }
         return false; //en cualquier otro caso
     }
@@ -93,6 +99,7 @@ public class Utility {
             case "string":
                 String s1 =(String)a; String s2 = (String)b;
                return s1.compareToIgnoreCase(s2)>0;
+               
         }
         return false; //en cualquier otro caso
     }
