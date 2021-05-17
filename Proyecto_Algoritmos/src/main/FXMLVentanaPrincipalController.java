@@ -94,7 +94,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Estudiante_Agregar(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLAgregarEstudiante");
     }
 
     @FXML

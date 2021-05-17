@@ -9,6 +9,7 @@ import Lists.CircularDoublyLinkedList;
 import Lists.DoublyLinkedList;
 import Lists.SinglyLinkedList;
 import domain.Career;
+import domain.Student;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -85,6 +86,9 @@ public class Utility {
                   case "Career":
                 Career career=(Career)a;Career career2=(Career)b;
                 return career.getDescription().equalsIgnoreCase(career2.getDescription())&&career.getId()==career2.getId() ;
+                  case "Student":
+                  Student student1=(Student)a;Student student2=(Student)b;
+                return student1.getLastname(). equalsIgnoreCase(student2.getLastname() )&&student1.getId()==student2.getId() ;
         }
         
         return false; //en cualquier otro caso
@@ -94,6 +98,7 @@ public class Utility {
         if(a instanceof Integer && b instanceof Integer) return "integer";
         if(a instanceof String && b instanceof String) return "string";
           if(a instanceof Career && b instanceof Career)return "Career";
+               if(a instanceof Student && b instanceof Student)return "Student";
         return "unknown"; //desconocido
     }
     
