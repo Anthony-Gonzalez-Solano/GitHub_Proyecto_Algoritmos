@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLVentanaPrincipalController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Carreras">
+            <items>
+              <MenuItem fx:id="MI_Carreras_Agregar" mnemonicParsing="false" onAction="#MI_Carreras_Agregar" text="Agregar Carrera" />
+                  <MenuItem fx:id="MI_Carreras_Modificar" mnemonicParsing="false" onAction="#MI_Carreras_Modificar" text="Modificar Carrera" />
+                  <MenuItem fx:id="MI_Carreras_Suprimir" mnemonicParsing="false" onAction="#MI_Carreras_Modificar" text="Suprimir Carrera" />
+                  <MenuItem fx:id="MI_Carreras_Mostrar" mnemonicParsing="false" onAction="#MI_Carreras_Mostrar" text="Mostrar Carreras" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Estudiantes">
+            <items>
+              <MenuItem fx:id="MI_Estudiante_Agregar" mnemonicParsing="false" onAction="#MI_Estudiante_Agregar" text="Agregar Estudiante" />
+                  <MenuItem fx:id="MI_Estudiante_Modificarr" mnemonicParsing="false" onAction="#MI_Estudiante_Modificarr" text="Modificar Estudiante" />
+                  <MenuItem fx:id="MI_Estudiante_Suprimir" mnemonicParsing="false" onAction="#MI_Estudiante_Suprimir" text="Suprimir Estudiante" />
+                  <MenuItem fx:id="MI_Estudiante_Mostrar" mnemonicParsing="false" onAction="#MI_Estudiante_Mostrar" text="Mostrar Estudiantes" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Cursos">
+            <items>
+              <MenuItem fx:id="MI_Cursos_Agregar" mnemonicParsing="false" onAction="#MI_Cursos_Agregar" text="Agregar Curso" />
+                  <MenuItem fx:id="MI_Cursos_Modificar" mnemonicParsing="false" onAction="#MI_Cursos_Modificar" text="Modificar Curso" />
+                  <MenuItem fx:id="MI_Cursos_Suprimir" mnemonicParsing="false" onAction="#MI_Cursos_Suprimir" text="Suprimir Curso" />
+                  <MenuItem fx:id="MI_Cursos_Mostrar" mnemonicParsing="false" onAction="#MI_Cursos_Mostrar" text="Mostrar Cursos" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Horarios">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu fx:id="MI_Reportes_Matricula" mnemonicParsing="false" onAction="#MI_Reportes_Matricula" text="Matricula">
+              <items>
+                <MenuItem fx:id="MI_Matricula_Nueva" mnemonicParsing="false" onAction="#MI_Matricula_Nueva" text="Nueva Matricula" />
+                  <MenuItem fx:id="Mi_Matricula_Retiro" mnemonicParsing="false" onAction="#Mi_Matricula_Retiro" text="Retiro de Cursos" />
+              </items>
+            </Menu>
+            <Menu fx:id="MI_Reportes_Retiros" mnemonicParsing="false" onAction="#MI_Reportes_Retiros" text="Reportes">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Reporte de Matricula" />
+                  <MenuItem mnemonicParsing="false" text="Reporte de Retiro de Cursos" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <AnchorPane fx:id="ap" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="138.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proyecto">
+               <font>
+                  <Font size="96.0" />
+               </font></Text>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
