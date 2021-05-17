@@ -8,9 +8,10 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="main.FXMLRemoverCarreraController">
    <children>
-      <TextField layoutX="174.0" layoutY="105.0" />
-      <Text layoutX="14.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion" wrappingWidth="137.13671875" />
-      <Text layoutX="14.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="228.13671875" />
-      <Button layoutX="182.0" layoutY="329.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="121.0" text="Remover" />
+      <TextField fx:id="textFieldDescription" layoutX="174.0" layoutY="105.0" />
+      <Text fx:id="txtDesciption" layoutX="14.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion" wrappingWidth="137.13671875" />
+      <Text fx:id="txtMessage" layoutX="14.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="228.13671875" />
+      <Button fx:id="btnRemover" layoutX="182.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnRemover" prefHeight="57.0" prefWidth="121.0" text="Remover" />
+      <TextField fx:id="textFieldId" layoutX="168.0" layoutY="160.0" onAction="#textFieldId" visible="false" />
    </children>
 </AnchorPane>

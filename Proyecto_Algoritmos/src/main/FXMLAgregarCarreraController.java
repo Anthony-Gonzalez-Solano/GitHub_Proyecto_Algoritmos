@@ -7,6 +7,7 @@ package main;
 
 import Lists.DoublyLinkedList;
 import domain.Career;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import util.FileTXT;
 
 /**
  * FXML Controller class
@@ -26,6 +28,7 @@ public class FXMLAgregarCarreraController implements Initializable {
 private Career career;
         private String description;
         private int id;
+        private util.FileTXT txt ;
     @FXML
     private TextField textFieldDescription;
     @FXML
@@ -46,13 +49,12 @@ private Career career;
     @FXML
     private void btnAgregar(ActionEvent event) {
                              try{
-           list.add(new Career(this.textFieldDescription.getText(), Integer.parseInt(this.textFieldId.getText())));
+           util.Utility.getCarreras().add(new Career(this.textFieldDescription.getText(), Integer.parseInt(this.textFieldId.getText())));
                         this.textFieldDescription.setText("");
-                        
+            txt.writeFile("carreras.txt",this.textFieldDescription.getText()+","+ Integer.parseInt(this.textFieldId.getText()) );
                         this.txtMessage.setVisible(true);
                         this.txtMessage.setText("Carrera agregada correctamente");
-              
-                
+
                 }catch(Exception e){
                       this.txtMessage.setVisible(true);
                     this.txtMessage.setText("Ha ocurrido un error");
@@ -62,5 +64,7 @@ private Career career;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        txt=new FileTXT();
+        
     }    
 }

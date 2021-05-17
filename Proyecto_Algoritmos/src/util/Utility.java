@@ -28,15 +28,15 @@ public class Utility {
     private static SinglyLinkedList listHorarios = new SinglyLinkedList();
     private static CircularDoublyLinkedList listMatricula = new CircularDoublyLinkedList(); 
     
-    public DoublyLinkedList getCarreras(){ return listCarreras;}
+    public static DoublyLinkedList getCarreras(){ return listCarreras;}
     public void setCarreras(DoublyLinkedList list){listCarreras=list;}
-    public SinglyLinkedList getEstudiantes(){ return listEstudiantes;}
+    public static SinglyLinkedList getEstudiantes(){ return listEstudiantes;}
     public void setEstudiantes(SinglyLinkedList list){listEstudiantes=list;}
-    public CircularDoublyLinkedList getCursos(){ return listCursos;}
+    public static CircularDoublyLinkedList getCursos(){ return listCursos;}
     public void setCursos(CircularDoublyLinkedList list){listCursos=list;}
-    public SinglyLinkedList getHorarios(){ return listHorarios;}
+    public static SinglyLinkedList getHorarios(){ return listHorarios;}
     public void setHorarios(SinglyLinkedList list){listHorarios=list;}
-    public CircularDoublyLinkedList getMatriculas(){ return listMatricula;}
+    public static CircularDoublyLinkedList getMatriculas(){ return listMatricula;}
     public void setMatriculas(CircularDoublyLinkedList list){listMatricula=list;}
 
     public static String dateFormat(Date date){
