@@ -53,7 +53,10 @@ private Career career;
                         this.textFieldDescription.setText("");
             txt.writeFile("carreras.txt",this.textFieldDescription.getText()+","+ Integer.parseInt(this.textFieldId.getText()) );
                         this.txtMessage.setVisible(true);
+                     
                         this.txtMessage.setText("Carrera agregada correctamente");
+                           textFieldId.setText("");
+                           
 
                 }catch(Exception e){
                       this.txtMessage.setVisible(true);

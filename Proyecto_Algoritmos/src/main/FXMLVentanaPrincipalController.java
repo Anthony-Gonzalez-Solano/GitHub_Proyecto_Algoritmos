@@ -89,7 +89,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Carreras_Mostrar(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLMostrarCarrera");
     }
 
     @FXML

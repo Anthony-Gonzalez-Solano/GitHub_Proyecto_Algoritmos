@@ -119,7 +119,7 @@ public class DoublyLinkedList {
     }
 
     public void remove(Object element) throws ListException {
-       if (isEmpty()) {
+      if (isEmpty()) {
             throw new ListException("List is empty : SinglyLinkedList");
         }
         //CASO 1. EL ELEMENTO A SUPRIMIR ES EL PRIMERO DE LA LISTA
