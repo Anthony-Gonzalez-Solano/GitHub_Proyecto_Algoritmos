@@ -5,14 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="main.FXMLAgregarCarreraController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLAgregarCarreraController">
    <children>
-      <TextField fx:id="textFieldDescription" layoutX="178.0" layoutY="100.0" visible="false" />
-      <Text fx:id="txtDescription" layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="149.0" />
-      <TextField fx:id="textFieldId" layoutX="178.0" layoutY="175.0" visible="false" />
-      <Text fx:id="txtId" layoutX="18.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="141.13671875" />
+      <TextField fx:id="textFieldDescription" layoutX="178.0" layoutY="100.0" />
+      <Text fx:id="txtDescription" layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion" wrappingWidth="149.0" />
+      <TextField fx:id="textFieldId" layoutX="178.0" layoutY="175.0" />
+      <Text fx:id="txtId" layoutX="18.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="141.13671875" />
       <Text fx:id="txtMessage" layoutX="25.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="234.13671875" />
-      <Button fx:id="btnAgregar" layoutX="96.0" layoutY="295.0" mnemonicParsing="false" onAction="#btnAgregar" prefHeight="79.0" prefWidth="149.0" text="Agregar" visible="false" />
+      <Button fx:id="btnAgregar" layoutX="96.0" layoutY="295.0" mnemonicParsing="false" onAction="#btnAgregar" prefHeight="79.0" prefWidth="149.0" text="Agregar" />
    </children>
 </AnchorPane>
