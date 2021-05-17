@@ -35,6 +35,13 @@ public class Student {
         this.address = address;
         this.careerID = careerID;
     }
+    
+          public boolean equals(Student other){
+        if(!(other instanceof Student))
+            return false;
+        Student c= (Student)other;
+                return id==(c.id);
+    }
 
     public int getId() {
         return id;

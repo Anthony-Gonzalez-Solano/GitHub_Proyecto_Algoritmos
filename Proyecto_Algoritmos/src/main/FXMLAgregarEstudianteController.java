@@ -73,7 +73,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                 this.datePickerEstudiante.getValue().getMonthValue(),
                 this.datePickerEstudiante.getValue().getDayOfMonth());
             try{
-           util.Utility.getEstudiantes().add(new Student(Integer.parseInt(this.textFieldId.getText()), "", this.textFieldLastName.getText(), this.textFieldFirstName.getText(),cal.getTime() , this.textFieldPhone.getText(),this.textFieldEmail.getText(),this.textFieldAdress.getText(), 0));
+           util.Utility.getEstudiantes().add(new Student(Integer.parseInt(this.textFieldId.getText()), "h", this.textFieldLastName.getText(), this.textFieldFirstName.getText(),cal.getTime() , this.textFieldPhone.getText(),this.textFieldEmail.getText(),this.textFieldAdress.getText(), 2));
                         this.textFieldAdress.setText("");
                          this.textFieldEmail.setText("");
                           this.textFieldFirstName.setText("");

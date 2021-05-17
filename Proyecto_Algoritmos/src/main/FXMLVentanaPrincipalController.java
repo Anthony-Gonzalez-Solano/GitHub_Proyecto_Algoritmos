@@ -104,12 +104,12 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Estudiante_Suprimir(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLRemoverEstudiante");
     }
 
     @FXML
     private void MI_Estudiante_Mostrar(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLMostrarEstudiante");
     }
 
     @FXML
