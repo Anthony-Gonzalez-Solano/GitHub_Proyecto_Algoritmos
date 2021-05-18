@@ -9,6 +9,7 @@ import Lists.ListException;
 import domain.Career;
 import domain.Student;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,24 +38,24 @@ public class FXMLMostrarEstudianteController implements Initializable {
         // TODO
         
           if(this.tableViewEstudiante.getColumns().isEmpty()){
-         TableColumn<Student,String>column1=new TableColumn<>("Id");
+             TableColumn<Student,String>column1=new TableColumn<>("Id");
             column1.setCellValueFactory(new PropertyValueFactory<>("id"));
             TableColumn<Student,String>column2=new TableColumn<>("ID Estudiante");
-            column2.setCellValueFactory(new PropertyValueFactory<>(" studentID"));
+            column2.setCellValueFactory(new PropertyValueFactory<>("studentID"));
               TableColumn<Student,String>column3=new TableColumn<>("LastName");
-            column1.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+            column3.setCellValueFactory(new PropertyValueFactory<>("lastname"));
                 TableColumn<Student,String>column4=new TableColumn<>("FirstName");
-            column1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+            column4.setCellValueFactory(new PropertyValueFactory<>("firstname"));
                  TableColumn<Student,String>column5=new TableColumn<>("Fecha de nacimiento");
-            column1.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+            column5.setCellValueFactory(new PropertyValueFactory<>("birthday"));
                  TableColumn<Student,String>column6=new TableColumn<>("Telefono");
-            column1.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+            column6.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
                  TableColumn<Student,String>column7=new TableColumn<>("E-Mail");
-            column1.setCellValueFactory(new PropertyValueFactory<>("email"));
+            column7.setCellValueFactory(new PropertyValueFactory<>("email"));
                  TableColumn<Student,String>column8=new TableColumn<>("Direccion");
-            column1.setCellValueFactory(new PropertyValueFactory<>("address"));
+            column8.setCellValueFactory(new PropertyValueFactory<>("address"));
                  TableColumn<Student,String>column9=new TableColumn<>("ID Carrera");
-            column1.setCellValueFactory(new PropertyValueFactory<>("careerID"));
+            column9.setCellValueFactory(new PropertyValueFactory<>("careerID"));
        
             
             this.tableViewEstudiante.getColumns().add(column1);//agregar columnas

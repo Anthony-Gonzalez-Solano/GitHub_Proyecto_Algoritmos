@@ -8,6 +8,8 @@ package main;
 import domain.Career;
 import domain.Student;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
@@ -25,7 +27,9 @@ import javafx.scene.text.Text;
  * @author Dell 7470
  */
 public class FXMLAgregarEstudianteController implements Initializable {
-
+    private static int autoID;
+    
+    
     @FXML
     private TextField textFieldId;
     @FXML
@@ -64,7 +68,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
     @FXML
@@ -73,7 +77,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                 this.datePickerEstudiante.getValue().getMonthValue(),
                 this.datePickerEstudiante.getValue().getDayOfMonth());
             try{
-           util.Utility.getEstudiantes().add(new Student(Integer.parseInt(this.textFieldId.getText()), "h", this.textFieldLastName.getText(), this.textFieldFirstName.getText(),cal.getTime() , this.textFieldPhone.getText(),this.textFieldEmail.getText(),this.textFieldAdress.getText(), 2));
+           util.Utility.getEstudiantes().add(new Student(Integer.parseInt(this.textFieldId.getText()), new DecimalFormat("0000").format(autoID), this.textFieldLastName.getText(), this.textFieldFirstName.getText(),cal.getTime() , this.textFieldPhone.getText(),this.textFieldEmail.getText(),this.textFieldAdress.getText(), 2));
                         this.textFieldAdress.setText("");
                          this.textFieldEmail.setText("");
                           this.textFieldFirstName.setText("");
@@ -85,7 +89,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                         this.txtMessage.setVisible(true);
                      
                         this.txtMessage.setText("Estudiante agregado correctamente");
-                        
+                        autoID++;
                            
 
                 }catch(Exception e){
