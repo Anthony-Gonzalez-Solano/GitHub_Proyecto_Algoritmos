@@ -56,6 +56,8 @@ Date date = null;
            util.Utility.getEstudiantes().remove(new Student(Integer.parseInt(this.textFieldCedula.getText()), "", this.textFieldLastName.getText(), "",date, "","","", 0));
            txtMessage.setText("Estudiante eliminado");
            txtMessage.setVisible(true);
+           textFieldCedula.setText("");
+           textFieldLastName.setText("");
                    
         } catch(Exception e){
                       this.txtMessage.setVisible(true);
