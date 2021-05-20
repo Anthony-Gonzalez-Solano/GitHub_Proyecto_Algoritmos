@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,6 +29,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import util.FileTXT;
 
 /**
  * FXML Controller class
@@ -62,6 +64,20 @@ public class FXMLSecurityController implements Initializable {
     private PasswordField tf_password;
     @FXML
     private BorderPane bp;
+    @FXML
+    private Button btn_newStudent;
+    @FXML
+    private Pane P_NewSudent;
+    @FXML
+    private Button btn_acept_newStudent;
+    @FXML
+    private Button btn_cancel_newStudent;
+    @FXML
+    private TextField tf_carnet_newStudent;
+    @FXML
+    private PasswordField tf_password_newSudent;
+    @FXML
+    private PasswordField tf_passwordConfirm_newStudent;
 
     /**
      * Initializes the controller class.
@@ -86,11 +102,33 @@ public class FXMLSecurityController implements Initializable {
     @FXML
     private void btn_acept_student(ActionEvent event) {
         try {
-            for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
-                Student s = (Student)util.Utility.getEstudiantes().getNode(i).getData();
-                if(tf_canet.getText().equals(s.getStudentID())){
-
+            if(!util.Utility.getEstudiantes().isEmpty()){
+                if(!tf_canet.getText().isBlank()){
+                    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
+                        Student s = (Student)util.Utility.getEstudiantes().getNode(i).getData();
+                        if(tf_canet.getText().equals(s.getStudentID())){
+                            util.Utility.setSecurity("admin");
+                            Parent root = null;
+                            try {
+                                root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
+                            } catch (IOException ex) {
+                                Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            Scene scene = new Scene(root);
+                            Stage stage = (Stage) btn_acept.getScene().getWindow();
+                            stage.setScene(scene);
+                        }
+                    }
+                }else{
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No debe dejar espacios en blanco");
+                    a.showAndWait(); 
                 }
+            }else{
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("no hay estudiantes registrados\npara usar esta opcion");
+                a.showAndWait();
+                    
             }
         } catch (ListException ex) {
             Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,24 +143,28 @@ public class FXMLSecurityController implements Initializable {
     @FXML
     private void btn_acept_admin(ActionEvent event) {
         try {
-            util.Utility.getUsers().add(new Security("admin", "123"));
-            for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
-                
-                Security s2 = (Security)util.Utility.getUsers().getNode(i).getData();
-                Security s1 = new Security(tf_user.getText(), tf_password.getText());
-               if(s1.equals(s2)){
-                    
-                    util.Utility.setSecurity("admin");
-                    Parent root = null;
-                    try {
-                        root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    Scene scene = new Scene(root);
-                    Stage stage = (Stage) btn_acept.getScene().getWindow();
-                    stage.setScene(scene);
-                }    
+            if(!tf_password.getText().isBlank() || !tf_user.getText().isBlank()){
+                for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
+
+                    Security s2 = (Security)util.Utility.getUsers().getNode(i).getData();
+                    Security s1 = new Security(tf_user.getText(), tf_password.getText());
+                   if(s1.equals(s2)){
+                        util.Utility.setSecurity("admin");
+                        Parent root = null;
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) btn_acept.getScene().getWindow();
+                        stage.setScene(scene);
+                    }    
+                }
+            }else{
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("No deje espacios en blanco");
+                a.showAndWait();
             }
         } catch (ListException ex) {
             Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,6 +174,58 @@ public class FXMLSecurityController implements Initializable {
     @FXML
     private void btn_cancel_admin(ActionEvent event) {
         System.exit(0);
+    }
+
+    @FXML
+    private void btn_newStudent(ActionEvent event) {
+        P_selection.setVisible(false);
+        P_NewSudent.setVisible(true);
+    }
+
+    @FXML
+    private void btn_acept_newStudent(ActionEvent event) {
+        if(!tf_carnet_newStudent.getText().isBlank() || !tf_passwordConfirm_newStudent.getText().isBlank() || 
+                !tf_password_newSudent.getText().isBlank()){
+            try {
+                boolean register=true;
+                for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
+                    Security s = (Security)util.Utility.getUsers().getNode(i).data;
+                    if(tf_carnet_newStudent.getText().equals(s.getUser()) && s.getPassword().equals("-")){
+                        register=false;
+                    }
+                }
+                if(register==false){
+                    if(tf_password_newSudent.getText().equals(tf_passwordConfirm_newStudent.getText())){
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    }else{
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setHeaderText("Aocurrido un error en la confirmacion de la contraseña");
+                        a.showAndWait();
+                    }
+                }else{
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("El estudiante indicado no se a podido encontrar\no ya tiene una contraseña registrada");
+                    a.showAndWait();
+                }  
+            } catch (ListException ex) {
+                Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }else{
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No debe dejar espacios en blanco");
+            a.showAndWait();
+        }
+    }
+
+    @FXML
+    private void btn_cancel_newStudent(ActionEvent event) {
+
     }
     
 }

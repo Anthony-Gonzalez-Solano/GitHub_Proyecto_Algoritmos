@@ -39,6 +39,7 @@ public class NewFXMain extends Application {
             primaryStage.setResizable(false);
             primaryStage.show();
            
+            util.Utility.fillList();
         } catch (IOException ex) {
             Logger.getLogger(NewFXMain.class.getName()).log(Level.SEVERE, null, ex);
         }

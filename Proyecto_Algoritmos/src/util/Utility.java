@@ -10,6 +10,7 @@ import Lists.CircularLinkedList;
 import Lists.DoublyLinkedList;
 import Lists.SinglyLinkedList;
 import domain.Career;
+import domain.Security;
 import domain.Student;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -154,22 +155,22 @@ public class Utility {
     public static void setSecurity(String admin_studnet){Security = admin_studnet;}
     public static String getSecurity(){return Security;}
     
-    public void fillList(){
+    public static void fillList(){
         FileTXT file = new FileTXT();
         ArrayList<String> list = new ArrayList<>();
         
-        if(file.existFile("carreras.txt")){
+        if(file.existFile("a.txt")){
             list = file.readFile("carreras.txt");
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
                 getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
             }
         }
-        if(file.existFile("a.txt")){
-            list = file.readFile("a.txt");
+        if(file.existFile("Users.txt")){
+            list = file.readFile("Users.txt");
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
-                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+                getUsers().add(new Security(datos[0], desBinaryCodify(datos[1])));
             }
         }
         if(file.existFile("a.txt")){
@@ -201,5 +202,40 @@ public class Utility {
             }
         }
         
+    }
+
+    public static String binaryCodify(String dato){
+        String code="";
+        int[] numberCode=new int[dato.length()];
+        for (int i = 0; i < dato.length(); i++) {
+            numberCode[i] = dato.charAt(i);
+        }
+        for (int i = 0; i < numberCode.length; i++) {
+            while(numberCode[i]!=0){
+                    code += numberCode[i]%2+"";
+                    numberCode[i]=numberCode[i]/2;
+            }
+            code+="0@";
+        }
+        code+="end";
+        return code;
+    }
+    
+    public static String desBinaryCodify(String binary){
+        String text="";
+        String[] binaryText = binary.split("@");
+        int[] decimalText = new int[binaryText.length-1];
+        
+        
+        for (int i = 0; i < binaryText.length-1; i++) {
+            String aux = "";
+            for (int j = 0; j < binaryText[i].length(); j++) {
+                decimalText[i] += Integer.parseInt(binaryText[i].charAt(j)+"")*(Math.pow(2, j));
+            }
+        }
+        for (int i = 0; i < decimalText.length; i++) {
+            text += (char)decimalText[i];
+        }
+        return text;
     }
 }

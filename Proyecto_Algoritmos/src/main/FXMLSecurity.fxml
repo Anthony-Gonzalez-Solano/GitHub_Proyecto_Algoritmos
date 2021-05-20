@@ -15,8 +15,9 @@
             <Pane fx:id="P_selection" prefHeight="229.0" prefWidth="349.0">
                <children>
                   <Button fx:id="btn_admin" layoutX="131.0" layoutY="56.0" mnemonicParsing="false" onAction="#btn_admin" text="admin" />
-                  <Button fx:id="btn_student" layoutX="130.0" layoutY="115.0" mnemonicParsing="false" onAction="#btn_student" text="student" />
+                  <Button fx:id="btn_student" layoutX="130.0" layoutY="115.0" mnemonicParsing="false" onAction="#btn_student" text="Consulta Estudiante" />
                   <Text layoutX="199.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;-- usen este" />
+                  <Button fx:id="btn_newStudent" layoutX="89.0" layoutY="166.0" mnemonicParsing="false" onAction="#btn_newStudent" text="Ingreso Nuevo estudiante" />
                </children>
             </Pane>
             <Pane fx:id="P_student" prefHeight="229.0" prefWidth="349.0" visible="false">
@@ -35,6 +36,15 @@
                   <Button fx:id="btn_cancel_admin" layoutX="112.0" layoutY="180.0" mnemonicParsing="false" onAction="#btn_cancel_admin" text="cancelar" />
                   <PasswordField fx:id="tf_password" layoutX="57.0" layoutY="130.0" onAction="#btn_acept_admin" text="123" />
                   <Text fill="RED" layoutX="206.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="solo delen aceptar" />
+               </children>
+            </Pane>
+            <Pane fx:id="P_NewSudent" prefHeight="229.0" prefWidth="349.0" visible="false">
+               <children>
+                  <Button fx:id="btn_acept_newStudent" layoutX="32.0" layoutY="176.0" mnemonicParsing="false" onAction="#btn_acept_newStudent" text="Aceptar" />
+                  <Button fx:id="btn_cancel_newStudent" layoutX="111.0" layoutY="176.0" mnemonicParsing="false" onAction="#btn_cancel_newStudent" text="Cancelar" />
+                  <TextField fx:id="tf_carnet_newStudent" layoutX="32.0" layoutY="29.0" />
+                  <PasswordField fx:id="tf_password_newSudent" layoutX="32.0" layoutY="79.0" />
+                  <PasswordField fx:id="tf_passwordConfirm_newStudent" layoutX="32.0" layoutY="131.0" />
                </children>
             </Pane>
          </children>
