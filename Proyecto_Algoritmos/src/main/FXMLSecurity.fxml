@@ -16,6 +16,7 @@
                <children>
                   <Button fx:id="btn_admin" layoutX="131.0" layoutY="56.0" mnemonicParsing="false" onAction="#btn_admin" text="admin" />
                   <Button fx:id="btn_student" layoutX="130.0" layoutY="115.0" mnemonicParsing="false" onAction="#btn_student" text="student" />
+                  <Text layoutX="199.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;-- usen este" />
                </children>
             </Pane>
             <Pane fx:id="P_student" prefHeight="229.0" prefWidth="349.0" visible="false">
@@ -27,12 +28,13 @@
             </Pane>
             <Pane fx:id="P_admin" prefHeight="229.0" prefWidth="349.0" visible="false">
                <children>
-                  <TextField fx:id="tf_user" layoutX="57.0" layoutY="62.0" onAction="#btn_acept_admin" />
+                  <TextField fx:id="tf_user" layoutX="57.0" layoutY="62.0" onAction="#btn_acept_admin" text="admin" />
                   <Text layoutX="67.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user" />
                   <Text layoutX="62.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="contra" />
                   <Button fx:id="btn_acept" layoutX="29.0" layoutY="180.0" mnemonicParsing="false" onAction="#btn_acept_admin" text="aceptar" />
                   <Button fx:id="btn_cancel_admin" layoutX="112.0" layoutY="180.0" mnemonicParsing="false" onAction="#btn_cancel_admin" text="cancelar" />
-                  <PasswordField fx:id="tf_password" layoutX="57.0" layoutY="130.0" onAction="#btn_acept_admin" />
+                  <PasswordField fx:id="tf_password" layoutX="57.0" layoutY="130.0" onAction="#btn_acept_admin" text="123" />
+                  <Text fill="RED" layoutX="206.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="solo delen aceptar" />
                </children>
             </Pane>
          </children>
