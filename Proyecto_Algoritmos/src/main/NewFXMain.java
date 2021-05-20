@@ -5,6 +5,9 @@
  */
 package main;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,22 +20,27 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Dell 7470
+ * @author Anthony G.S
  */
 public class NewFXMain extends Application {
     
+    private String Security;
+    
     @Override
     public void start(Stage primaryStage) {
+        Security = util.Utility.getSecurity();
+        
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
+            primaryStage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLSecurity.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setTitle("Proyecto , Algoritmos y estructura de datos - 2021 , Ciclo I");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
-            
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+           
+        } catch (IOException ex) {
+            Logger.getLogger(NewFXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

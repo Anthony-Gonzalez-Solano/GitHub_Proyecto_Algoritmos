@@ -5,6 +5,7 @@
  */
 package main;
 
+import domain.Security;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -153,15 +154,14 @@ public class FXMLVentanaPrincipalController implements Initializable {
     }
     
     
-       private void loadPage(String page){
-
+    private void loadPage(String page){
     Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource(page+".fxml"));
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLVentanaPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         this.bp.setCenter(root);   
+            try {
+                root = FXMLLoader.load(getClass().getResource(page+".fxml"));
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLVentanaPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             this.bp.setCenter(root);   
     }
 
 

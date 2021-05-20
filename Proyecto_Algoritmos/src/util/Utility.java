@@ -6,12 +6,14 @@
 package util;
 
 import Lists.CircularDoublyLinkedList;
+import Lists.CircularLinkedList;
 import Lists.DoublyLinkedList;
 import Lists.SinglyLinkedList;
 import domain.Career;
 import domain.Student;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -23,23 +25,10 @@ import java.util.Locale;
  */
 public class Utility {
     
-    private static DoublyLinkedList listCarreras = new DoublyLinkedList();
-    private static SinglyLinkedList listEstudiantes = new SinglyLinkedList(); 
-    private static CircularDoublyLinkedList listCursos = new CircularDoublyLinkedList();
-    private static SinglyLinkedList listHorarios = new SinglyLinkedList();
-    private static CircularDoublyLinkedList listMatricula = new CircularDoublyLinkedList(); 
-    
-    public static DoublyLinkedList getCarreras(){ return listCarreras;}
-    public void setCarreras(DoublyLinkedList list){listCarreras=list;}
-    public static SinglyLinkedList getEstudiantes(){ return listEstudiantes;}
-    public void setEstudiantes(SinglyLinkedList list){listEstudiantes=list;}
-    public static CircularDoublyLinkedList getCursos(){ return listCursos;}
-    public void setCursos(CircularDoublyLinkedList list){listCursos=list;}
-    public static SinglyLinkedList getHorarios(){ return listHorarios;}
-    public void setHorarios(SinglyLinkedList list){listHorarios=list;}
-    public static CircularDoublyLinkedList getMatriculas(){ return listMatricula;}
-    public void setMatriculas(CircularDoublyLinkedList list){listMatricula=list;}
 
+    
+    
+    
     public static String dateFormat(Date date){
         
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
@@ -134,5 +123,83 @@ public class Utility {
         Calendar c2 = Calendar.getInstance();
         c2.setTime(birthday);
         return c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR);
+    }
+    
+    
+    
+    
+    
+    //-------------------------------------------Metodos para las listas -------------------------------------------------------
+    private static CircularLinkedList listUsers = new CircularLinkedList();
+    private static DoublyLinkedList listCarreras = new DoublyLinkedList();
+    private static SinglyLinkedList listEstudiantes = new SinglyLinkedList(); 
+    private static CircularDoublyLinkedList listCursos = new CircularDoublyLinkedList();
+    private static SinglyLinkedList listHorarios = new SinglyLinkedList();
+    private static CircularDoublyLinkedList listMatricula = new CircularDoublyLinkedList(); 
+    
+    public static CircularLinkedList getUsers(){ return listUsers;}
+    public void setUsers(CircularLinkedList list){listUsers=list;}
+    public static DoublyLinkedList getCarreras(){ return listCarreras;}
+    public void setCarreras(DoublyLinkedList list){listCarreras=list;}
+    public static SinglyLinkedList getEstudiantes(){ return listEstudiantes;}
+    public void setEstudiantes(SinglyLinkedList list){listEstudiantes=list;}
+    public static CircularDoublyLinkedList getCursos(){ return listCursos;}
+    public void setCursos(CircularDoublyLinkedList list){listCursos=list;}
+    public static SinglyLinkedList getHorarios(){ return listHorarios;}
+    public void setHorarios(SinglyLinkedList list){listHorarios=list;}
+    public static CircularDoublyLinkedList getMatriculas(){ return listMatricula;}
+    public void setMatriculas(CircularDoublyLinkedList list){listMatricula=list;}
+    
+    private static String Security = "security";
+    public static void setSecurity(String admin_studnet){Security = admin_studnet;}
+    public static String getSecurity(){return Security;}
+    
+    public void fillList(){
+        FileTXT file = new FileTXT();
+        ArrayList<String> list = new ArrayList<>();
+        
+        if(file.existFile("carreras.txt")){
+            list = file.readFile("carreras.txt");
+            for (int i = 0; i < list.size(); i++) {
+                String[] datos = list.get(i).split(",");
+                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+            }
+        }
+        if(file.existFile("a.txt")){
+            list = file.readFile("a.txt");
+            for (int i = 0; i < list.size(); i++) {
+                String[] datos = list.get(i).split(",");
+                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+            }
+        }
+        if(file.existFile("a.txt")){
+            list = file.readFile("a.txt");
+            for (int i = 0; i < list.size(); i++) {
+                String[] datos = list.get(i).split(",");
+                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+            }
+        }
+        if(file.existFile("a.txt")){
+            list = file.readFile("a.txt");
+            for (int i = 0; i < list.size(); i++) {
+                String[] datos = list.get(i).split(",");
+                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+            }
+        }
+        if(file.existFile("a.txt")){
+            list = file.readFile("a.txt");
+            for (int i = 0; i < list.size(); i++) {
+                String[] datos = list.get(i).split(",");
+                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+            }
+        }
+        if(file.existFile("a.txt")){
+            list = file.readFile("a.txt");
+            for (int i = 0; i < list.size(); i++) {
+                String[] datos = list.get(i).split(",");
+                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+            }
+        }
+        
     }
 }
