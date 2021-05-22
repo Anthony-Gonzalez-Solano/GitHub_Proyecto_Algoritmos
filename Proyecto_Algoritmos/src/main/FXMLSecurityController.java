@@ -103,7 +103,7 @@ public class FXMLSecurityController implements Initializable {
     private void btn_acept_student(ActionEvent event) {
         try {
             if(!util.Utility.getEstudiantes().isEmpty()){
-                if(!tf_canet.getText().isBlank()){
+                if(!tf_canet.getText().isEmpty()){ // este lo cambie para que no diera error
                     for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                         Student s = (Student)util.Utility.getEstudiantes().getNode(i).getData();
                         if(tf_canet.getText().equals(s.getStudentID())){
@@ -143,7 +143,7 @@ public class FXMLSecurityController implements Initializable {
     @FXML
     private void btn_acept_admin(ActionEvent event) {
         try {
-            if(!tf_password.getText().isBlank() || !tf_user.getText().isBlank()){
+            if(!tf_password.getText().isEmpty() || !tf_user.getText().isEmpty()){ // esto lo cambie por is empty , luego cambiar por blank
                 for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
 
                     Security s2 = (Security)util.Utility.getUsers().getNode(i).getData();
@@ -184,8 +184,8 @@ public class FXMLSecurityController implements Initializable {
 
     @FXML
     private void btn_acept_newStudent(ActionEvent event) {
-        if(!tf_carnet_newStudent.getText().isBlank() || !tf_passwordConfirm_newStudent.getText().isBlank() || 
-                !tf_password_newSudent.getText().isBlank()){
+        if(!tf_carnet_newStudent.getText().isEmpty()|| !tf_passwordConfirm_newStudent.getText().isEmpty() || 
+                !tf_password_newSudent.getText().isEmpty()){// esto lo cambie
             try {
                 boolean register=true;
                 for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
@@ -205,7 +205,7 @@ public class FXMLSecurityController implements Initializable {
                         
                     }else{
                         Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("Aocurrido un error en la confirmacion de la contraseña");
+                        a.setHeaderText("A ocurrido un error en la confirmacion de la contraseña");
                         a.showAndWait();
                     }
                 }else{

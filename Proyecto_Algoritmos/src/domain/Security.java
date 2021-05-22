@@ -6,10 +6,6 @@
 package domain;
 
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
-import util.mail;
 
 /**
  *

@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import util.FileTXT;
 
 /**
  * FXML Controller class
@@ -29,7 +30,7 @@ import javafx.scene.text.Text;
 public class FXMLAgregarEstudianteController implements Initializable {
     private static int autoID;
     
-    
+     private util.FileTXT txt ;
     @FXML
     private TextField textFieldId;
     @FXML
@@ -68,7 +69,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+           txt=new FileTXT();
     }    
 
     @FXML
@@ -76,8 +77,9 @@ public class FXMLAgregarEstudianteController implements Initializable {
              Calendar cal=new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
                 this.datePickerEstudiante.getValue().getMonthValue(),
                 this.datePickerEstudiante.getValue().getDayOfMonth());
+             Student s=new Student(Integer.parseInt(this.textFieldId.getText()),new DecimalFormat("0000").format(autoID), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
             try{
-           util.Utility.getEstudiantes().add(new Student(Integer.parseInt(this.textFieldId.getText()), new DecimalFormat("0000").format(autoID), this.textFieldLastName.getText(), this.textFieldFirstName.getText(),cal.getTime() , this.textFieldPhone.getText(),this.textFieldEmail.getText(),this.textFieldAdress.getText(), 2));
+           util.Utility.getEstudiantes().add(s);
                         this.textFieldAdress.setText("");
                          this.textFieldEmail.setText("");
                           this.textFieldFirstName.setText("");
@@ -85,7 +87,8 @@ public class FXMLAgregarEstudianteController implements Initializable {
                             this.textFieldId.setText("");
                              this.textFieldLastName.setText("");
                             
-          //  txt.writeFile("carreras.txt",this.textFieldDescription.getText()+","+ Integer.parseInt(this.textFieldId.getText()) );
+            txt.writeFile("carreras.txt",s.toString());
+            
                         this.txtMessage.setVisible(true);
                      
                         this.txtMessage.setText("Estudiante agregado correctamente");

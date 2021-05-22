@@ -45,7 +45,12 @@ private Career career;
     /**
      * Initializes the controller class.
      */
-
+   @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+        txt=new FileTXT();
+        
+    }  
     @FXML
     private void btnAgregar(ActionEvent event) {
                              try{
@@ -64,10 +69,5 @@ private Career career;
                 }
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        txt=new FileTXT();
-        
-    }    
+     
 }
