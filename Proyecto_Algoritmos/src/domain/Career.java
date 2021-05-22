@@ -44,7 +44,7 @@ public class Career {
 
     @Override
     public String toString() {
-        return "Career{" + "description=" + description + ", id=" + id + '}';
+        return description+","+id;
     }
     
     

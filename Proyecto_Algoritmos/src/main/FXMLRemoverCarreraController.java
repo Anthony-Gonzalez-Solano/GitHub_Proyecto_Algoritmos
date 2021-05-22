@@ -36,6 +36,8 @@ private static DoublyLinkedList list= new DoublyLinkedList();
     private TextField textFieldId;
     @FXML
     private Text txtId;
+    @FXML
+    private Text txtError;
 
     /**
      * Initializes the controller class.
@@ -49,16 +51,19 @@ private static DoublyLinkedList list= new DoublyLinkedList();
 
     @FXML
     private void btnRemover(ActionEvent event) {
-        
+        txtMessage.setText("");
                      try{
+                         
         util.Utility.getCarreras().remove(new Career(this.textFieldDescription.getText(),Integer.parseInt(this.textFieldId.getText())));
                      this.txtMessage.setVisible(true);
                      this.txtMessage.setText("La carrera fue eliminada correctamente");
                      textFieldDescription.setText("");
                      textFieldId.setText("");
                 }catch(Exception e){
-                    this.txtMessage.setVisible(true);
-                    this.txtMessage.setText("La lista no está llena");
+                    this.txtError.setVisible(true);
+                    this.txtError.setText("La lista no está llena o no existe el estudiante");
+                    textFieldId.setText("");
+                    textFieldDescription.setText("");
                 }
     }   
 }

@@ -117,7 +117,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return  id+"," + studentID+","+lastname+","+firstname+","+birthday+","+phoneNumber+","+email+","+address+","+careerID ;
+        return  id+"," + studentID+","+lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address+","+careerID ;
     }
     
 }

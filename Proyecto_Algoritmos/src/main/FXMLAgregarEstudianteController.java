@@ -87,7 +87,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                             this.textFieldId.setText("");
                              this.textFieldLastName.setText("");
                             
-            txt.writeFile("carreras.txt",s.toString());
+            txt.writeFile("estudiantes.txt",s.toString());
             
                         this.txtMessage.setVisible(true);
                      

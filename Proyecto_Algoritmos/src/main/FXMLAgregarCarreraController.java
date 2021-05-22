@@ -54,9 +54,10 @@ private Career career;
     @FXML
     private void btnAgregar(ActionEvent event) {
                              try{
-           util.Utility.getCarreras().add(new Career(this.textFieldDescription.getText(), Integer.parseInt(this.textFieldId.getText())));
+                                 Career c=new Career(this.textFieldDescription.getText(),Integer.parseInt(this.textFieldId.getText()));
+           util.Utility.getCarreras().add(c);
                         this.textFieldDescription.setText("");
-            txt.writeFile("carreras.txt",this.textFieldDescription.getText()+","+ Integer.parseInt(this.textFieldId.getText()) );
+            txt.writeFile("carreras.txt",c.toString() );
                         this.txtMessage.setVisible(true);
                      
                         this.txtMessage.setText("Carrera agregada correctamente");
