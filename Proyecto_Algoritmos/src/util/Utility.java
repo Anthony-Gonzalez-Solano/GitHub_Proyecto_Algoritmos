@@ -170,8 +170,6 @@ public class Utility {
                         datos[1], datos[2], datos[3], c.getTime(), datos[5], datos[6], datos[7], Integer.parseInt(datos[8]));
                 getEstudiantes().add(s);
                 s.setAutoStudentID(Integer.parseInt(s.getStudentID())+1);
-                
-                
             }
         }
         if(file.existFile("Users.txt")){
@@ -181,8 +179,8 @@ public class Utility {
                 getUsers().add(new Security(datos[0], desBinaryCodify(datos[1])));
             }
         }
-        if(file.existFile("a.txt")){
-            list = file.readFile("a.txt");
+        if(file.existFile("carreras.txt")){
+            list = file.readFile("carreras.txt");
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
                 getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
