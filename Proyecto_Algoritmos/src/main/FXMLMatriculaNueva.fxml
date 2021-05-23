@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaNuevaController">
-   <children>
-      <ComboBox fx:id="cboxListStud" layoutX="181.0" layoutY="116.0" onAction="#cboxListStud" prefHeight="60.0" prefWidth="192.0" />
-      <TableView prefHeight="400.0" prefWidth="600.0" visible="false">
-        <columns>
-          <TableColumn prefWidth="132.0" text="Cedula" />
-          <TableColumn prefWidth="166.0" text="C2" />
-        </columns>
-      </TableView>
-   </children>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaNuevaController">
+    
 </AnchorPane>
