@@ -77,7 +77,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
              Calendar cal=new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
                 this.datePickerEstudiante.getValue().getMonthValue(),
                 this.datePickerEstudiante.getValue().getDayOfMonth());
-             Student s=new Student(Integer.parseInt(this.textFieldId.getText()),new DecimalFormat("0000").format(autoID), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
+             Student s=new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
             try{
            util.Utility.getEstudiantes().add(s);
                         this.textFieldAdress.setText("");
@@ -88,6 +88,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                              this.textFieldLastName.setText("");
                             
             txt.writeFile("estudiantes.txt",s.toString());
+            txt.writeFile("Users.txt", s.getStudentID()+","+util.Utility.binaryCodify("-"));
             
                         this.txtMessage.setVisible(true);
                      

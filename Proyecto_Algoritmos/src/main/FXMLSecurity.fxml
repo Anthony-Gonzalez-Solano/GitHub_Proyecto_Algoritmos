@@ -24,7 +24,8 @@
                <children>
                   <Button fx:id="btn_acept_student" layoutX="23.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_acept_student" text="Button" />
                   <Button fx:id="btn_cancel_student" layoutX="112.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_cancel_student" text="Button" />
-                  <TextField fx:id="tf_canet" layoutX="26.0" layoutY="102.0" onAction="#btn_acept_student" />
+                  <TextField fx:id="tf_canet" layoutX="38.0" layoutY="47.0" onAction="#btn_acept_student" />
+                  <TextField fx:id="tf_Password_Student" layoutX="38.0" layoutY="102.0" />
                </children>
             </Pane>
             <Pane fx:id="P_admin" prefHeight="229.0" prefWidth="349.0" visible="false">

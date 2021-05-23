@@ -159,11 +159,19 @@ public class Utility {
         FileTXT file = new FileTXT();
         ArrayList<String> list = new ArrayList<>();
         
-        if(file.existFile("a.txt")){
-            list = file.readFile("carreras.txt");
+        if(file.existFile("estudiantes.txt")){
+            list = file.readFile("estudiantes.txt");
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
-                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+                String[] date = datos[4].split("/");
+                Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1]),Integer.parseInt(date[0]));
+                
+                Student s = new Student(Integer.parseInt(datos[0]),
+                        datos[1], datos[2], datos[3], c.getTime(), datos[5], datos[6], datos[7], Integer.parseInt(datos[8]));
+                getEstudiantes().add(s);
+                s.setAutoStudentID(Integer.parseInt(s.getStudentID())+1);
+                
+                
             }
         }
         if(file.existFile("Users.txt")){

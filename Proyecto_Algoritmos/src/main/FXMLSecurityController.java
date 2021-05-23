@@ -78,6 +78,8 @@ public class FXMLSecurityController implements Initializable {
     private PasswordField tf_password_newSudent;
     @FXML
     private PasswordField tf_passwordConfirm_newStudent;
+    @FXML
+    private TextField tf_Password_Student;
 
     /**
      * Initializes the controller class.
@@ -95,40 +97,53 @@ public class FXMLSecurityController implements Initializable {
 
     @FXML
     private void btn_student(ActionEvent event) {
-        P_selection.setVisible(false);
-        P_student.setVisible(true);
+        if(!util.Utility.getEstudiantes().isEmpty()){
+            P_selection.setVisible(false);
+            P_student.setVisible(true);
+        }else{
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("no hay estudiantes registrados\npara usar esta opcion");
+            a.showAndWait();
+
+        }
     }
 
     @FXML
     private void btn_acept_student(ActionEvent event) {
         try {
-            if(!util.Utility.getEstudiantes().isEmpty()){
-                if(!tf_canet.getText().isEmpty()){ // este lo cambie para que no diera error
-                    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
-                        Student s = (Student)util.Utility.getEstudiantes().getNode(i).getData();
-                        if(tf_canet.getText().equals(s.getStudentID())){
-                            util.Utility.setSecurity("admin");
-                            Parent root = null;
-                            try {
-                                root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
-                            } catch (IOException ex) {
-                                Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
+            if(!tf_canet.getText().isEmpty() && !tf_Password_Student.getText().isEmpty()){ // este lo cambie para que no diera error
+                for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
+                    Security s = (Security)util.Utility.getUsers().getNode(i).data;
+                    if(tf_canet.getText().equals(s.getUser())){
+                        if(!s.getPassword().equals("-")){
+                            if(tf_canet.getText().equals(s.getUser()) && tf_Password_Student.getText().equals(s.getPassword())){
+                                util.Utility.setSecurity("student");
+                                Parent root = null;
+                                try {
+                                    root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
+                                } catch (IOException ex) {
+                                    Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                Scene scene = new Scene(root);
+                                Stage stage = (Stage) btn_acept.getScene().getWindow();
+                                stage.setScene(scene);
+                            }else{
+                                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                                a.setHeaderText("La contrseña o Carnet es incorrecto");
+                                a.showAndWait();  
                             }
-                            Scene scene = new Scene(root);
-                            Stage stage = (Stage) btn_acept.getScene().getWindow();
-                            stage.setScene(scene);
+                        }else{
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("El Carnet ingresado esta registrado, pero sin contraseña");
+                            a.setContentText("Cancele e ingrese ¨Primero Ingreso¨ y registre su contraseña");
+                            a.showAndWait();  
                         }
                     }
-                }else{
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setHeaderText("No debe dejar espacios en blanco");
-                    a.showAndWait(); 
                 }
             }else{
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setHeaderText("no hay estudiantes registrados\npara usar esta opcion");
-                a.showAndWait();
-                    
+                a.setHeaderText("No debe dejar espacios en blanco");
+                a.showAndWait(); 
             }
         } catch (ListException ex) {
             Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
@@ -137,7 +152,10 @@ public class FXMLSecurityController implements Initializable {
 
     @FXML
     private void btn_cancel_student(ActionEvent event) {
-        System.exit(0);
+        tf_Password_Student.setText("");
+        tf_canet.setText("");
+        P_selection.setVisible(true);
+        P_student.setVisible(false);
     }
 
     @FXML
@@ -173,18 +191,28 @@ public class FXMLSecurityController implements Initializable {
 
     @FXML
     private void btn_cancel_admin(ActionEvent event) {
-        System.exit(0);
+        tf_user.setText("");
+        tf_password.setText("");
+        P_selection.setVisible(true);
+        P_admin.setVisible(false);
     }
 
     @FXML
     private void btn_newStudent(ActionEvent event) {
-        P_selection.setVisible(false);
-        P_NewSudent.setVisible(true);
+        if(!util.Utility.getEstudiantes().isEmpty()){
+            P_selection.setVisible(false);
+            P_NewSudent.setVisible(true);
+        }else{
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("no hay estudiantes registrados\npara usar esta opcion");
+            a.showAndWait();
+
+        }
     }
 
     @FXML
     private void btn_acept_newStudent(ActionEvent event) {
-        if(!tf_carnet_newStudent.getText().isEmpty()|| !tf_passwordConfirm_newStudent.getText().isEmpty() || 
+        if(!tf_carnet_newStudent.getText().isEmpty() && !tf_passwordConfirm_newStudent.getText().isEmpty() && 
                 !tf_password_newSudent.getText().isEmpty()){// esto lo cambie
             try {
                 boolean register=true;
@@ -194,18 +222,27 @@ public class FXMLSecurityController implements Initializable {
                         register=false;
                     }
                 }
+                FileTXT file = new FileTXT();
                 if(register==false){
                     if(tf_password_newSudent.getText().equals(tf_passwordConfirm_newStudent.getText())){
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                        for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
+                            Security s = (Security)util.Utility.getUsers().getNode(i).data;
+                            if(tf_carnet_newStudent.getText().equals(s.getUser())){
+                                file.modifyFile("Users.txt", s, new Security(tf_carnet_newStudent.getText(),tf_password_newSudent.getText())) ;
+                                s.setPassword(tf_password_newSudent.getText());
+                                util.Utility.getUsers().getNode(i).data = s;
+                                
+                                P_NewSudent.setVisible(false);
+                                P_selection.setVisible(true);
+                                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                                a.setHeaderText("Se a guardado con exito la contraseña");
+                                a.setContentText("ahora puede ingresar a hacer consultas");
+                                a.showAndWait();
+                            }
+                        }   
                     }else{
                         Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("A ocurrido un error en la confirmacion de la contraseña");
+                        a.setHeaderText("La contrseña y su confirmación no coinciden");
                         a.showAndWait();
                     }
                 }else{
@@ -225,7 +262,11 @@ public class FXMLSecurityController implements Initializable {
 
     @FXML
     private void btn_cancel_newStudent(ActionEvent event) {
-
+        tf_carnet_newStudent.setText("");
+        tf_password_newSudent.setText("");
+        tf_passwordConfirm_newStudent.setText("");
+        P_selection.setVisible(true);
+        P_NewSudent.setVisible(false);
     }
     
 }

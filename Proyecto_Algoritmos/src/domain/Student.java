@@ -5,6 +5,7 @@
  */
 package domain;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 /**
@@ -15,6 +16,7 @@ public class Student {
     
     
     private int id;
+    private static int autoStudentID;
     private String studentID;
     private String lastname;
     private String firstname;
@@ -24,7 +26,19 @@ public class Student {
     private String address;
     private int careerID;
 
-    public Student(int id, String studentID, String lastname, String firstname, Date birthday, String phoneNumber, String email, String address, int careerID) {
+    public Student(int id, String lastname, String firstname, Date birthday, String phoneNumber, String email, String address, int careerID) {
+        this.id = id;
+        this.studentID = new DecimalFormat("0000").format(autoStudentID);
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.birthday = birthday;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.careerID = careerID;
+        autoStudentID++;
+    }
+    public Student(int id,String studentID, String lastname, String firstname, Date birthday, String phoneNumber, String email, String address, int careerID) {
         this.id = id;
         this.studentID = studentID;
         this.lastname = lastname;
@@ -114,6 +128,15 @@ public class Student {
     public void setCareerID(int careerID) {
         this.careerID = careerID;
     }
+
+    public static int getAutoStudentID() {
+        return autoStudentID;
+    }
+
+    public void setAutoStudentID(int autoStudentID) {
+        this.autoStudentID = autoStudentID;
+    }
+    
 
     @Override
     public String toString() {
