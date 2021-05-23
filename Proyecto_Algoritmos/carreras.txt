@@ -8,3 +8,6 @@ p,6
 dfds,4
 l,8
 h,6
+ere,1
+fdgfd,6
+Informatica,1

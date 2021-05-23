@@ -5,6 +5,7 @@
  */
 package main;
 
+import Lists.ListException;
 import domain.Career;
 import domain.Student;
 import java.net.URL;
@@ -13,10 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -63,13 +67,26 @@ public class FXMLAgregarEstudianteController implements Initializable {
     private Button btnAgregar;
     @FXML
     private Text txtMessage;
+    @FXML
+    private ComboBox<String> comboCarrera;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-           txt=new FileTXT();
+    
+        try {
+            txt=new FileTXT();
+            
+            for(int i=1;i<util.Utility.getCarreras().size();i++)
+                comboCarrera.getItems().add(util.Utility.getCarreras().getNode(i).data+"");
+                
+                } catch (ListException ex) {
+            Logger.getLogger(FXMLAgregarEstudianteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+         
     }    
 
     @FXML

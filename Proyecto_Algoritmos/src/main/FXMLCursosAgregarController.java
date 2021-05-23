@@ -22,7 +22,7 @@ import javafx.scene.control.ComboBox;
 public class FXMLCursosAgregarController implements Initializable {
 
     @FXML
-    private ComboBox<?> comboCursos;
+    private ComboBox<String> comboCursos;
     @FXML
     private Button btnAgregar;
 
@@ -32,6 +32,8 @@ public class FXMLCursosAgregarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        comboCursos.getItems().addAll(util.Utility.getCarreras()+"");
     }    
 
     @FXML
