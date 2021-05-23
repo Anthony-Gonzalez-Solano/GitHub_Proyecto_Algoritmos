@@ -5,6 +5,7 @@
  */
 package main;
 
+import Lists.ListException;
 import domain.Student;
 import java.net.URL;
 import java.util.Calendar;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import util.FileTXT;
 
 /**
  * FXML Controller class
@@ -24,7 +26,7 @@ import javafx.scene.text.Text;
  * @author Dell 7470
  */
 public class FXMLRemoverEstudianteController implements Initializable {
-
+  private util.FileTXT txt ;
     @FXML
     private TextField textFieldLastName;
     @FXML
@@ -37,6 +39,8 @@ public class FXMLRemoverEstudianteController implements Initializable {
     private Button btnRemover;
     @FXML
     private Text txtMessage;
+    @FXML
+    private Text txtError;
 
     /**
      * Initializes the controller class.
@@ -44,6 +48,7 @@ public class FXMLRemoverEstudianteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+          txt=new FileTXT();
     }    
 
     @FXML
@@ -51,18 +56,31 @@ public class FXMLRemoverEstudianteController implements Initializable {
 //         Calendar cal=new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
 //                this.datePickerEstudiante.getValue().getMonthValue(),
 //                this.datePickerEstudiante.getValue().getDayOfMonth());
-Date date = null;
+    Date date = null;
+            Student s=new Student(Integer.parseInt(this.textFieldCedula.getText()),"", this.textFieldLastName.getText(), "", date, "", "", "", 0);
+       
             try{
-           util.Utility.getEstudiantes().remove(new Student(Integer.parseInt(this.textFieldCedula.getText()), "", this.textFieldLastName.getText(), "",date, "","","", 0));
+         //  util.Utility.getEstudiantes().remove(new Student(Integer.parseInt(this.textFieldCedula.getText()), "", this.textFieldLastName.getText(), "",date, "","","", 0));
+           util.Utility.getEstudiantes().remove(s);
+            txtMessage.setVisible(true);
            txtMessage.setText("Estudiante eliminado");
-           txtMessage.setVisible(true);
+          
            textFieldCedula.setText("");
            textFieldLastName.setText("");
+           txt.removeElement("estudiantes.txt", s.toString());
                    
-        } catch(Exception e){
-                      this.txtMessage.setVisible(true);
-                    this.txtMessage.setText("Ha ocurrido un error");
+        } catch(ListException e){
+                      this.txtError.setVisible(true);
+                    this.txtError.setText("Ha ocurrido un error");
                 }
+            catch(NullPointerException es){
+                txtError.setVisible(true);
+                txtError.setText("Error");
+            }
+            catch(NumberFormatException en){
+                 txtError.setVisible(true);
+                txtError.setText("Error");
+            }
     
 }
 }
