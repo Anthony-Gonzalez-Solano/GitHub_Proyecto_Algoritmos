@@ -33,9 +33,10 @@ import util.FileTXT;
  * @author Dell 7470
  */
 public class FXMLAgregarEstudianteController implements Initializable {
+
     private static int autoID;
-    
-     private util.FileTXT txt ;
+
+    private util.FileTXT txt;
     @FXML
     private TextField textFieldId;
     @FXML
@@ -76,51 +77,67 @@ public class FXMLAgregarEstudianteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
+
         try {
-            txt=new FileTXT();
-            
-            for(int i=1;i<util.Utility.getCarreras().size();i++){
-                comboCarrera.getItems().add(util.Utility.getCarreras().getNode(i).data+"");
+            txt = new FileTXT();
+
+            for (int i = 1; i < util.Utility.getCarreras().size(); i++) {
+                comboCarrera.getItems().add(util.Utility.getCarreras().getNode(i).data + "");
             }
-                } catch (ListException ex) {
-            Logger.getLogger(FXMLAgregarEstudianteController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ListException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("La lista esta vacia");
+            a.showAndWait();
         }
-           
-        System.out.println("");
-    }    
+
+    }
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-             Calendar cal=new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
+        Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
                 this.datePickerEstudiante.getValue().getMonthValue(),
                 this.datePickerEstudiante.getValue().getDayOfMonth());
-             Student s=new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
-            try{
-           util.Utility.getEstudiantes().add(s);
-                        this.textFieldAdress.setText("");
-                         this.textFieldEmail.setText("");
-                          this.textFieldFirstName.setText("");
-                           this.textFieldPhone.setText("");
-                            this.textFieldId.setText("");
-                             this.textFieldLastName.setText("");
-                            
-            txt.writeFile("estudiantes.txt",s.toString());
-            txt.writeFile("Users.txt", s.getStudentID()+","+util.Utility.binaryCodify("-"));
-            
-                        this.txtMessage.setVisible(true);
-                     
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setHeaderText("Estudiante agregado correctamente");
+        if (textFieldAdress.getText().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldLastName.getText().isEmpty() || textFieldPhone.getText().isEmpty() || textFieldFirstName.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-                        autoID++;
-                           
+        } else {
+            Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
+            try {
+                if (util.Utility.getEstudiantes().contains(s) == false ) {
+                    util.Utility.getEstudiantes().add(s);
+                    this.textFieldAdress.setText("");
+                    this.textFieldEmail.setText("");
+                    this.textFieldFirstName.setText("");
+                    this.textFieldPhone.setText("");
+                    this.textFieldId.setText("");
+                    this.textFieldLastName.setText("");
 
-                }catch(NullPointerException e){
-                     Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Error inesperado");
-            a.showAndWait();
+                    txt.writeFile("estudiantes.txt", s.toString());
+                    txt.writeFile("Users.txt", s.getStudentID() + "," + util.Utility.binaryCodify("-"));
+
+                    this.txtMessage.setVisible(true);
+
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText("Estudiante agregado correctamente");
+                    a.showAndWait();
+                    autoID++;
+                } else {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("El estudiante ya esta registrado\n  Ingrese uno nuevo");
+                    a.showAndWait();
                 }
+
+            } catch (NullPointerException e) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Error inesperado");
+                a.showAndWait();
+            } catch (ListException ex) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Lista vacia");
+                a.showAndWait();
+            }
+        }
     }
-    
+
 }
