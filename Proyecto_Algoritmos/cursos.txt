@@ -1,0 +1,2 @@
+5,Estadistica,6,1
+2,Estadistica,3,1

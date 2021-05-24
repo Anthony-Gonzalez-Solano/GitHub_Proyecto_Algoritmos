@@ -86,7 +86,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
             Logger.getLogger(FXMLAgregarEstudianteController.class.getName()).log(Level.SEVERE, null, ex);
         }
            
-         
+        System.out.println("");
     }    
 
     @FXML

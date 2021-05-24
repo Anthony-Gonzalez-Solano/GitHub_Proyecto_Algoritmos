@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import util.FileTXT;
 
 /**
  * FXML Controller class
@@ -53,7 +54,7 @@ public class FXMLCursosAgregarController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+       this.txt=new FileTXT();
         try {
             
             for (int i = 1; i <=util.Utility.getCarreras().size(); i++) {

@@ -56,7 +56,7 @@ public class FXMLMostrarCursosController implements Initializable {
         while(!this.tableViewCursos.getItems().isEmpty()){
             this.tableViewCursos.getItems().remove(0);
         }
-        for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+        for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
             this.tableViewCursos.getItems().add((Course) util.Utility.getCursos().getNode(i).data);
             
         }
