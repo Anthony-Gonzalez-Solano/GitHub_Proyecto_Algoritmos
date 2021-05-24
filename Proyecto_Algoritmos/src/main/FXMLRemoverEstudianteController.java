@@ -61,6 +61,10 @@ public class FXMLRemoverEstudianteController implements Initializable {
             Student s=new Student(Integer.parseInt(this.textFieldCedula.getText()),textFieldCedula.getText(), this.textFieldLastName.getText(), textFieldCedula.getText(), date, textFieldCedula.getText(), textFieldCedula.getText(), textFieldCedula.getText(), Integer.parseInt(textFieldCedula.getText()));
        
             try{
+               if(!util.Utility.getEstudiantes().isEmpty()){    
+                if(!textFieldCedula.getText().isEmpty()||!textFieldLastName.getText().isEmpty()){
+                 
+                    if(util.Utility.getEstudiantes().contains(s)==true){
                 for (int i = 1; i <=util.Utility.getEstudiantes().size(); i++) {
                    Student s2 = (Student)util.Utility.getEstudiantes().getNode(i).data;
                     if(s2.equals(s)){
@@ -78,24 +82,42 @@ public class FXMLRemoverEstudianteController implements Initializable {
                 textFieldLastName.setText("");
 
                txt.removeElement("estudiantes.txt", s.toString());
-               
-                   
-        } catch(ListException e){
-                       Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Lista vacia");
-            a.showAndWait();
+                    }
+                    else{
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("El estudiante no esta registrado");
+                    a.showAndWait();
+                    textFieldCedula.setText("");
+                    textFieldLastName.setText("");
+                    }
+                }else{
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No debe dejar campos vacios");
+                    a.showAndWait();
+                    textFieldCedula.setText("");
+                    textFieldLastName.setText("");
                 }
-//            catch(NullPointerException es){
-//                    Alert a = new Alert(Alert.AlertType.ERROR);
-//            a.setHeaderText("Error inesperado");
-//            a.showAndWait();
-//            }
-            catch(NumberFormatException en){
+               } else{
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText("No hay estudiantes registrados\n Registre primero un estudiante");
+                    a.showAndWait();
+               }
+
+////            catch(NullPointerException es){
+////                    Alert a = new Alert(Alert.AlertType.ERROR);
+////            a.setHeaderText("Error inesperado");
+////            a.showAndWait();
+////            }
+            }catch(NumberFormatException en){
                        Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Ingrese numeros en los campos que solo lo requieran");
             a.showAndWait();
             }
-            
+            catch(ListException e){
+                       Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Lista vacia");
+            a.showAndWait();
+            }  
 //     
 }
 }
