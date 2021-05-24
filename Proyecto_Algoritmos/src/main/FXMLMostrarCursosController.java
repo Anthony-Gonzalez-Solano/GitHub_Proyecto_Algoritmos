@@ -40,9 +40,9 @@ public class FXMLMostrarCursosController implements Initializable {
             TableColumn<Course,String>column2=new TableColumn<>("Nombre");
             column2.setCellValueFactory(new PropertyValueFactory<>("name"));
              TableColumn<Course,String>column3=new TableColumn<>("Creditos");
-            column2.setCellValueFactory(new PropertyValueFactory<>("credits"));
+            column3.setCellValueFactory(new PropertyValueFactory<>("credits"));
              TableColumn<Course,String>column4=new TableColumn<>("ID Carrera");
-            column2.setCellValueFactory(new PropertyValueFactory<>("careerID"));
+            column4.setCellValueFactory(new PropertyValueFactory<>("careerID"));
            
        
             
