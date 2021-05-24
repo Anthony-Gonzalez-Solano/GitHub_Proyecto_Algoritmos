@@ -61,38 +61,41 @@ public class FXMLRemoverEstudianteController implements Initializable {
             Student s=new Student(Integer.parseInt(this.textFieldCedula.getText()),textFieldCedula.getText(), this.textFieldLastName.getText(), textFieldCedula.getText(), date, textFieldCedula.getText(), textFieldCedula.getText(), textFieldCedula.getText(), Integer.parseInt(textFieldCedula.getText()));
        
             try{
-         //  util.Utility.getEstudiantes().remove(new Student(Integer.parseInt(this.textFieldCedula.getText()), "", this.textFieldLastName.getText(), "",date, "","","", 0));
-            for (int i = 1; i <util.Utility.getEstudiantes().size(); i++) {
-                   // util.Utility.getEstudiantes().getNode(i).data;
-                    if(util.Utility.getEstudiantes().getNode(i).data.equals(s))// && util.Utility.getEstudiantes().getNode(i).data.equals(s.getLastname()))
+                for (int i = 1; i <=util.Utility.getEstudiantes().size(); i++) {
+                   Student s2 = (Student)util.Utility.getEstudiantes().getNode(i).data;
+                    if(s2.equals(s)){
                         s=(Student) util.Utility.getEstudiantes().getNode(i).data;
+                    }
                 } 
-               util.Utility.getEstudiantes().remove(s);
+                util.Utility.getEstudiantes().remove(s);
            
              
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setHeaderText("Estudiante eliminado correctamente");
-            a.showAndWait();
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setHeaderText("Estudiante eliminado correctamente");
+                a.showAndWait();
           
-           textFieldCedula.setText("");
-           textFieldLastName.setText("");
-           txt.removeElement("estudiantes.txt", s.toString());
+                textFieldCedula.setText("");
+                textFieldLastName.setText("");
+
+               txt.removeElement("estudiantes.txt", s.toString());
+               
                    
         } catch(ListException e){
                        Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Lista vacia");
             a.showAndWait();
                 }
-            catch(NullPointerException es){
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Error inesperado");
-            a.showAndWait();
-            }
+//            catch(NullPointerException es){
+//                    Alert a = new Alert(Alert.AlertType.ERROR);
+//            a.setHeaderText("Error inesperado");
+//            a.showAndWait();
+//            }
             catch(NumberFormatException en){
                        Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Ingrese numeros en los campos que solo lo requieran");
             a.showAndWait();
             }
-    
+            
+//     
 }
 }

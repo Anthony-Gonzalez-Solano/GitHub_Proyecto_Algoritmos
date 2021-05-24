@@ -32,7 +32,6 @@ public class Utility {
     
     
     public static String dateFormat(Date date){
-        
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
@@ -79,7 +78,7 @@ public class Utility {
                 return career.getDescription().equalsIgnoreCase(career2.getDescription())&&career.getId()==career2.getId() ;
                   case "Student":
                   Student student1=(Student)a;Student student2=(Student)b;
-                return student1.getLastname(). equalsIgnoreCase(student2.getLastname() )&&student1.getId()==student2.getId() ;
+                return student1.getLastname(). equalsIgnoreCase(student2.getLastname()) && student1.getId()==student2.getId() ;
                   case "Course":
                       Course course1=(Course)a;Course course2=(Course)b;
                       return course1.getId().equalsIgnoreCase(course2.getId()) && course1.getName().equalsIgnoreCase(course2.getName());
@@ -169,7 +168,7 @@ public class Utility {
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
                 String[] date = datos[4].split("/");
-                Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1]),Integer.parseInt(date[0]));
+                Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1])-1,Integer.parseInt(date[0]));
                 
                 Student s = new Student(Integer.parseInt(datos[0]),
                         datos[1], datos[2], datos[3], c.getTime(), datos[5], datos[6], datos[7], Integer.parseInt(datos[8]));
