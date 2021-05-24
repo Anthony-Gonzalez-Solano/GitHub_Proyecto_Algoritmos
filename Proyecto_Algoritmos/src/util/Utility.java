@@ -10,6 +10,7 @@ import Lists.CircularLinkedList;
 import Lists.DoublyLinkedList;
 import Lists.SinglyLinkedList;
 import domain.Career;
+import domain.Course;
 import domain.Security;
 import domain.Student;
 import java.text.DecimalFormat;
@@ -79,6 +80,9 @@ public class Utility {
                   case "Student":
                   Student student1=(Student)a;Student student2=(Student)b;
                 return student1.getLastname(). equalsIgnoreCase(student2.getLastname() )&&student1.getId()==student2.getId() ;
+                  case "Course":
+                      Course course1=(Course)a;Course course2=(Course)b;
+                      return course1.getId().equalsIgnoreCase(course2.getId()) && course1.getName().equalsIgnoreCase(course2.getName());
         }
         
         return false; //en cualquier otro caso
@@ -87,8 +91,9 @@ public class Utility {
     private static String instanceOf(Object a, Object b) {
         if(a instanceof Integer && b instanceof Integer) return "integer";
         if(a instanceof String && b instanceof String) return "string";
-          if(a instanceof Career && b instanceof Career)return "Career";
-               if(a instanceof Student && b instanceof Student)return "Student";
+        if(a instanceof Career && b instanceof Career)return "Career";
+        if(a instanceof Student && b instanceof Student)return "Student";
+        if(a instanceof Course && b instanceof Course)return "Course";        
         return "unknown"; //desconocido
     }
     

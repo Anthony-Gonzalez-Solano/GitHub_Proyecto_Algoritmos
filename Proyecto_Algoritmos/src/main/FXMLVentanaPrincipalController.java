@@ -130,7 +130,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Cursos_Mostrar(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLMostrarCursos");
     }
 
     @FXML

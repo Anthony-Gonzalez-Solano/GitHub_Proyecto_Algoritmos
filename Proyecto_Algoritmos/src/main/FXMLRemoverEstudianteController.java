@@ -57,12 +57,19 @@ public class FXMLRemoverEstudianteController implements Initializable {
 //                this.datePickerEstudiante.getValue().getMonthValue(),
 //                this.datePickerEstudiante.getValue().getDayOfMonth());
     Date date = null;
-            Student s=new Student(Integer.parseInt(this.textFieldCedula.getText()),"", this.textFieldLastName.getText(), "", date, "", "", "", 0);
+            Student s=new Student(Integer.parseInt(this.textFieldCedula.getText()),textFieldCedula.getText(), this.textFieldLastName.getText(), textFieldCedula.getText(), date, textFieldCedula.getText(), textFieldCedula.getText(), textFieldCedula.getText(), Integer.parseInt(textFieldCedula.getText()));
        
             try{
          //  util.Utility.getEstudiantes().remove(new Student(Integer.parseInt(this.textFieldCedula.getText()), "", this.textFieldLastName.getText(), "",date, "","","", 0));
-           util.Utility.getEstudiantes().remove(s);
-            txtMessage.setVisible(true);
+            for (int i = 1; i <util.Utility.getEstudiantes().size(); i++) {
+                   // util.Utility.getEstudiantes().getNode(i).data;
+                    if(util.Utility.getEstudiantes().getNode(i).data.equals(s.getId()) && util.Utility.getEstudiantes().getNode(i).data.equals(s.getLastname()))
+                        s=(Student) util.Utility.getEstudiantes().getNode(i).data;
+                } 
+         util.Utility.getEstudiantes().remove(s);
+           
+             
+             txtMessage.setVisible(true);
            txtMessage.setText("Estudiante eliminado");
           
            textFieldCedula.setText("");

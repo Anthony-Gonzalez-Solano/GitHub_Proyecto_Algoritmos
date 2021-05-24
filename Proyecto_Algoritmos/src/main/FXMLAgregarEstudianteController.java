@@ -79,9 +79,9 @@ public class FXMLAgregarEstudianteController implements Initializable {
         try {
             txt=new FileTXT();
             
-            for(int i=1;i<util.Utility.getCarreras().size();i++)
+            for(int i=1;i<util.Utility.getCarreras().size();i++){
                 comboCarrera.getItems().add(util.Utility.getCarreras().getNode(i).data+"");
-                
+            }
                 } catch (ListException ex) {
             Logger.getLogger(FXMLAgregarEstudianteController.class.getName()).log(Level.SEVERE, null, ex);
         }
