@@ -191,11 +191,11 @@ public class Utility {
                 getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
             }
         }
-        if(file.existFile("a.txt")){
-            list = file.readFile("a.txt");
+        if(file.existFile("cursos.txt")){
+            list = file.readFile("cursos.txt");
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
-                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+                getCursos().add(new Course(datos[0], datos[1], Integer.parseInt(datos[2]), Integer.parseInt(datos[3])));
             }
         }
         if(file.existFile("a.txt")){
