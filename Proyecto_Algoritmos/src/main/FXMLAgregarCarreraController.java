@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -53,21 +54,22 @@ private Career career;
     }  
     @FXML
     private void btnAgregar(ActionEvent event) {
-                             try{
-                        Career c=new Career(this.textFieldDescription.getText(),Integer.parseInt(this.textFieldId.getText()));
-           util.Utility.getCarreras().add(c);
-                        this.textFieldDescription.setText("");
+        try{
+            Career c=new Career(this.textFieldDescription.getText(),Integer.parseInt(this.textFieldId.getText()));
+            util.Utility.getCarreras().add(c);
+            this.textFieldDescription.setText("");
             txt.writeFile("carreras.txt",c.toString() );
-                        this.txtMessage.setVisible(true);
-                     
-                        this.txtMessage.setText("Carrera agregada correctamente");
-                           textFieldId.setText("");
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Carrera agregada correctamente");
+            a.showAndWait();
+            textFieldId.setText("");
                      
                            
 
-                }catch(Exception e){
-                      this.txtMessage.setVisible(true);
-                    this.txtMessage.setText("Ha ocurrido un error");
+                }catch(NumberFormatException e){
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText("Ingrese solo numeros en los campos correspondientes");
+                    a.showAndWait();   
                 
              
                 }

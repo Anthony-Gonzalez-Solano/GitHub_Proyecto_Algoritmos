@@ -4,3 +4,4 @@
 324,0003,sdf,fdsfs,05/06/2021,2342,sdfds,dfds,0
 1136,0004,Frodo,Berrocal,14/05/2002,85524557,froy1404@gmail.com,Cachi,1
 32423,0005,Gerald,Boza,10/04/2021,343,@gama,rr,0
+12321,0006,dda,d,30/05/2021,3,d,d,0

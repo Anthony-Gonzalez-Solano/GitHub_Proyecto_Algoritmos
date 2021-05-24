@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -61,11 +62,14 @@ public class FXMLMostrarCursosController implements Initializable {
             
         }
     } catch (ListException ex) {
-       txtError.setText("Lista Vacia");
+         Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("La lista esta vacia");
+            a.showAndWait();
     }
         catch(NullPointerException eda){
-            txtError.setVisible(true);
-            this.txtError.setText("Error");
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error inesperado");
+            a.showAndWait();
         }
               }
     }    

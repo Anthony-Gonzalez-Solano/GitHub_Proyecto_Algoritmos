@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -109,15 +110,17 @@ public class FXMLAgregarEstudianteController implements Initializable {
             
                         this.txtMessage.setVisible(true);
                      
-                        this.txtMessage.setText("Estudiante agregado correctamente");
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Estudiante agregado correctamente");
+            a.showAndWait();
                         autoID++;
                            
 
-                }catch(Exception e){
-                      this.txtMessage.setVisible(true);
-                    this.txtMessage.setText("Ha ocurrido un error");
+                }catch(NullPointerException e){
+                     Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error inesperado");
+            a.showAndWait();
                 }
-        
     }
     
 }

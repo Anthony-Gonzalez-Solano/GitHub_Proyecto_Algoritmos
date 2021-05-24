@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -56,10 +57,14 @@ public class FXMLMostrarCarreraController implements Initializable {
             
         }
     } catch (ListException ex) {
-       txtMessage.setText("Lista Vacia");
+          Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Lista vacia");
+            a.showAndWait();
     }
         catch(NullPointerException eda){
-            this.txtMessage.setText("Error");
+         Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error inesperado");
+            a.showAndWait();
         }
            tableViewCarrera.setVisible(true);
     }

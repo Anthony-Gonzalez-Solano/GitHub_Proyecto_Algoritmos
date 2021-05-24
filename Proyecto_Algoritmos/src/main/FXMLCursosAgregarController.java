@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -64,7 +65,9 @@ public class FXMLCursosAgregarController implements Initializable {
             }
             
         } catch (ListException ex) {
-            Logger.getLogger(FXMLCursosAgregarController.class.getName()).log(Level.SEVERE, null, ex);
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Lista vacia");
+            a.showAndWait();
         }
     }    
 
@@ -79,22 +82,27 @@ public class FXMLCursosAgregarController implements Initializable {
         try{
               String combo [] =     comboCursos.getSelectionModel().getSelectedItem().split(",");
         Course c=new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()), Integer.parseInt(combo[1]));
+        
         util.Utility.getCursos().add(c);
         
          txtMessage.setVisible(true);
          textFieldCreditos.setText("");
          textFieldId.setText("");
          textFieldNombre.setText("");
-         
+               Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Curso agregado correctamente");
+            a.showAndWait();
           this.txt.writeFile("cursos.txt", c.toString());
          
         }catch(NullPointerException e){
-            txtError.setVisible(true);
-            txtError.setText("Error");
+              Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText(" Error inesperado");
+            a.showAndWait();
         }
            catch(NumberFormatException e){
-                      this.txtError.setVisible(true);
-                    this.txtError.setText("Ha ocurrido un error");
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Formato incorrecto\n Coloque correctamente los numeros en los campos correspondientes");
+            a.showAndWait();
                 }
         
     }

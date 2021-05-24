@@ -7,12 +7,14 @@ package main;
 
 import Lists.CircularDoublyLinkedList;
 import Lists.DoublyLinkedList;
+import Lists.ListException;
 import domain.Career;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -51,19 +53,25 @@ private static DoublyLinkedList list= new DoublyLinkedList();
 
     @FXML
     private void btnRemover(ActionEvent event) {
-        txtMessage.setText("");
+        
                      try{
                          
         util.Utility.getCarreras().remove(new Career(this.textFieldDescription.getText(),Integer.parseInt(this.textFieldId.getText())));
-                     this.txtMessage.setVisible(true);
-                     this.txtMessage.setText("La carrera fue eliminada correctamente");
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Carrera agregada correctamente");
+            a.showAndWait();
                      textFieldDescription.setText("");
                      textFieldId.setText("");
-                }catch(Exception e){
-                    this.txtError.setVisible(true);
-                    this.txtError.setText("La lista no está llena o no existe el estudiante");
+                }catch(ListException e){
+             Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("La lista esta vacia");
+            a.showAndWait();
+                }catch(NumberFormatException es){
+                       Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Ingrese solo numeros en los campos correspondientes");
+            a.showAndWait();   
+                    }
                     textFieldId.setText("");
                     textFieldDescription.setText("");
                 }
     }   
-}

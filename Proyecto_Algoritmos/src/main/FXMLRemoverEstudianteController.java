@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -63,30 +64,34 @@ public class FXMLRemoverEstudianteController implements Initializable {
          //  util.Utility.getEstudiantes().remove(new Student(Integer.parseInt(this.textFieldCedula.getText()), "", this.textFieldLastName.getText(), "",date, "","","", 0));
             for (int i = 1; i <util.Utility.getEstudiantes().size(); i++) {
                    // util.Utility.getEstudiantes().getNode(i).data;
-                    if(util.Utility.getEstudiantes().getNode(i).data.equals(s.getId()) && util.Utility.getEstudiantes().getNode(i).data.equals(s.getLastname()))
+                    if(util.Utility.getEstudiantes().getNode(i).data.equals(s))// && util.Utility.getEstudiantes().getNode(i).data.equals(s.getLastname()))
                         s=(Student) util.Utility.getEstudiantes().getNode(i).data;
                 } 
-         util.Utility.getEstudiantes().remove(s);
+               util.Utility.getEstudiantes().remove(s);
            
              
-             txtMessage.setVisible(true);
-           txtMessage.setText("Estudiante eliminado");
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Estudiante eliminado correctamente");
+            a.showAndWait();
           
            textFieldCedula.setText("");
            textFieldLastName.setText("");
            txt.removeElement("estudiantes.txt", s.toString());
                    
         } catch(ListException e){
-                      this.txtError.setVisible(true);
-                    this.txtError.setText("Ha ocurrido un error");
+                       Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Lista vacia");
+            a.showAndWait();
                 }
             catch(NullPointerException es){
-                txtError.setVisible(true);
-                txtError.setText("Error");
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error inesperado");
+            a.showAndWait();
             }
             catch(NumberFormatException en){
-                 txtError.setVisible(true);
-                txtError.setText("Error");
+                       Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Ingrese numeros en los campos que solo lo requieran");
+            a.showAndWait();
             }
     
 }

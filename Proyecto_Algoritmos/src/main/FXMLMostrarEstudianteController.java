@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -69,7 +70,7 @@ public class FXMLMostrarEstudianteController implements Initializable {
             this.tableViewEstudiante.getColumns().add(column9);
                
 }
-        //}
+      
            try{
         while(!this.tableViewEstudiante.getItems().isEmpty()){
             this.tableViewEstudiante.getItems().remove(0);
@@ -79,10 +80,14 @@ public class FXMLMostrarEstudianteController implements Initializable {
             
         }
     } catch (ListException ex) {
-       txtMessage.setText("Lista Vacia");
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setHeaderText(" La lista esta vacia");
+            a.showAndWait();
     }
         catch(NullPointerException eda){
-            this.txtMessage.setText("Error");
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error inesperado");
+            a.showAndWait();
         }
            tableViewEstudiante.setVisible(true);
     }
