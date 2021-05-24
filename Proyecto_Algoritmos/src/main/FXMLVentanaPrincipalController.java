@@ -135,7 +135,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Matricula_Nueva(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLMatriculaNueva");
     }
 
     @FXML
