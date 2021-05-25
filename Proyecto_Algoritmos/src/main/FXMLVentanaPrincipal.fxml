@@ -38,7 +38,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Horarios">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem fx:id="MI_Horarios" mnemonicParsing="false" onAction="#MI_Horarios" text="Agregar Horario" />
               </items>
             </Menu>
             <Menu fx:id="MI_Reportes_Matricula" mnemonicParsing="false" onAction="#MI_Reportes_Matricula" text="Matricula">

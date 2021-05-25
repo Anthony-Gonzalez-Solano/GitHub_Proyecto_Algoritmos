@@ -1,5 +1,2 @@
-101110111,0000,skjshdfkjh,kjshdkjhsdf,06/06/2021,kjhsdfkjh,skjhsdfkjh,skjhsdkfjh,0
-202220222,0001,kjhsdfkjhsdf,kjhsdfkjh,06/05/2021,kjsdfkjhsdf,kjhsdffkjhsd,kjhsdfsdf,1
-303330333,0002,skjhsdkfjhsdf,jhsdkfjsfkj,05/06/2021,kjshdfkjhsdf,kjhsdfkjh,kjshdfkjh,0
 1136,0004,Frodo,Berrocal,14/05/2002,85524557,froy1404@gmail.com,Cachi,1
 505550555,0007,ha,ha,04/06/2021,ha,ha,ha,0

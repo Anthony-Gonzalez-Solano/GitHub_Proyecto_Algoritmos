@@ -13,6 +13,7 @@ import domain.Career;
 import domain.Course;
 import domain.Security;
 import domain.Student;
+import domain.TimeTable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -197,11 +198,11 @@ public class Utility {
                 getCursos().add(new Course(datos[0], datos[1], Integer.parseInt(datos[2]), Integer.parseInt(datos[3])));
             }
         }
-        if(file.existFile("a.txt")){
-            list = file.readFile("a.txt");
+        if(file.existFile("horarios.txt")){
+            list = file.readFile("horarios.txt");
             for (int i = 0; i < list.size(); i++) {
-                String[] datos = list.get(i).split(",");
-                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+                String[] datos = list.get(i).split(";");
+                getHorarios().add(new TimeTable(datos[0], datos[1], datos[2], datos[3]));
             }
         }
         if(file.existFile("a.txt")){

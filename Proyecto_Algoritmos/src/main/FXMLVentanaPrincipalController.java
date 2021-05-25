@@ -64,6 +64,8 @@ public class FXMLVentanaPrincipalController implements Initializable {
     private AnchorPane ap;
     @FXML
     private MenuItem MI_Carreras_Suprimir;
+    @FXML
+    private MenuItem MI_Horarios;
 
     /**
      * Initializes the controller class.
@@ -153,6 +155,11 @@ public class FXMLVentanaPrincipalController implements Initializable {
        // loadPage(null);
     }
     
+    @FXML
+    private void MI_Horarios(ActionEvent event) {
+        loadPage("FXMLAgregarHorario");
+    }
+    
     
     private void loadPage(String page){
     Parent root = null;
@@ -163,6 +170,8 @@ public class FXMLVentanaPrincipalController implements Initializable {
             }
              this.bp.setCenter(root);   
     }
+
+
 
 
 }

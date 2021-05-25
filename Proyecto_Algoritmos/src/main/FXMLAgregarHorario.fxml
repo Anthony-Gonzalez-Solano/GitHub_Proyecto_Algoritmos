@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLAgregarHorarioController">
+   <children>
+      <ComboBox fx:id="CB_Date_Schedule1" layoutX="61.0" layoutY="161.0" prefWidth="150.0" promptText="Dia" visibleRowCount="4" />
+      <ComboBox fx:id="CB_Cicle" layoutX="14.0" layoutY="120.0" prefWidth="150.0" promptText="Ciclo" visibleRowCount="4" />
+      <ComboBox fx:id="CB_HourStar_Schedule1" layoutX="211.0" layoutY="161.0" prefHeight="25.0" prefWidth="96.0" promptText="Hora " visibleRowCount="4" />
+      <ComboBox fx:id="CB_HourDnd_Schedule1" layoutX="307.0" layoutY="161.0" prefHeight="25.0" prefWidth="112.0" promptText="Hora" visibleRowCount="4" />
+      <ComboBox fx:id="CB_Carrer" layoutX="21.0" layoutY="27.0" onAction="#CB_CareerSelect" prefHeight="25.0" prefWidth="269.0" />
+      <ComboBox fx:id="CB_Course" layoutX="21.0" layoutY="72.0" prefHeight="25.0" prefWidth="179.0" />
+      <ComboBox fx:id="CB_Date_Schedule2" layoutX="61.0" layoutY="264.0" prefWidth="150.0" promptText="Dia" visibleRowCount="4" />
+      <ComboBox fx:id="CB_HourStar_Schedule2" layoutX="211.0" layoutY="264.0" prefHeight="25.0" prefWidth="96.0" promptText="Hora" visibleRowCount="4" />
+      <ComboBox fx:id="CB_HourEnd_Schedule2" layoutX="307.0" layoutY="264.0" prefHeight="25.0" prefWidth="112.0" promptText="Hora" visibleRowCount="4" />
+      <Button fx:id="BTN_aceptar" layoutX="50.0" layoutY="338.0" mnemonicParsing="false" onAction="#BTN_aceptar" text="Guardar Horario" />
+   </children>
+</AnchorPane>
