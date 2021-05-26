@@ -228,7 +228,7 @@ public class FXMLSecurityController implements Initializable {
                         for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
                             Security s = (Security)util.Utility.getUsers().getNode(i).data;
                             if(tf_carnet_newStudent.getText().equals(s.getUser())){
-                                file.modifyFile("Users.txt", s.toString(), new Security(tf_carnet_newStudent.getText(),tf_password_newSudent.getText()).toString() ) ;
+                                file.modifyFile("Users.txt", s, new Security(tf_carnet_newStudent.getText(),tf_password_newSudent.getText())) ;
                                 s.setPassword(tf_password_newSudent.getText());
                                 util.Utility.getUsers().getNode(i).data = s;
                                 

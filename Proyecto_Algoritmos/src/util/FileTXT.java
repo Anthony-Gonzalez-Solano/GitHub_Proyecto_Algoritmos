@@ -84,14 +84,14 @@ public class FileTXT {
    return information;
   }
  
- public boolean removeElement(String address,String o){
+ public boolean removeElement(String address,Object o){
     ArrayList<String> elements = readFile(address);
     ArrayList<String> elementsOK = new ArrayList<>();
     boolean tf = false;
     
     int count = 0;
     while (count < elements.size()) {
-        if(elements.get(count).equals(o)){
+        if(elements.get(count).equals(o.toString())){
             tf=true;
             count++;
         }else{
@@ -107,15 +107,15 @@ public class FileTXT {
     return tf;
  }
  
- public boolean modifyFile(String address, String o,String o2){
+ public boolean modifyFile(String address, Object o,Object o2){
     ArrayList<String> elements = readFile(address);
     ArrayList<String> elementsOK = new ArrayList<>();
     boolean tf = false;
     
     int count = 0;
     while (count < elements.size()) {
-        if(elements.get(count).equals(o)){
-            elementsOK.add(o2);
+        if(elements.get(count).equals(o.toString())){
+            elementsOK.add(o2.toString());
             tf=true;
             count++;
         }else{
