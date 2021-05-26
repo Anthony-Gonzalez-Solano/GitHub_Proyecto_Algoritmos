@@ -87,7 +87,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Carreras_Modificar(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLModificarCarrera");
     }
 
     @FXML

@@ -64,15 +64,23 @@ public class FXMLRemoverCarreraController implements Initializable {
         } else {
             Career c = new Career(textFieldDescription.getText(), Integer.parseInt(textFieldId.getText()));
             try {
+                boolean exist = false;
+                boolean exist2 = false;
                 if (!util.Utility.getCarreras().isEmpty()) {
-                    if (util.Utility.getCarreras().contains(c) == true) {
-                         for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
-                            Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
-                            if (c2.equals(c)) {
-                                c = (Career) util.Utility.getCarreras().getNode(i).data;
-                            }
+
+                    for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+                        Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
+                        if (c2.equals(c)) {
+                            c = (Career) util.Utility.getCarreras().getNode(i).data;
                         }
-                        
+                        if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {
+                            exist = true;
+                        }
+                        if (textFieldDescription.getText().equals(c2.getDescription())) {
+                            exist2 = true;
+                        }
+                    }
+                    if (exist == true && exist2 == true) {
                         util.Utility.getCarreras().remove(c);
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                         a.setHeaderText("Carrera eliminada correctamente");
@@ -80,21 +88,37 @@ public class FXMLRemoverCarreraController implements Initializable {
                         textFieldDescription.setText("");
                         textFieldId.setText("");
 
-                        txt.removeElement("carreras.txt", c);
+                        txt.removeElement("carreras.txt", c.toString());
                     } else {
-                        Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("La carrera no esta registrada");
-                        a.showAndWait();
-                        textFieldId.setText("");
-                        textFieldDescription.setText("");
+                        if (exist == false && exist2 == false) {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("La carrera no esta registrada");
+                            a.showAndWait();
+                            textFieldId.setText("");
+                            textFieldDescription.setText("");
+                            System.out.println("exist " + exist);
+                        }
+                        if (exist2 = true && exist == false) {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("Existe esta  carrera, pero no con el Id ingresado");
+                            a.showAndWait();
+                        }
+                        if (exist == true && exist2 == false) {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("SI existe el iD, pero no con esta carrera asociada");
+                            a.showAndWait();
+                        }
+
                     }
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setHeaderText("La lista no esta vacia\n Agregue primero una carrera");
+                    a.setHeaderText("La lista  esta vacia\n Agregue primero una carrera");
                     a.showAndWait();
                     textFieldId.setText("");
                     textFieldDescription.setText("");
+
                 }
+
             } catch (ListException e) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("La lista esta vacia");
@@ -104,6 +128,12 @@ public class FXMLRemoverCarreraController implements Initializable {
             } catch (NumberFormatException es) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Ingrese solo numeros en los campos correspondientes");
+                a.showAndWait();
+                textFieldId.setText("");
+                textFieldDescription.setText("");
+            } catch (NullPointerException epx) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Error inesperado. Intente de nuevo");
                 a.showAndWait();
                 textFieldId.setText("");
                 textFieldDescription.setText("");

@@ -72,16 +72,42 @@ public class FXMLAgregarCarreraController implements Initializable {
             try {
 
                 Career c = new Career(this.textFieldDescription.getText(), Integer.parseInt(this.textFieldId.getText()));
-                if (util.Utility.getCarreras().contains(c) == false ) {
+                if (util.Utility.getCarreras().contains(c) == false) {
+                    boolean exist = false;
+                    boolean exist2 = false;
+                    for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+                        Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
+                        if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {
+                            exist = true;
+                        }
+                        if (textFieldDescription.getText().equals(c2.getDescription())) {
+                            exist2 = true;
+                        }
 
-                    util.Utility.getCarreras().add(c);
-                    txt.writeFile("carreras.txt", c.toString());
-                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                    a.setHeaderText("Carrera agregada correctamente");
-                    a.showAndWait();
-                    textFieldId.setText("");
-                    this.textFieldDescription.setText("");
-
+                    }
+                    if (exist == false && exist2 == false) {
+                        util.Utility.getCarreras().add(c);
+                        txt.writeFile("carreras.txt", c.toString());
+                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                        a.setHeaderText("Carrera agregada correctamente");
+                        a.showAndWait();
+                        textFieldId.setText("");
+                        this.textFieldDescription.setText("");
+                    } else {
+                        if (exist == true) {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("El Id ingresado ya existe para una carrera\n Ingrese uno nuevo");
+                            a.showAndWait();
+                            textFieldId.setText("");
+                            this.textFieldDescription.setText("");
+                        } else {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("La carrera ingresa ya existe\n Ingrese una nueva carrera");
+                            a.showAndWait();
+                            textFieldId.setText("");
+                            this.textFieldDescription.setText("");
+                        }
+                    }
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("La carrera ya esta agregada\n Ingrese una nueva carrera");
@@ -94,15 +120,21 @@ public class FXMLAgregarCarreraController implements Initializable {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Ingrese solo numeros en los campos correspondientes");
                 a.showAndWait();
+                textFieldDescription.setText("");
+                textFieldId.setText("");
 
             } catch (NullPointerException ep) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Error inesperado");
                 a.showAndWait();
+                textFieldDescription.setText("");
+                textFieldId.setText("");
             } catch (ListException ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("La lista esta vacia");
                 a.showAndWait();
+                textFieldDescription.setText("");
+                textFieldId.setText("");
             }
         }
     }

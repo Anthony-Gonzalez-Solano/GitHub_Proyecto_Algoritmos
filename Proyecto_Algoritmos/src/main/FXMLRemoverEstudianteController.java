@@ -105,12 +105,12 @@ public class FXMLRemoverEstudianteController implements Initializable {
                     a.showAndWait();
                 }
 
-////            catch(NullPointerException es){
-////                    Alert a = new Alert(Alert.AlertType.ERROR);
-////            a.setHeaderText("Error inesperado");
-////            a.showAndWait();
-////            }
-            } catch (NumberFormatException en) {
+            }catch(NullPointerException es){
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error inesperado");
+            a.showAndWait();
+            }
+             catch (NumberFormatException en) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Ingrese numeros en los campos que solo lo requieran");
                 a.showAndWait();
