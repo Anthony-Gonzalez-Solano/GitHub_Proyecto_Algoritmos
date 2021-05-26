@@ -92,15 +92,16 @@ public class FXMLAgregarEstudianteController implements Initializable {
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-        Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
-                this.datePickerEstudiante.getValue().getMonthValue(),
-                this.datePickerEstudiante.getValue().getDayOfMonth());
+       
 
-        if (textFieldAdress.getText().isEmpty() || comboCarrera.getSelectionModel().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldLastName.getText().isEmpty() || textFieldPhone.getText().isEmpty() || textFieldFirstName.getText().isEmpty() || datePickerEstudiante.getValue() == null) {
+        if (textFieldAdress.getText().isEmpty() || comboCarrera.getSelectionModel().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldLastName.getText().isEmpty() || textFieldPhone.getText().isEmpty() || textFieldFirstName.getText().isEmpty() || datePickerEstudiante.getEditor().getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
+             Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
+                this.datePickerEstudiante.getValue().getMonthValue(),
+                this.datePickerEstudiante.getValue().getDayOfMonth());
             Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
             try {
                 boolean exist = false;// validar si existe el dato en la lista

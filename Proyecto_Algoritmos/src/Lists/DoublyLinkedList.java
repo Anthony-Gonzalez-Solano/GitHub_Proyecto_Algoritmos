@@ -120,7 +120,7 @@ public class DoublyLinkedList {
 
     public void remove(Object element) throws ListException {
       if (isEmpty()) {
-            throw new ListException("List is empty : SinglyLinkedList");
+            throw new ListException("List is empty : DoublyLinkedList");
         }
         //CASO 1. EL ELEMENTO A SUPRIMIR ES EL PRIMERO DE LA LISTA
         if (util.Utility.equals(first.data, element)) {
@@ -138,6 +138,9 @@ public class DoublyLinkedList {
             if (aux.next != null && util.Utility.equals(aux.data, element)) {
                 //desenlazo el nodo
                 prev.next = aux.next;
+            }
+            if(aux.next==null&&util.Utility.equals(aux.data, element)){
+                    prev.next = aux.next;
             }
         }
     }

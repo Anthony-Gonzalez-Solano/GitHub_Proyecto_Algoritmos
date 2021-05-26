@@ -76,7 +76,7 @@ public class FXMLRemoverCarreraController implements Initializable {
                         if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {
                             exist = true;
                         }
-                        if (textFieldDescription.getText().equals(c2.getDescription())) {
+                        if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {
                             exist2 = true;
                         }
                     }
@@ -88,7 +88,7 @@ public class FXMLRemoverCarreraController implements Initializable {
                         textFieldDescription.setText("");
                         textFieldId.setText("");
 
-                        txt.removeElement("carreras.txt", c.toString());
+                        txt.removeElement("carreras.txt", c.secondToString());
                     } else {
                         if (exist == false && exist2 == false) {
                             Alert a = new Alert(Alert.AlertType.ERROR);

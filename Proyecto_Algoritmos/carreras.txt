@@ -1,7 +1,6 @@
 Fisiologias,2
 Fisiologia,2
 Biologia,9
-Diseño,6
-Granjero,4
-Y,9
+Dise,6
+Astronomo,9
 Deporte,14

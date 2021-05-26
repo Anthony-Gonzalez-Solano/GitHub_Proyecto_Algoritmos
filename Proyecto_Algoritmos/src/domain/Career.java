@@ -46,10 +46,11 @@ public class Career {
 
     @Override
     public String toString() {
-        return description+","+id;
+        return description;
     }
-//   public String secondToString(){
-//       return description+","+id;
-//   } 
+   public String secondToString(){
+       return description+","+id;
+  } 
     
 }
+
