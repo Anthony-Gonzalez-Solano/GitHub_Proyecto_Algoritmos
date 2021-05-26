@@ -6,7 +6,6 @@
 package main;
 
 import Lists.ListException;
-import domain.Career;
 import domain.Course;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,7 +27,8 @@ import util.FileTXT;
  * @author Dell 7470
  */
 public class FXMLCursosAgregarController implements Initializable {
-   private util.FileTXT txt ;
+
+    private util.FileTXT txt;
     @FXML
     private ComboBox<String> comboCursos;
     @FXML
@@ -55,56 +55,91 @@ public class FXMLCursosAgregarController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       this.txt=new FileTXT();
+        this.txt = new FileTXT();
         try {
-            
-            for (int i = 1; i <=util.Utility.getCarreras().size(); i++) {
-           
-                comboCursos.getItems().add(util.Utility.getCarreras().getNode(i).data+""); 
-         
+
+            for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+
+                comboCursos.getItems().add(util.Utility.getCarreras().getNode(i).data + "");
+
             }
-            
+
         } catch (ListException ex) {
-                 Alert a = new Alert(Alert.AlertType.ERROR);
+            Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Lista vacia");
             a.showAndWait();
         }
-    }    
+    }
 
     @FXML
     private void comboCursos(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-        
-        try{
-              String combo [] =     comboCursos.getSelectionModel().getSelectedItem().split(",");
-        Course c=new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()), Integer.parseInt(combo[1]));
-        
-        util.Utility.getCursos().add(c);
-        
-         txtMessage.setVisible(true);
-         textFieldCreditos.setText("");
-         textFieldId.setText("");
-         textFieldNombre.setText("");
-               Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setHeaderText("Curso agregado correctamente");
+        if (textFieldId.getText().isEmpty() || textFieldNombre.getText().isEmpty() || textFieldCreditos.getText().isEmpty() || comboCursos.getSelectionModel().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-          this.txt.writeFile("cursos.txt", c.toString());
-         
-        }catch(NullPointerException e){
-              Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText(" Error inesperado");
-            a.showAndWait();
-        }
-           catch(NumberFormatException e){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Formato incorrecto\n Coloque correctamente los numeros en los campos correspondientes");
-            a.showAndWait();
+        } else {
+            try {
+                String combo[] = comboCursos.getSelectionModel().getSelectedItem().split(",");
+                Course c = new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()), Integer.parseInt(combo[1]));
+                boolean exist = false;
+                boolean exist2 = false;
+                if (util.Utility.getCursos().contains(c) == false) {
+                    for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+                        Course s2 = (Course) util.Utility.getCursos().getNode(i).data;
+                        if (textFieldId.getText().equals(s2.getId())) {
+                            exist = true;
+                        }
+                        if (textFieldNombre.getText().equals(s2.getName())) {
+                            exist2 = true;
+                        }
+
+                    }
+                    if (exist == false && exist2 == false) {
+                        util.Utility.getCursos().add(c);
+                    
+
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText("Curso agregado correctamente");
+                    a.showAndWait();
+                    textFieldCreditos.setText("");
+                    textFieldId.setText("");
+                    textFieldNombre.setText("");
+                    this.txt.writeFile("cursos.txt", c.toString());
+                    }else{
+                        if(exist==true &&exist2==false){
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("El id del curso a agregar ya existe para otro curso\n Ingrese uno nuevo");
+                    a.showAndWait();
+                        }
+                        if(exist==false && exist2==true){
+                                  Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("El   curso a agregar, ya existe pero con Id diferente\n Ingrese uno nuevo");
+                    a.showAndWait();
+                        }
+                    }
+
+                } else {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText(" El curso ingresado ya existe\n Ingrese uno nuevo");
+                    a.showAndWait();
                 }
-        
+            } catch (NullPointerException e) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText(" Error inesperado");
+                a.showAndWait();
+            } catch (NumberFormatException e) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Formato incorrecto\n Coloque correctamente los numeros en los campos correspondientes");
+                a.showAndWait();
+            } catch (ListException ex) {
+                Logger.getLogger(FXMLCursosAgregarController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
-    
 }

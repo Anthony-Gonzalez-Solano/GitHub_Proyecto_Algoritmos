@@ -96,9 +96,9 @@ public class FXMLRemoverCarreraController implements Initializable {
                             a.showAndWait();
                             textFieldId.setText("");
                             textFieldDescription.setText("");
-                            System.out.println("exist " + exist);
+                     
                         }
-                        if (exist2 = true && exist == false) {
+                        if (exist2 == true && exist == false) {
                             Alert a = new Alert(Alert.AlertType.ERROR);
                             a.setHeaderText("Existe esta  carrera, pero no con el Id ingresado");
                             a.showAndWait();

@@ -109,7 +109,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                     if (util.Utility.getEstudiantes().contains(s) == false) {
                         for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                             Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                            if (textFieldId.getText().equals(s2.getId())) {
+                            if (Integer.parseInt(textFieldId.getText())==(s2.getId())) {
                                 exist = true;
                             }
                             if (textFieldEmail.getText().equals(s2.getEmail())) {

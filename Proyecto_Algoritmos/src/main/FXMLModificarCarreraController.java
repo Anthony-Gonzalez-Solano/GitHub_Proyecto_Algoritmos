@@ -29,7 +29,7 @@ import util.FileTXT;
 public class FXMLModificarCarreraController implements Initializable {
 private util.FileTXT txt;
     @FXML
-    private ComboBox<String> comboCarrera;
+    private ComboBox<Career> comboCarrera;
     @FXML
     private TextField textFieldModificar;
     @FXML
@@ -45,10 +45,10 @@ private util.FileTXT txt;
             
             for (int i = 1; i <=util.Utility.getCarreras().size(); i++) {
            
-                comboCarrera.getItems().add(util.Utility.getCarreras().getNode(i).data+""); 
-         
+             comboCarrera.getItems().add((Career)util.Utility.getCarreras().getNode(i).data);
+              
             }
-        
+       
             
         } catch (ListException ex) {
                  Alert a = new Alert(Alert.AlertType.ERROR);
@@ -60,34 +60,46 @@ private util.FileTXT txt;
     @FXML
     private void btnModificar(ActionEvent event) {
        String dato[]= textFieldModificar.getText().split(",");
-        Career c=new Career(dato[0], Integer.parseInt(dato[1]));
         
-        
+Career c=new Career(dato[0], Integer.parseInt(dato[1]));
+      
            try {
-                for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-               Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
-               if (c2.equals(c)) {
-                   c = (Career) util.Utility.getCarreras().getNode(i).data;
-               }
-                }
+         for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+                            Career  c2 = (Career) util.Utility.getCarreras().getNode(i).data;
+                          if(c2.equals(comboCarrera.getSelectionModel().getSelectedItem())){
+                           util.Utility.getCarreras().getNode(i).data=c;
+                          
+                  
+                          }
+                        }
+      int x=comboCarrera.getSelectionModel().getSelectedIndex();
+      comboCarrera.getItems().remove(x);
+      comboCarrera.getItems().add(x, c);
                  txt.modifyFile("carreras.txt", comboCarrera.getSelectionModel().getSelectedItem(), c.toString());
                 Alert a = new Alert(Alert.AlertType.CONFIRMATION);
             a.setHeaderText("La carrera ha sido mofificada correctamente");
             a.showAndWait();
+            
             textFieldModificar.setText("");
+            textFieldModificar.clear();
             comboCarrera.getSelectionModel().clearSelection();
+           }catch(NullPointerException e){
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error inesperado");
+            a.showAndWait();
            } catch (ListException ex) {
-               Logger.getLogger(FXMLModificarCarreraController.class.getName()).log(Level.SEVERE, null, ex);
-           
-                        }
+           Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No hay carreras registradas");
+            a.showAndWait();
+    }
         
        
         
     }
-
+    
     @FXML
     private void comboCarrera(ActionEvent event) {
-            textFieldModificar.setText(comboCarrera.getSelectionModel().getSelectedItem());
+            textFieldModificar.setText(comboCarrera.getSelectionModel().getSelectedItem()+"");
     }
     
 }

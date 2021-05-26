@@ -48,6 +48,8 @@ public class Career {
     public String toString() {
         return description+","+id;
     }
-    
+//   public String secondToString(){
+//       return description+","+id;
+//   } 
     
 }
