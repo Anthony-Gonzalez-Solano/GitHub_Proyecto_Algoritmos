@@ -51,13 +51,13 @@ public class FXMLVentanaPrincipalController implements Initializable {
     @FXML
     private MenuItem MI_Cursos_Mostrar;
     @FXML
-    private Menu MI_Reportes_Matricula;
+    private MenuItem MI_Reportes_Matricula;
     @FXML
     private MenuItem MI_Matricula_Nueva;
     @FXML
     private MenuItem Mi_Matricula_Retiro;
     @FXML
-    private Menu MI_Reportes_Retiros;
+    private MenuItem MI_Reportes_Retiros;
     @FXML
     private BorderPane bp;
     @FXML
@@ -147,7 +147,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Reportes_Matricula(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLReporteMatricula");
     }
 
     @FXML

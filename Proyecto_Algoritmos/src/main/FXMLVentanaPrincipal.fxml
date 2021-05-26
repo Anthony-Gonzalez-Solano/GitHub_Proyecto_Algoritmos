@@ -41,16 +41,16 @@
                 <MenuItem fx:id="MI_Horarios" mnemonicParsing="false" onAction="#MI_Horarios" text="Agregar Horario" />
               </items>
             </Menu>
-            <Menu fx:id="MI_Reportes_Matricula" mnemonicParsing="false" onAction="#MI_Reportes_Matricula" text="Matricula">
+            <Menu mnemonicParsing="false" text="Matricula">
               <items>
                 <MenuItem fx:id="MI_Matricula_Nueva" mnemonicParsing="false" onAction="#MI_Matricula_Nueva" text="Nueva Matricula" />
                   <MenuItem fx:id="Mi_Matricula_Retiro" mnemonicParsing="false" onAction="#Mi_Matricula_Retiro" text="Retiro de Cursos" />
               </items>
             </Menu>
-            <Menu fx:id="MI_Reportes_Retiros" mnemonicParsing="false" onAction="#MI_Reportes_Retiros" text="Reportes">
+            <Menu mnemonicParsing="false" text="Reportes">
               <items>
-                <MenuItem mnemonicParsing="false" text="Reporte de Matricula" />
-                  <MenuItem mnemonicParsing="false" text="Reporte de Retiro de Cursos" />
+                <MenuItem fx:id="MI_Reportes_Matricula" mnemonicParsing="false" onAction="#MI_Reportes_Matricula" text="Reporte de Matricula" />
+                  <MenuItem fx:id="MI_Reportes_Retiros" mnemonicParsing="false" onAction="#MI_Reportes_Retiros" text="Reporte de Retiro de Cursos" />
               </items>
             </Menu>
         </menus>
