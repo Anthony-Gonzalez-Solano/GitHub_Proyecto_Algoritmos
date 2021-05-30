@@ -1,4 +1,4 @@
-5,Estadistica,6,1
-2,Estadistica,3,1
+5,PrograI,4,1
+2,Mate Discreta,3,1
 1,Estadistica,4,1
 IF-4011,Introduccion,4,9

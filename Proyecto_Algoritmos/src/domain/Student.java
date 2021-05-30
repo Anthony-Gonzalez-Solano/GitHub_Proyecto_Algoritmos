@@ -136,10 +136,15 @@ public class Student {
     public void setAutoStudentID(int autoStudentID) {
         this.autoStudentID = autoStudentID;
     }
-    
 
     @Override
     public String toString() {
+        return lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address;
+    }
+    
+
+    
+    public String secondToString() {
         return  id+"," + studentID+","+lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address+","+careerID ;
     }
     

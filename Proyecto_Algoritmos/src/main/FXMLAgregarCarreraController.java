@@ -80,7 +80,7 @@ public class FXMLAgregarCarreraController implements Initializable {
                         if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {
                             exist = true;
                         }
-                        if (textFieldDescription.getText().equals(c2.getDescription())) {
+                        if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {
                             exist2 = true;
                         }
 

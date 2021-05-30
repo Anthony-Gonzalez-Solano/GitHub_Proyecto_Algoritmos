@@ -102,7 +102,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Estudiante_Modificarr(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLModificarEstudiante");
     }
 
     @FXML
@@ -122,7 +122,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Cursos_Modificar(ActionEvent event) {
-       // loadPage(null);
+        loadPage("FXMLModificarCursos");
     }
 
     @FXML

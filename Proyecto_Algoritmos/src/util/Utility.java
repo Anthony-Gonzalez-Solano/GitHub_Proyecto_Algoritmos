@@ -21,6 +21,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -63,6 +65,22 @@ public class Utility {
          //#,##0.00 '%'
         return new DecimalFormat("#,##0.00'%'")
                 .format(value);
+    }
+     
+    public static boolean ValidarMail(String email) {
+
+//      ^ especifica el inicio de la entrada.
+//([_a-z0-9-]) primer grupo. Se refiere a la aparición de uno o más caracteres compuestos por guión bajo, letras, números y guiones.  
+// \.[_a-z0-9-]) segundo grupo. Puede ser opcional y repetible, se refiere a la aparición de un punto seguido de uno o más caracteres compuestos por guión bajo, letras, números y guiones. 
+// Luego la verificacion del carácter arroba @.
+// Despues de repetite lo mismo, [a-z0-9-]). Tercer grupo. Especifica la aparición de uno o más caracteres compuestos por letras, números y guiones.
+//(\.[a-z0-9-]) cuarto grupo. Especifica un punto seguido de uno o más caracteres compuestos por letras, números y guiones.
+//(\.[a-z]{2,4}) quinto grupo. Especifica un punto seguido de entre 2 y 4 letras, con el fin de considerar dominios terminados, por ejemplo, en .com y .info
+// "$" especifica el fin de la entrada.
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$");   // Patron para validar el email y se compila la expresion regular
+
+        Matcher mather = pattern.matcher(email);
+        return mather.find();// retorna si es valido o no 
     }
 
     public static boolean equals(Object a, Object b) {

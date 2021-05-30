@@ -106,7 +106,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
             try {
                 boolean exist = false;// validar si existe el dato en la lista
                 boolean exist2 = false;
-                if (ValidarMail(this.textFieldEmail.getText()) == true) {
+                if (util.Utility.ValidarMail(this.textFieldEmail.getText()) == true) {
                     if (util.Utility.getEstudiantes().contains(s) == false) {
                         for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                             Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
@@ -204,19 +204,4 @@ public class FXMLAgregarEstudianteController implements Initializable {
         }
     }
 
-    public static boolean ValidarMail(String email) {
-
-//      ^ especifica el inicio de la entrada.
-//([_a-z0-9-]) primer grupo. Se refiere a la aparición de uno o más caracteres compuestos por guión bajo, letras, números y guiones.  
-// \.[_a-z0-9-]) segundo grupo. Puede ser opcional y repetible, se refiere a la aparición de un punto seguido de uno o más caracteres compuestos por guión bajo, letras, números y guiones. 
-// Luego la verificacion del carácter arroba @.
-// Despues de repetite lo mismo, [a-z0-9-]). Tercer grupo. Especifica la aparición de uno o más caracteres compuestos por letras, números y guiones.
-//(\.[a-z0-9-]) cuarto grupo. Especifica un punto seguido de uno o más caracteres compuestos por letras, números y guiones.
-//(\.[a-z]{2,4}) quinto grupo. Especifica un punto seguido de entre 2 y 4 letras, con el fin de considerar dominios terminados, por ejemplo, en .com y .info
-// "$" especifica el fin de la entrada.
-        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$");   // Patron para validar el email y se compila la expresion regular
-
-        Matcher mather = pattern.matcher(email);
-        return mather.find();// retorna si es valido o no 
-    }
 }

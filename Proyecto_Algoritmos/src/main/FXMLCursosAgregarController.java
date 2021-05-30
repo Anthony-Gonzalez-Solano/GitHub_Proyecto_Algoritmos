@@ -91,10 +91,10 @@ public class FXMLCursosAgregarController implements Initializable {
                 if (util.Utility.getCursos().contains(c) == false) {
                     for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                         Course s2 = (Course) util.Utility.getCursos().getNode(i).data;
-                        if (textFieldId.getText().equals(s2.getId())) {
+                        if (textFieldId.getText().equalsIgnoreCase(s2.getId())) {
                             exist = true;
                         }
-                        if (textFieldNombre.getText().equals(s2.getName())) {
+                        if (textFieldNombre.getText().equalsIgnoreCase(s2.getName())) {
                             exist2 = true;
                         }
 

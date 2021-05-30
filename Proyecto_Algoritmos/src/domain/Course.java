@@ -40,6 +40,11 @@ public class Course {
 
     @Override
     public String toString() {
+        return name;
+    }
+
+ 
+    public String secondToString() {
         return id+","+name+ ","+ credits+","+careerID;
     }
    

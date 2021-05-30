@@ -7,11 +7,8 @@ package main;
 
 import Lists.ListException;
 import domain.Career;
-import domain.Course;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +16,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import util.FileTXT;
 
 /**
@@ -61,10 +57,18 @@ public class FXMLModificarCarreraController implements Initializable {
     @FXML
     private void btnModificar(ActionEvent event) {
         // String dato[]= textFieldModificar.getText().split(",");
-
+  
+        if(textFieldModificar.getText().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Debe ingresar una carrera para poder modificarla");
+            a.showAndWait();
+        }
+        else{
+        
         Career c = new Career(textFieldModificar.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());
 
         try {
+            if(!util.Utility.getCarreras().isEmpty()){
             for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
                 Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
                 if (c2.equals(comboCarrera.getSelectionModel().getSelectedItem())) {
@@ -83,8 +87,13 @@ public class FXMLModificarCarreraController implements Initializable {
             a.setHeaderText("La carrera ha sido mofificada correctamente");
             a.showAndWait();
 
-            // textFieldModificar.setText("");
+         
             textFieldModificar.setText("");
+            }else{
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No se puede modificar ninguna carrera, porque no hay ninguna agregada\n Agregue una primero");
+            a.showAndWait();
+            }
         } catch (NullPointerException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Error inesperado");
@@ -93,6 +102,7 @@ public class FXMLModificarCarreraController implements Initializable {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No hay carreras registradas");
             a.showAndWait();
+        }
         }
 
     }
