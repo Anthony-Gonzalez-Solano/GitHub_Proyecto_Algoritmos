@@ -57,59 +57,63 @@ public class FXMLModificarCarreraController implements Initializable {
     @FXML
     private void btnModificar(ActionEvent event) {
         // String dato[]= textFieldModificar.getText().split(",");
-  
-        if(textFieldModificar.getText().isEmpty()){
+
+        if (textFieldModificar.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
             a.setHeaderText("Debe ingresar una carrera para poder modificarla");
             a.showAndWait();
-        }
-        else{
-        
-        Career c = new Career(textFieldModificar.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());
+        } else {
 
-        try {
-            if(!util.Utility.getCarreras().isEmpty()){
-            for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
-                Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
-                if (c2.equals(comboCarrera.getSelectionModel().getSelectedItem())) {
-                    util.Utility.getCarreras().getNode(i).data = c;
+            Career c = new Career(textFieldModificar.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());
 
+            try {
+                if (!util.Utility.getCarreras().isEmpty()) {
+                    for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+                        Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
+                        if (c2.equals(comboCarrera.getSelectionModel().getSelectedItem())) {
+                            util.Utility.getCarreras().getNode(i).data = c;
+
+                        }
+                    }
+                    txt.modifyFile("carreras.txt", comboCarrera.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());
+                    int x = comboCarrera.getSelectionModel().getSelectedIndex();
+                    comboCarrera.getItems().remove(x);
+                    comboCarrera.getItems().add(x, c);
+                    comboCarrera.getSelectionModel().clearSelection();
+                    textFieldModificar.setText("");
+
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText("La carrera ha sido mofificada correctamente");
+                    a.showAndWait();
+                    textFieldModificar.setVisible(false);
+                    btnModificar.setVisible(false);
+                    textFieldModificar.setText("");
+                } else {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No se puede modificar ninguna carrera, porque no hay ninguna agregada\n Agregue una primero");
+                    a.showAndWait();
                 }
+            } catch (NullPointerException e) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Error inesperado");
+                a.showAndWait();
+            } catch (ListException ex) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("No hay carreras registradas");
+                a.showAndWait();
             }
-            txt.modifyFile("carreras.txt", comboCarrera.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());
-            int x = comboCarrera.getSelectionModel().getSelectedIndex();
-            comboCarrera.getItems().remove(x);
-            comboCarrera.getItems().add(x, c);
-            comboCarrera.getSelectionModel().clearSelection();
-            textFieldModificar.setText("");
-
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setHeaderText("La carrera ha sido mofificada correctamente");
-            a.showAndWait();
-
-         
-            textFieldModificar.setText("");
-            }else{
-                 Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("No se puede modificar ninguna carrera, porque no hay ninguna agregada\n Agregue una primero");
-            a.showAndWait();
-            }
-        } catch (NullPointerException e) {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Error inesperado");
-            a.showAndWait();
-        } catch (ListException ex) {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("No hay carreras registradas");
-            a.showAndWait();
-        }
         }
 
     }
 
     @FXML
     private void comboCarrera(ActionEvent event) {
-        textFieldModificar.setText(comboCarrera.getSelectionModel().getSelectedItem() + "");
+        if (comboCarrera.getSelectionModel().getSelectedIndex() != -1) {
+            textFieldModificar.setVisible(true);
+            btnModificar.setVisible(true);
+            textFieldModificar.setText(comboCarrera.getSelectionModel().getSelectedItem() + "");
+            
+        }
     }
 
 }

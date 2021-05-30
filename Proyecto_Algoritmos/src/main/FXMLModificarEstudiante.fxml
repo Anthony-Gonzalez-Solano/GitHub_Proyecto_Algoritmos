@@ -6,20 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="main.FXMLModificarEstudianteController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLModificarEstudianteController">
    <children>
       <ComboBox fx:id="comboEstudiantes" layoutX="443.0" layoutY="14.0" onAction="#comboEstudiantes" prefWidth="150.0" promptText="Estudiantes" />
-      <TextField fx:id="textFieldLastName" layoutX="176.0" layoutY="69.0" />
-      <TextField fx:id="textFieldFirstName" layoutX="176.0" layoutY="121.0" />
-      <TextField fx:id="textFieldPhoneNumber" layoutX="176.0" layoutY="175.0" />
-      <TextField fx:id="textFieldEmail" layoutX="176.0" layoutY="223.0" />
-      <TextField fx:id="textFieldAdress" layoutX="176.0" layoutY="268.0" />
-      <Text fx:id="txtLastName" layoutX="14.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LastName" />
-      <Text fx:id="txtFirstName" layoutX="14.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FirstName" />
-      <Text fx:id="txtPhone" layoutX="14.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono" />
-      <Text fx:id="txtEmail" layoutX="13.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Mail" wrappingWidth="107.5625" />
-      <Text fx:id="txtAdress" layoutX="15.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" wrappingWidth="89.13671875" />
-      <Button fx:id="btnModificar" layoutX="197.0" layoutY="313.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="73.0" prefWidth="108.0" text="Modificar" />
+      <TextField fx:id="textFieldLastName" layoutX="176.0" layoutY="69.0" visible="false" />
+      <TextField fx:id="textFieldFirstName" layoutX="176.0" layoutY="121.0" visible="false" />
+      <TextField fx:id="textFieldPhoneNumber" layoutX="176.0" layoutY="175.0" visible="false" />
+      <TextField fx:id="textFieldEmail" layoutX="176.0" layoutY="223.0" visible="false" />
+      <TextField fx:id="textFieldAdress" layoutX="176.0" layoutY="268.0" visible="false" />
+      <Text fx:id="txtLastName" layoutX="14.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LastName" visible="false" />
+      <Text fx:id="txtFirstName" layoutX="14.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FirstName" visible="false" />
+      <Text fx:id="txtPhone" layoutX="14.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono" visible="false" />
+      <Text fx:id="txtEmail" layoutX="13.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Mail" visible="false" wrappingWidth="107.5625" />
+      <Text fx:id="txtAdress" layoutX="15.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" visible="false" wrappingWidth="89.13671875" />
+      <Button fx:id="btnModificar" layoutX="197.0" layoutY="313.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="73.0" prefWidth="108.0" text="Modificar" visible="false" />
    </children>
 </AnchorPane>

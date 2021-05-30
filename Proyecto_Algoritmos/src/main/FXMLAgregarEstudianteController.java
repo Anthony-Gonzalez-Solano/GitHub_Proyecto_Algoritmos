@@ -6,6 +6,7 @@
 package main;
 
 import Lists.ListException;
+import domain.Career;
 import domain.Student;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -68,7 +69,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
     @FXML
     private Text txtMessage;
     @FXML
-    private ComboBox<String> comboCarrera;
+    private ComboBox<Career> comboCarrera;
 
     /**
      * Initializes the controller class.
@@ -80,7 +81,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
             txt = new FileTXT();
 
             for (int i = 1; i < util.Utility.getCarreras().size(); i++) {
-                comboCarrera.getItems().add(util.Utility.getCarreras().getNode(i).data + "");
+                comboCarrera.getItems().add((Career)util.Utility.getCarreras().getNode(i).data );
             }
         } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -101,7 +102,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
             Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
                     this.datePickerEstudiante.getValue().getMonthValue(),
                     this.datePickerEstudiante.getValue().getDayOfMonth());
-            Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
+            Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());
             try {
                 boolean exist = false;// validar si existe el dato en la lista
                 boolean exist2 = false;

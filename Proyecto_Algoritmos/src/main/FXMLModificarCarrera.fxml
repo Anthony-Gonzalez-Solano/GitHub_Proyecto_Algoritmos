@@ -8,7 +8,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLModificarCarreraController">
    <children>
       <ComboBox fx:id="comboCarrera" layoutX="440.0" layoutY="2.0" onAction="#comboCarrera" prefWidth="150.0" promptText="Elegir Carrera" />
-      <TextField fx:id="textFieldModificar" layoutY="188.0" prefHeight="25.0" prefWidth="600.0" />
-      <Button fx:id="btnModificar" layoutX="172.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="93.0" prefWidth="163.0" text="Modificar" />
+      <TextField fx:id="textFieldModificar" layoutX="184.0" layoutY="188.0" prefHeight="25.0" prefWidth="139.0" visible="false" />
+      <Button fx:id="btnModificar" layoutX="172.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="93.0" prefWidth="163.0" text="Modificar" visible="false" />
    </children>
 </AnchorPane>

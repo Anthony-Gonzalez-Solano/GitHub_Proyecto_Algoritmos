@@ -66,8 +66,9 @@ public class FXMLRemoverCarreraController implements Initializable {
             try {
                 boolean exist = false;
                 boolean exist2 = false;
+                boolean student=false;
                 if (!util.Utility.getCarreras().isEmpty()) {
-
+         
                     for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
                         Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
                         if (c2.equals(c)) {
@@ -80,6 +81,14 @@ public class FXMLRemoverCarreraController implements Initializable {
                             exist2 = true;
                         }
                     }
+                        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
+                        Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
+                        if(Integer.parseInt(textFieldId.getText())==s2.getCareerID()){
+                            student=true;
+                        }
+                            
+                        }
+                        if(student==false){
                     if (exist == true && exist2 == true) {
                         util.Utility.getCarreras().remove(c);
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -110,6 +119,12 @@ public class FXMLRemoverCarreraController implements Initializable {
                         }
 
                     }
+                        }else{
+                             Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("No se puede eliminar esta carrera\n Ya hay un estudiante registrado en esta carrera");
+                            a.showAndWait();
+                        }
+                 
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("La lista  esta vacia\n Agregue primero una carrera");

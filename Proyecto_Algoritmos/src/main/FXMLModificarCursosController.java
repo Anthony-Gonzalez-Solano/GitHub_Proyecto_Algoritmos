@@ -51,6 +51,7 @@ public class FXMLModificarCursosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
         this.txt = new FileTXT();
         try {
 
@@ -96,7 +97,13 @@ public class FXMLModificarCursosController implements Initializable {
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText("El curso ha sido mofificado correctamente");
                     a.showAndWait();
-
+                    txtCredits.setVisible(false);
+                    txtId.setVisible(false);
+                    txtNombre.setVisible(false);
+                    textFieldId.setVisible(false);
+                    textFieldCredits.setVisible(false);
+                    textFieldNombre.setVisible(false);
+                    btnModificar.setVisible(false);
                     textFieldNombre.setText("");
                     textFieldCredits.setText("");
                     textFieldId.setText("");
@@ -121,9 +128,17 @@ public class FXMLModificarCursosController implements Initializable {
     @FXML
     private void comboCursos(ActionEvent event) {
         if (comboCursos.getSelectionModel().getSelectedIndex() != -1) {
+            txtCredits.setVisible(true);
+            txtId.setVisible(true);
+            txtNombre.setVisible(true);
+            textFieldId.setVisible(true);
+            textFieldCredits.setVisible(true);
+            textFieldNombre.setVisible(true);
+            btnModificar.setVisible(true);
             textFieldCredits.setText(comboCursos.getSelectionModel().getSelectedItem().getCredits() + "");
             textFieldId.setText(comboCursos.getSelectionModel().getSelectedItem().getId() + "");
             textFieldNombre.setText(comboCursos.getSelectionModel().getSelectedItem().getName() + "");
+
         }
     }
 

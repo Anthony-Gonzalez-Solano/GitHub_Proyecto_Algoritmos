@@ -110,7 +110,17 @@ public class FXMLModificarEstudianteController implements Initializable {
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                         a.setHeaderText("El estudiante ha sido mofificada correctamente");
                         a.showAndWait();
-
+                        textFieldAdress.setVisible(false);
+                        textFieldFirstName.setVisible(false);
+                        textFieldLastName.setVisible(false);
+                        textFieldPhoneNumber.setVisible(false);
+                        textFieldEmail.setVisible(false);
+                        txtAdress.setVisible(false);
+                        txtFirstName.setVisible(false);
+                        txtLastName.setVisible(false);
+                        txtPhone.setVisible(false);
+                        txtEmail.setVisible(false);
+                        btnModificar.setVisible(false);
                         textFieldAdress.setText("");
                         textFieldEmail.setText("");
                         textFieldFirstName.setText("");
@@ -147,6 +157,17 @@ public class FXMLModificarEstudianteController implements Initializable {
             textFieldPhoneNumber.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getPhoneNumber() + "");
             textFieldEmail.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getEmail() + "");
             textFieldAdress.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getAddress() + "");
+            textFieldAdress.setVisible(true);
+            textFieldFirstName.setVisible(true);
+            textFieldLastName.setVisible(true);
+            textFieldPhoneNumber.setVisible(true);
+            textFieldEmail.setVisible(true);
+            txtAdress.setVisible(true);
+            txtFirstName.setVisible(true);
+            txtLastName.setVisible(true);
+            txtPhone.setVisible(true);
+            txtEmail.setVisible(true);
+            btnModificar.setVisible(true);
         }
     }
 
