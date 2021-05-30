@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLSecurityController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="349.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLSecurityController">
    <center>
       <AnchorPane prefHeight="229.0" prefWidth="542.0" BorderPane.alignment="CENTER">
          <children>
             <Pane fx:id="P_selection" prefHeight="229.0" prefWidth="349.0">
                <children>
-                  <Button fx:id="btn_admin" layoutX="131.0" layoutY="56.0" mnemonicParsing="false" onAction="#btn_admin" text="admin" />
-                  <Button fx:id="btn_student" layoutX="130.0" layoutY="115.0" mnemonicParsing="false" onAction="#btn_student" text="Consulta Estudiante" />
-                  <Text layoutX="199.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;-- usen este" />
-                  <Button fx:id="btn_newStudent" layoutX="89.0" layoutY="166.0" mnemonicParsing="false" onAction="#btn_newStudent" text="Ingreso Nuevo estudiante" />
+                  <Button fx:id="btn_admin" layoutX="130.0" layoutY="50.0" mnemonicParsing="false" onAction="#btn_admin" text="Admin" />
+                  <Button fx:id="btn_student" layoutX="83.0" layoutY="100.0" mnemonicParsing="false" onAction="#btn_student" text="Consulta Estudiante" />
+                  <Button fx:id="btn_newStudent" layoutX="63.0" layoutY="171.0" mnemonicParsing="false" onAction="#btn_newStudent" text="Primer Ingreso Estudiante" />
+                  <Label layoutX="16.0" layoutY="14.0" text="Inicio de secion" />
+                  <Label layoutX="124.0" layoutY="140.0" text="- - - o - - -" />
                </children>
             </Pane>
             <Pane fx:id="P_student" prefHeight="229.0" prefWidth="349.0" visible="false">
                <children>
-                  <Button fx:id="btn_acept_student" layoutX="23.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_acept_student" text="Button" />
-                  <Button fx:id="btn_cancel_student" layoutX="112.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_cancel_student" text="Button" />
+                  <Button fx:id="btn_acept_student" layoutX="23.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_acept_student" text="Aceptar" />
+                  <Button fx:id="btn_cancel_student" layoutX="232.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_cancel_student" text="Cancelar" />
                   <TextField fx:id="tf_canet" layoutX="38.0" layoutY="47.0" onAction="#btn_acept_student" />
-                  <TextField fx:id="tf_Password_Student" layoutX="38.0" layoutY="102.0" />
+                  <TextField fx:id="tf_Password_Student" layoutX="38.0" layoutY="122.0" />
+                  <Label layoutX="23.0" layoutY="14.0" text="Carnet" />
+                  <Label layoutX="23.0" layoutY="91.0" text="Contraseña" />
                </children>
             </Pane>
             <Pane fx:id="P_admin" prefHeight="229.0" prefWidth="349.0" visible="false">
                <children>
-                  <TextField fx:id="tf_user" layoutX="57.0" layoutY="62.0" onAction="#btn_acept_admin" text="admin" />
-                  <Text layoutX="67.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user" />
-                  <Text layoutX="62.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="contra" />
-                  <Button fx:id="btn_acept" layoutX="29.0" layoutY="180.0" mnemonicParsing="false" onAction="#btn_acept_admin" text="aceptar" />
-                  <Button fx:id="btn_cancel_admin" layoutX="112.0" layoutY="180.0" mnemonicParsing="false" onAction="#btn_cancel_admin" text="cancelar" />
-                  <PasswordField fx:id="tf_password" layoutX="57.0" layoutY="130.0" onAction="#btn_acept_admin" text="123" />
-                  <Text fill="RED" layoutX="206.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="solo delen aceptar" />
+                  <TextField fx:id="tf_user" layoutX="58.0" layoutY="44.0" onAction="#btn_acept_admin" text="admin" />
+                  <Button fx:id="btn_acept" layoutX="29.0" layoutY="180.0" mnemonicParsing="false" onAction="#btn_acept_admin" text="Aceptar" />
+                  <Button fx:id="btn_cancel_admin" layoutX="217.0" layoutY="180.0" mnemonicParsing="false" onAction="#btn_cancel_admin" text="Cancelar" />
+                  <PasswordField fx:id="tf_password" layoutX="58.0" layoutY="121.0" onAction="#btn_acept_admin" text="123" />
+                  <Label layoutX="29.0" layoutY="14.0" text="Administrado" />
+                  <Label layoutX="25.0" layoutY="91.0" text="Contraseña" />
                </children>
             </Pane>
             <Pane fx:id="P_NewSudent" prefHeight="229.0" prefWidth="349.0" visible="false">
                <children>
-                  <Button fx:id="btn_acept_newStudent" layoutX="32.0" layoutY="176.0" mnemonicParsing="false" onAction="#btn_acept_newStudent" text="Aceptar" />
-                  <Button fx:id="btn_cancel_newStudent" layoutX="111.0" layoutY="176.0" mnemonicParsing="false" onAction="#btn_cancel_newStudent" text="Cancelar" />
-                  <TextField fx:id="tf_carnet_newStudent" layoutX="32.0" layoutY="29.0" />
-                  <PasswordField fx:id="tf_password_newSudent" layoutX="32.0" layoutY="79.0" />
-                  <PasswordField fx:id="tf_passwordConfirm_newStudent" layoutX="32.0" layoutY="131.0" />
+                  <Button fx:id="btn_acept_newStudent" layoutX="14.0" layoutY="186.0" mnemonicParsing="false" onAction="#btn_acept_newStudent" text="Aceptar" />
+                  <Button fx:id="btn_cancel_newStudent" layoutX="228.0" layoutY="186.0" mnemonicParsing="false" onAction="#btn_cancel_newStudent" text="Cancelar" />
+                  <TextField fx:id="tf_carnet_newStudent" layoutX="99.0" layoutY="30.0" />
+                  <PasswordField fx:id="tf_password_newSudent" layoutX="132.0" layoutY="85.0" prefHeight="34.0" prefWidth="199.0" />
+                  <PasswordField fx:id="tf_passwordConfirm_newStudent" layoutX="133.0" layoutY="131.0" prefHeight="34.0" prefWidth="200.0" />
+                  <Label layoutX="21.0" layoutY="35.0" text="Carnet" />
+                  <Label layoutX="11.0" layoutY="90.0" text="Contraseña" />
+                  <Label layoutX="17.0" layoutY="131.0" text="Confirmar" />
+                  <Label layoutX="17.0" layoutY="149.0" text="Contraseña" />
                </children>
             </Pane>
          </children>

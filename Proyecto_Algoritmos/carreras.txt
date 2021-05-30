@@ -1,3 +1,4 @@
+Ninguna,0
 Fisiologo,2
 Fisiologia,2
 Biologia,9
