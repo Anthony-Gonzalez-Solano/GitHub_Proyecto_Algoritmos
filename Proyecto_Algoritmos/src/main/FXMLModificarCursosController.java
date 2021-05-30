@@ -26,6 +26,7 @@ import util.FileTXT;
  * @author Dell 7470
  */
 public class FXMLModificarCursosController implements Initializable {
+
     private util.FileTXT txt;
     @FXML
     private Button btnModificar;
@@ -50,7 +51,7 @@ public class FXMLModificarCursosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-             this.txt = new FileTXT();
+        this.txt = new FileTXT();
         try {
 
             for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
@@ -64,44 +65,42 @@ public class FXMLModificarCursosController implements Initializable {
             a.setHeaderText("Lista vacia");
             a.showAndWait();
         }
-    }    
+    }
 
     @FXML
     private void btnModificar(ActionEvent event) {
-          if ( textFieldNombre.getText().isEmpty() || textFieldCredits.getText().isEmpty() || textFieldId.getText().isEmpty()) {
+        if (textFieldNombre.getText().isEmpty() || textFieldCredits.getText().isEmpty() || textFieldId.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
-         Course c= new Course(textFieldId.getText(), textFieldNombre.getText(),Integer.parseInt(textFieldCredits.getText()), comboCursos.getSelectionModel().getSelectedItem().getCareerID());
+            Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), Integer.parseInt(textFieldCredits.getText()), comboCursos.getSelectionModel().getSelectedItem().getCareerID());
             try {
                 if (!util.Utility.getCursos().isEmpty()) {
-                 
-                   
-                        
-                        for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-                            Course c2 = (Course) util.Utility.getCursos().getNode(i).data;
-                            if (c2.equals(comboCursos.getSelectionModel().getSelectedItem())) {
-                                util.Utility.getCursos().getNode(i).data = c;
 
-                            }
+                    for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+                        Course c2 = (Course) util.Utility.getCursos().getNode(i).data;
+                        if (c2.equals(comboCursos.getSelectionModel().getSelectedItem())) {
+                            util.Utility.getCursos().getNode(i).data = c;
+
                         }
-                        txt.modifyFile("cursos.txt", comboCursos.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());
-                        int x = comboCursos.getSelectionModel().getSelectedIndex();
-                        comboCursos.getItems().remove(x);
-                        comboCursos.getItems().add(x, c);
-                        comboCursos.getSelectionModel().clearSelection();
-                       textFieldNombre.setText("");
-                        textFieldCredits.setText("");
-                        textFieldId.setText("");
-                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                        a.setHeaderText("El curso ha sido mofificado correctamente");
-                        a.showAndWait();
+                    }
+                    txt.modifyFile("cursos.txt", comboCursos.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());
+                    int x = comboCursos.getSelectionModel().getSelectedIndex();
+                    comboCursos.getItems().remove(x);
+                    comboCursos.getItems().add(x, c);
+                    comboCursos.getSelectionModel().clearSelection();
+                    textFieldNombre.setText("");
+                    textFieldCredits.setText("");
+                    textFieldId.setText("");
+                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    a.setHeaderText("El curso ha sido mofificado correctamente");
+                    a.showAndWait();
 
-                        textFieldNombre.setText("");
-                        textFieldCredits.setText("");
-                        textFieldId.setText("");
-                   
+                    textFieldNombre.setText("");
+                    textFieldCredits.setText("");
+                    textFieldId.setText("");
+
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("La lista de estudiantes esta vacia\nAgregue uno primero");
@@ -121,9 +120,11 @@ public class FXMLModificarCursosController implements Initializable {
 
     @FXML
     private void comboCursos(ActionEvent event) {
-        textFieldCredits.setText(comboCursos.getSelectionModel().getSelectedItem().getCredits()+"");
-        textFieldId.setText(comboCursos.getSelectionModel().getSelectedItem().getId()+"");
-        textFieldNombre.setText(comboCursos.getSelectionModel().getSelectedItem().getName()+"");
+        if (comboCursos.getSelectionModel().getSelectedIndex() != -1) {
+            textFieldCredits.setText(comboCursos.getSelectionModel().getSelectedItem().getCredits() + "");
+            textFieldId.setText(comboCursos.getSelectionModel().getSelectedItem().getId() + "");
+            textFieldNombre.setText(comboCursos.getSelectionModel().getSelectedItem().getName() + "");
+        }
     }
-    
+
 }

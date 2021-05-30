@@ -87,9 +87,9 @@ public class FXMLModificarEstudianteController implements Initializable {
             Student s = new Student(comboEstudiantes.getSelectionModel().getSelectedItem().getId(), comboEstudiantes.getSelectionModel().getSelectedItem().getStudentID(), textFieldLastName.getText(), textFieldFirstName.getText(), comboEstudiantes.getSelectionModel().getSelectedItem().getBirthday(), textFieldPhoneNumber.getText(), textFieldEmail.getText(), textFieldAdress.getText(), comboEstudiantes.getSelectionModel().getSelectedItem().getCareerID());
             try {
                 if (!util.Utility.getEstudiantes().isEmpty()) {
-                    if(!util.Utility.getMatriculas().isEmpty()){
+
                     if (util.Utility.ValidarMail(this.textFieldEmail.getText()) == true) {
-                        
+
                         for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                             Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
                             if (s2.equals(comboEstudiantes.getSelectionModel().getSelectedItem())) {
@@ -121,11 +121,7 @@ public class FXMLModificarEstudianteController implements Initializable {
                         a.setHeaderText("La direccion de E-Mail no es valida ");
                         a.showAndWait();
                     }
-                    }else{
-                         Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("Este estudiante ya esta matriculado.\n No se puede modificar porque ya hecho un proceso de matricula ");
-                        a.showAndWait();
-                    }
+
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("La lista de estudiantes esta vacia\nAgregue uno primero");
@@ -145,13 +141,13 @@ public class FXMLModificarEstudianteController implements Initializable {
 
     @FXML
     private void comboEstudiantes(ActionEvent event) {
-
-        textFieldLastName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getLastname() + "");
-        textFieldFirstName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getFirstname() + "");
-        textFieldPhoneNumber.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getPhoneNumber() + "");
-        textFieldEmail.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getEmail() + "");
-        textFieldAdress.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getAddress() + "");
-
+        if (comboEstudiantes.getSelectionModel().getSelectedIndex() != -1) {
+            textFieldLastName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getLastname() + "");
+            textFieldFirstName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getFirstname() + "");
+            textFieldPhoneNumber.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getPhoneNumber() + "");
+            textFieldEmail.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getEmail() + "");
+            textFieldAdress.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getAddress() + "");
+        }
     }
 
 }

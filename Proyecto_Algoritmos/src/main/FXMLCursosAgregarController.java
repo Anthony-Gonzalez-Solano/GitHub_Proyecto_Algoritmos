@@ -109,7 +109,7 @@ public class FXMLCursosAgregarController implements Initializable {
                     textFieldCreditos.setText("");
                     textFieldId.setText("");
                     textFieldNombre.setText("");
-                    this.txt.writeFile("cursos.txt", c.toString());
+                    this.txt.writeFile("cursos.txt", c.secondToString());
                     }else{
                         if(exist==true &&exist2==false){
                             Alert a = new Alert(Alert.AlertType.ERROR);

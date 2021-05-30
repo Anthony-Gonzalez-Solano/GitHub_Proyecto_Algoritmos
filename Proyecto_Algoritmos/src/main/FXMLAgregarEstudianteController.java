@@ -92,16 +92,15 @@ public class FXMLAgregarEstudianteController implements Initializable {
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-       
 
         if (textFieldAdress.getText().isEmpty() || comboCarrera.getSelectionModel().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldLastName.getText().isEmpty() || textFieldPhone.getText().isEmpty() || textFieldFirstName.getText().isEmpty() || datePickerEstudiante.getEditor().getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
-             Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
-                this.datePickerEstudiante.getValue().getMonthValue(),
-                this.datePickerEstudiante.getValue().getDayOfMonth());
+            Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
+                    this.datePickerEstudiante.getValue().getMonthValue(),
+                    this.datePickerEstudiante.getValue().getDayOfMonth());
             Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), Integer.parseInt(new DecimalFormat("0000").format(autoID)));
             try {
                 boolean exist = false;// validar si existe el dato en la lista
@@ -110,7 +109,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                     if (util.Utility.getEstudiantes().contains(s) == false) {
                         for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                             Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                            if (Integer.parseInt(textFieldId.getText())==(s2.getId())) {
+                            if (Integer.parseInt(textFieldId.getText()) == (s2.getId())) {
                                 exist = true;
                             }
                             if (textFieldEmail.getText().equals(s2.getEmail())) {
@@ -119,7 +118,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
 
                         }
 
-                        if (exist == false &&exist2==false) {
+                        if (exist == false && exist2 == false) {
 
                             util.Utility.getEstudiantes().add(s);
                             this.textFieldAdress.setText("");
@@ -131,7 +130,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                             datePickerEstudiante.getEditor().clear();
                             comboCarrera.getSelectionModel().clearSelection();
 
-                            txt.writeFile("estudiantes.txt", s.toString());
+                            txt.writeFile("estudiantes.txt", s.secondToString());
                             txt.writeFile("Users.txt", s.getStudentID() + "," + util.Utility.binaryCodify("-"));
 
                             this.txtMessage.setVisible(true);
@@ -176,7 +175,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                     }
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setHeaderText("La direccion de E-Mail no es correcta," );
+                    a.setHeaderText("La direccion de E-Mail no es correcta,");
                     a.showAndWait();
                 }
 
