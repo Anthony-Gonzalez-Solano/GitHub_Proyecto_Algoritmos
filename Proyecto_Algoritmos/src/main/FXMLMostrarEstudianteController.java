@@ -123,7 +123,7 @@ public class FXMLMostrarEstudianteController implements Initializable {
                 list.add(s.getEmail() + "");
                 list.add(s.getAddress() + "");
                 for (int j = 1; j <= util.Utility.getCarreras().size(); j++) {
-                    Career c = (Career) util.Utility.getCarreras().getNode(i).data;
+                    Career c = (Career) util.Utility.getCarreras().getNode(j).data;
                     if (s.getCareerID() == c.getId()) {
                         list.add(c.getDescription() + "");
                     }
