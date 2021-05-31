@@ -81,7 +81,14 @@ public class FXMLAgregarHorarioController implements Initializable {
             for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                 Course c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(c.getCareerID()==id){
-                    CB_Course.getItems().add((Course)util.Utility.getCursos().getNode(i).data);
+                    boolean tf=false;
+                    for (int j = 0; j < util.Utility.getHorarios().size(); j++) {
+                        TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(j).data;
+                        if(c.getId()==tt.getCourseID())
+                            tf=true;
+                    }
+                    if(tf=false)
+                        CB_Course.getItems().add((Course)util.Utility.getCursos().getNode(i).data);
                 }
             }
         } catch (ListException ex) {
