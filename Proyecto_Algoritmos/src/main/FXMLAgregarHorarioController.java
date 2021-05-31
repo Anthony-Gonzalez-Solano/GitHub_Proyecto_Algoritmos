@@ -82,12 +82,12 @@ public class FXMLAgregarHorarioController implements Initializable {
                 Course c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(c.getCareerID()==id){
                     boolean tf=false;
-                    for (int j = 0; j < util.Utility.getHorarios().size(); j++) {
+                    for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                         TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(j).data;
                         if(c.getId()==tt.getCourseID())
                             tf=true;
                     }
-                    if(tf=false)
+                    if(tf==false)
                         CB_Course.getItems().add((Course)util.Utility.getCursos().getNode(i).data);
                 }
             }
@@ -137,6 +137,16 @@ public class FXMLAgregarHorarioController implements Initializable {
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                         a.setHeaderText("Horario registrado Correctamente");
                         a.showAndWait();   
+                        
+                        CB_Carrer.getSelectionModel().clearSelection();
+                        CB_Course.getSelectionModel().clearSelection();
+                        CB_Cicle.getSelectionModel().clearSelection();
+                        CB_Date_Schedule1.getSelectionModel().clearSelection();
+                        CB_Date_Schedule2.getSelectionModel().clearSelection();
+                        CB_HourStar_Schedule1.getSelectionModel().clearSelection();
+                        CB_HourStar_Schedule2.getSelectionModel().clearSelection();
+                        CB_HourDnd_Schedule1.getSelectionModel().clearSelection();
+                        CB_HourEnd_Schedule2.getSelectionModel().clearSelection();
                     }
                 }else{
                     Alert a = new Alert(Alert.AlertType.ERROR);
