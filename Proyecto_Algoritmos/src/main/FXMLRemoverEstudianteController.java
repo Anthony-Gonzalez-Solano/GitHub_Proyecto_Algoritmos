@@ -6,6 +6,7 @@
 package main;
 
 import Lists.ListException;
+import domain.Enrollment;
 import domain.Student;
 import java.net.URL;
 import java.util.Calendar;
@@ -72,6 +73,7 @@ public class FXMLRemoverEstudianteController implements Initializable {
             Student s = new Student(Integer.parseInt(this.textFieldCedula.getText()), textFieldCedula.getText(), this.textFieldLastName.getText(), textFieldCedula.getText(), date, textFieldCedula.getText(), textFieldCedula.getText(), textFieldCedula.getText(), Integer.parseInt(textFieldCedula.getText()));
 
             try {
+                boolean exist=false;
                 if (!util.Utility.getEstudiantes().isEmpty()) {
 
                     if (util.Utility.getEstudiantes().contains(s) == true) {
@@ -80,7 +82,14 @@ public class FXMLRemoverEstudianteController implements Initializable {
                             if (s2.equals(s)) {
                                 s = (Student) util.Utility.getEstudiantes().getNode(i).data;
                             }
+                            for (int j = 0; j <= util.Utility.getMatriculas().size(); j++) {
+                                Enrollment e=(Enrollment)util.Utility.getMatriculas().getNode(j).data;
+                                if(e.getiD()==s.getId()){
+                                   exist=true; 
+                                }
+                            }
                         }
+                        if(exist==false){
                         util.Utility.getEstudiantes().remove(s);
 
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -90,7 +99,12 @@ public class FXMLRemoverEstudianteController implements Initializable {
                         textFieldCedula.setText("");
                         textFieldLastName.setText("");
 
-                        txt.removeElement("estudiantes.txt", s.toString());
+                        txt.removeElement("estudiantes.txt", s.secondToString());
+                        }else{
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setHeaderText("No se puede eliminar este estudiante\n Este estudiante ya hizo un proceso de matricula");
+                        a.showAndWait();
+                        }
                     } else {
                         Alert a = new Alert(Alert.AlertType.ERROR);
                         a.setHeaderText("El estudiante no esta registrado");

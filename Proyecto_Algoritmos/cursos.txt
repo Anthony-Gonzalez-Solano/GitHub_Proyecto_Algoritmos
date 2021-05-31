@@ -2,3 +2,4 @@
 2,Mate Discreta,5,1
 1,Estadistica,4,1
 IF-4011,Introduccion,4,9
+IF21,Abdominales,2,14

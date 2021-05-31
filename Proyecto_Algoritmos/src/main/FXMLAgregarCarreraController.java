@@ -87,7 +87,7 @@ public class FXMLAgregarCarreraController implements Initializable {
                     }
                     if (exist == false && exist2 == false) {
                         util.Utility.getCarreras().add(c);
-                        txt.writeFile("carreras.txt", c.toString());
+                        txt.writeFile("carreras.txt", c.secondToString());
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                         a.setHeaderText("Carrera agregada correctamente");
                         a.showAndWait();

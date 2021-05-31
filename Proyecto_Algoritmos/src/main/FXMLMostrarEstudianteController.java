@@ -118,7 +118,7 @@ public class FXMLMostrarEstudianteController implements Initializable {
                 list.add(s.getStudentID() + "");
                 list.add(s.getLastname() + "");
                 list.add(s.getFirstname() + "");
-                list.add(s.getBirthday() + "");
+                list.add(util.Utility.dateFormat(s.getBirthday()) + "");
                 list.add(s.getPhoneNumber() + "");
                 list.add(s.getEmail() + "");
                 list.add(s.getAddress() + "");

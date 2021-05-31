@@ -6,6 +6,7 @@
 package main;
 
 import Lists.ListException;
+import domain.Career;
 import domain.Course;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ public class FXMLCursosAgregarController implements Initializable {
 
     private util.FileTXT txt;
     @FXML
-    private ComboBox<String> comboCursos;
+    private ComboBox<Career> comboCursos;
     @FXML
     private Button btnAgregar;
     @FXML
@@ -60,7 +61,7 @@ public class FXMLCursosAgregarController implements Initializable {
 
             for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
 
-                comboCursos.getItems().add(util.Utility.getCarreras().getNode(i).data + "");
+                comboCursos.getItems().add((Career)util.Utility.getCarreras().getNode(i).data );
 
             }
 
@@ -84,8 +85,8 @@ public class FXMLCursosAgregarController implements Initializable {
             a.showAndWait();
         } else {
             try {
-                String combo[] = comboCursos.getSelectionModel().getSelectedItem().split(",");
-                Course c = new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()), Integer.parseInt(combo[1]));
+               // String combo[] = comboCursos.getSelectionModel().getSelectedItem().;
+                Course c = new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()),comboCursos.getSelectionModel().getSelectedItem().getId());
                 boolean exist = false;
                 boolean exist2 = false;
                 if (util.Utility.getCursos().contains(c) == false) {
@@ -100,16 +101,17 @@ public class FXMLCursosAgregarController implements Initializable {
 
                     }
                     if (exist == false && exist2 == false) {
-                        util.Utility.getCursos().add(c);
+                   util.Utility.getCursos().add(c);
                     
-
+                    this.txt.writeFile("cursos.txt", c.secondToString());
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText("Curso agregado correctamente");
                     a.showAndWait();
                     textFieldCreditos.setText("");
                     textFieldId.setText("");
                     textFieldNombre.setText("");
-                    this.txt.writeFile("cursos.txt", c.secondToString());
+                    comboCursos.getSelectionModel().clearSelection();
+       
                     }else{
                         if(exist==true &&exist2==false){
                             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -137,7 +139,9 @@ public class FXMLCursosAgregarController implements Initializable {
                 a.setHeaderText("Formato incorrecto\n Coloque correctamente los numeros en los campos correspondientes");
                 a.showAndWait();
             } catch (ListException ex) {
-                Logger.getLogger(FXMLCursosAgregarController.class.getName()).log(Level.SEVERE, null, ex);
+                         Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Lista Vacia");
+                a.showAndWait();
             }
 
         }

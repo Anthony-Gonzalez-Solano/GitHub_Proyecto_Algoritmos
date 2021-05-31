@@ -127,7 +127,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Cursos_Suprimir(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLRemoverCursos");
     }
 
     @FXML

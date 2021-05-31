@@ -36,7 +36,7 @@ public class FXMLMostrarCarreraController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         if(this.tableViewCarrera.getColumns().isEmpty()){
-         TableColumn<Career,String>column1=new TableColumn<>("Id");
+         TableColumn<Career,String>column1=new TableColumn<>("Id"); // nombre de las columnas
             column1.setCellValueFactory(new PropertyValueFactory<>("id"));
             TableColumn<Career,String>column2=new TableColumn<>("Carrera");
             column2.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -66,7 +66,7 @@ public class FXMLMostrarCarreraController implements Initializable {
             a.setHeaderText("Error inesperado");
             a.showAndWait();
         }
-           tableViewCarrera.setVisible(true);
+          
     }
     }    
     
