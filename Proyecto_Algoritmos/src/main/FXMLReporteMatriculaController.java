@@ -14,6 +14,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import domain.Student;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ObjectProperty;
 import javafx.embed.swing.SwingNode;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 /**
@@ -43,8 +45,12 @@ import javafx.fxml.Initializable;
 //import java.util.logging.Logger;
 //import org.faceless.pdf2.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 //import org.icepdf.core.pobjects.Document;
@@ -63,17 +69,20 @@ public class FXMLReporteMatriculaController implements Initializable {
     private AnchorPane ap;
     @FXML
     private BorderPane bp;
+    @FXML
+    private Button btnEnter;
+    @FXML
+    private TextField TxtFieldStudId;
+    @FXML
+    private Text putTxt;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        File stud = new File("estudiantes.txt");
+        this.bp.setVisible(false);
         try {
-            createPDF(stud);
             createViewer(bp);
-            openDocument("Retiros.pdf");
-            
 //org.icepdf.core.pobjects.Document currentDocument = new Document();
 //        OutputStream out = null;
 //        try {
@@ -99,28 +108,21 @@ public class FXMLReporteMatriculaController implements Initializable {
 //                Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
-        } catch (DocumentException ex) {
-            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
             Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ListException ex) {
-            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+      
     }
      
 public void createPDF(File newPDF) throws DocumentException, FileNotFoundException, ListException {
     Document document = new Document();
-    PdfWriter.getInstance(document, new FileOutputStream("Retiros.pdf"));
-    String content = null;
+    PdfWriter.getInstance(document, new FileOutputStream("ReporteMatricula.pdf"));
+    String content = "";
     document.open();
     // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
-    document.add(new Chunk(""));
-    
+
     for(int i=1;i<util.Utility.getCarreras().size();i++)
-                content +=util.Utility.getCarreras().getNode(i).data+"\n";
+                content +=util.Utility.getEstudiantes().getNode(i).data+"\n";
     Paragraph retiro = new Paragraph("Lista de personas \n\n"+content,
                 FontFactory.getFont("arial",
                         22,
@@ -196,6 +198,49 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
   Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
     }
         return temp.getAbsolutePath();
+    }
+
+    @FXML
+    private void btnEnter(ActionEvent event) throws ListException {
+    String studId = this.TxtFieldStudId.getText();
+    boolean findStud = false;
+    Student aux;
+    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
+            aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
+            if(studId.equals(aux.getStudentID()))
+                findStud=true;
+    }
+    if (TxtFieldStudId.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No debe dejar campos vacios");
+            a.showAndWait();
+        } 
+     else if(findStud==false){
+         Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
+            a.showAndWait();
+     }
+     else{
+         this.TxtFieldStudId.setVisible(false);
+         this.bp.setVisible(true);
+         this.putTxt.setVisible(false);
+         this.btnEnter.setVisible(false);
+         File stud = new File("estudiantes.txt");
+        try {
+            
+            createPDF(stud);
+//            createViewer(bp);
+            openDocument("ReporteMatricula.pdf");
+        } catch (DocumentException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ListException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+    }
+
     }
 }
 

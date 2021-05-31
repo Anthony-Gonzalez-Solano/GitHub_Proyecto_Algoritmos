@@ -142,7 +142,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void Mi_Matricula_Retiro(ActionEvent event) {
-        //loadPage(null);
+        loadPage("FXMLMatriculaRetirar");
     }
 
     @FXML
@@ -152,7 +152,7 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Reportes_Retiros(ActionEvent event) {
-       // loadPage(null);
+        loadPage("FXMLReporteRetiro");
     }
     
     @FXML
