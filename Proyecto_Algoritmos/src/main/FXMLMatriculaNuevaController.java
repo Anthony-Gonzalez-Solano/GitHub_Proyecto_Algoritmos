@@ -151,7 +151,7 @@ public class FXMLMatriculaNuevaController implements Initializable {
 
     @FXML
     private void btnEmail(ActionEvent event) {
-     String to = "alejandrorf1@hotmail.com";
+     String to = "adriure11@hotmail.com";
         // Mention the Sender's email address
         String from = "xx.ucrfake.xx@gmail.com";
         // Mention the SMTP server address. Below Gmail's SMTP server is being used to send email
