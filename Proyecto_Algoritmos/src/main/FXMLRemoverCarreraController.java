@@ -9,6 +9,7 @@ import Lists.CircularDoublyLinkedList;
 import Lists.DoublyLinkedList;
 import Lists.ListException;
 import domain.Career;
+import domain.Course;
 import domain.Student;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,9 +67,10 @@ public class FXMLRemoverCarreraController implements Initializable {
             try {
                 boolean exist = false;
                 boolean exist2 = false;
-                boolean student=false;
+                boolean student = false;
+                boolean career = false;
                 if (!util.Utility.getCarreras().isEmpty()) {
-         
+
                     for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
                         Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
                         if (c2.equals(c)) {
@@ -80,51 +82,64 @@ public class FXMLRemoverCarreraController implements Initializable {
                         if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {
                             exist2 = true;
                         }
+                        for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
+                            Course c3 = (Course) util.Utility.getCursos().getNode(j).data;
+                            if (c3.getCareerID() == c.getId()) {
+                                career = true;
+                            }
+
+                        }
                     }
-                        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
+                    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                         Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                        if(Integer.parseInt(textFieldId.getText())==s2.getCareerID()){
-                            student=true;
-                        }
-                            
-                        }
-                        if(student==false){
-                    if (exist == true && exist2 == true) {
-                        util.Utility.getCarreras().remove(c);
-                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                        a.setHeaderText("Carrera eliminada correctamente");
-                        a.showAndWait();
-                        textFieldDescription.setText("");
-                        textFieldId.setText("");
-
-                        txt.removeElement("carreras.txt", c.secondToString());
-                    } else {
-                        if (exist == false && exist2 == false) {
-                            Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("La carrera no esta registrada");
-                            a.showAndWait();
-                            textFieldId.setText("");
-                            textFieldDescription.setText("");
-                     
-                        }
-                        if (exist2 == true && exist == false) {
-                            Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("Existe esta  carrera, pero no con el Id ingresado");
-                            a.showAndWait();
-                        }
-                        if (exist == true && exist2 == false) {
-                            Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("SI existe el iD, pero no con esta carrera asociada");
-                            a.showAndWait();
+                        if (Integer.parseInt(textFieldId.getText()) == s2.getCareerID()) {
+                            student = true;
                         }
 
                     }
-                        }else{
-                             Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("No se puede eliminar esta carrera\n Ya hay un estudiante registrado en esta carrera");
+                    if (student == false) {
+                        if (career == false) {
+                            if (exist == true && exist2 == true) {
+                                util.Utility.getCarreras().remove(c);
+                                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                                a.setHeaderText("Carrera eliminada correctamente");
+                                a.showAndWait();
+                                textFieldDescription.setText("");
+                                textFieldId.setText("");
+
+                                txt.removeElement("carreras.txt", c.secondToString());
+                            } else {
+                                if (exist == false && exist2 == false) {
+                                    Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setHeaderText("La carrera no esta registrada");
+                                    a.showAndWait();
+                                    textFieldId.setText("");
+                                    textFieldDescription.setText("");
+
+                                }
+                                if (exist2 == true && exist == false) {
+                                    Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setHeaderText("Existe esta  carrera, pero no con el Id ingresado");
+                                    a.showAndWait();
+                                }
+                                if (exist == true && exist2 == false) {
+                                    Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setHeaderText("SI existe el iD, pero no con esta carrera asociada");
+                                    a.showAndWait();
+                                }
+
+                            }
+                        } else {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("No se puede eliminar esta carrera.\n Esta carrera ya tiene cursos agregados");
                             a.showAndWait();
                         }
-                 
+                    } else {
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setHeaderText("No se puede eliminar esta carrera\n Ya hay un estudiante registrado en esta carrera");
+                        a.showAndWait();
+                    }
+
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("La lista  esta vacia\n Agregue primero una carrera");
@@ -146,6 +161,7 @@ public class FXMLRemoverCarreraController implements Initializable {
                 a.showAndWait();
                 textFieldId.setText("");
                 textFieldDescription.setText("");
+
             } catch (NullPointerException epx) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Error inesperado. Intente de nuevo");

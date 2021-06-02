@@ -7,6 +7,7 @@ package main;
 
 import Lists.ListException;
 import domain.Course;
+import domain.Enrollment;
 import domain.Student;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -77,6 +78,7 @@ public class FXMLModificarCursosController implements Initializable {
         } else {
             Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), Integer.parseInt(textFieldCredits.getText()), comboCursos.getSelectionModel().getSelectedItem().getCareerID());
             try {
+                boolean curso = false;
                 if (!util.Utility.getCursos().isEmpty()) {
 
                     for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
@@ -85,28 +87,40 @@ public class FXMLModificarCursosController implements Initializable {
                             util.Utility.getCursos().getNode(i).data = c;
 
                         }
+//                        for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
+//                            Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(i).data;
+//                            if (comboCursos.getSelectionModel().getSelectedItem().getId().equalsIgnoreCase(e.getCourseID())) {
+//                                curso = true;
+//                            }
+//                        }// No puede hacerse todavia
                     }
-                    txt.modifyFile("cursos.txt", comboCursos.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());
-                    int x = comboCursos.getSelectionModel().getSelectedIndex();
-                    comboCursos.getItems().remove(x);
-                    comboCursos.getItems().add(x, c);
-                    comboCursos.getSelectionModel().clearSelection();
-                    textFieldNombre.setText("");
-                    textFieldCredits.setText("");
-                    textFieldId.setText("");
-                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                    a.setHeaderText("El curso ha sido mofificado correctamente");
-                    a.showAndWait();
-                    txtCredits.setVisible(false);
-                    txtId.setVisible(false);
-                    txtNombre.setVisible(false);
-                    textFieldId.setVisible(false);
-                    textFieldCredits.setVisible(false);
-                    textFieldNombre.setVisible(false);
-                    btnModificar.setVisible(false);
-                    textFieldNombre.setText("");
-                    textFieldCredits.setText("");
-                    textFieldId.setText("");
+                    if (curso == false) {
+                        txt.modifyFile("cursos.txt", comboCursos.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());
+                        int x = comboCursos.getSelectionModel().getSelectedIndex();
+                        comboCursos.getItems().remove(x);
+                        comboCursos.getItems().add(x, c);
+                        comboCursos.getSelectionModel().clearSelection();
+                        textFieldNombre.setText("");
+                        textFieldCredits.setText("");
+                        textFieldId.setText("");
+                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                        a.setHeaderText("El curso ha sido mofificado correctamente");
+                        a.showAndWait();
+                        txtCredits.setVisible(false);
+                        txtId.setVisible(false);
+                        txtNombre.setVisible(false);
+                        textFieldId.setVisible(false);
+                        textFieldCredits.setVisible(false);
+                        textFieldNombre.setVisible(false);
+                        btnModificar.setVisible(false);
+                        textFieldNombre.setText("");
+                        textFieldCredits.setText("");
+                        textFieldId.setText("");
+                    } else {
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setHeaderText("No se puede eliminar este curso.\nYa hay un estudiante que ha hecho un proceso de matricula con este curso");
+                        a.showAndWait();
+                    }
 
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);

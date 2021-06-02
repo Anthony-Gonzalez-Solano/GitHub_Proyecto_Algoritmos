@@ -7,6 +7,7 @@ package main;
 
 import Lists.ListException;
 import domain.Career;
+import domain.Student;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -56,7 +57,7 @@ public class FXMLModificarCarreraController implements Initializable {
 
     @FXML
     private void btnModificar(ActionEvent event) {
-        // String dato[]= textFieldModificar.getText().split(",");
+   
 
         if (textFieldModificar.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -65,7 +66,7 @@ public class FXMLModificarCarreraController implements Initializable {
         } else {
 
             Career c = new Career(textFieldModificar.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());
-
+            boolean career=false;
             try {
                 if (!util.Utility.getCarreras().isEmpty()) {
                     for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
@@ -74,7 +75,16 @@ public class FXMLModificarCarreraController implements Initializable {
                             util.Utility.getCarreras().getNode(i).data = c;
 
                         }
+                        for (int j = 1; j <=util.Utility.getEstudiantes().size(); j++) {
+                            Student s=(Student)util.Utility.getEstudiantes().getNode(i).data;
+                              if(comboCarrera.getSelectionModel().getSelectedItem().getId()==(s.getCareerID())){
+                                  career=true;
+                            
+                              }
+                        }
+                      
                     }
+                    if(career==false){
                     txt.modifyFile("carreras.txt", comboCarrera.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());
                     int x = comboCarrera.getSelectionModel().getSelectedIndex();
                     comboCarrera.getItems().remove(x);
@@ -88,6 +98,11 @@ public class FXMLModificarCarreraController implements Initializable {
                     textFieldModificar.setVisible(false);
                     btnModificar.setVisible(false);
                     textFieldModificar.setText("");
+                    }else{
+                             Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No se puede modificar esta carrera.\n Ya existe un estudiante registrado en esta carrera");
+                    a.showAndWait();
+                    }
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("No se puede modificar ninguna carrera, porque no hay ninguna agregada\n Agregue una primero");

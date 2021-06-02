@@ -73,64 +73,86 @@ public class FXMLRemoverEstudianteController implements Initializable {
             Student s = new Student(Integer.parseInt(this.textFieldCedula.getText()), textFieldCedula.getText(), this.textFieldLastName.getText(), textFieldCedula.getText(), date, textFieldCedula.getText(), textFieldCedula.getText(), textFieldCedula.getText(), Integer.parseInt(textFieldCedula.getText()));
 
             try {
-                boolean exist=false;
+                boolean exist = false;
+                boolean exist2 = false;
+                boolean lastName = false;
                 if (!util.Utility.getEstudiantes().isEmpty()) {
 
-                    if (util.Utility.getEstudiantes().contains(s) == true) {
+                    
                         for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                             Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
                             if (s2.equals(s)) {
                                 s = (Student) util.Utility.getEstudiantes().getNode(i).data;
                             }
-                            for (int j = 0; j <= util.Utility.getMatriculas().size(); j++) {
-                                Enrollment e=(Enrollment)util.Utility.getMatriculas().getNode(j).data;
-                                if(e.getiD()==s.getId()){
-                                   exist=true; 
+                            if (s2.getId() == s.getId()) {
+                                exist2 = true;
+                            }
+                            if (s2.getLastname().equalsIgnoreCase(textFieldLastName.getText())) {
+                                lastName = true;
+                            }
+//                            for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
+//                                Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(j).data;
+//                                if (e.getiD() == s.getId()) {
+//                                    exist = true;
+//                                }
+//                            }
+                        }
+
+                        if (exist == false) {
+                            if (exist2 == true && lastName == true) {
+
+                                util.Utility.getEstudiantes().remove(s);
+
+                                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                                a.setHeaderText("Estudiante eliminado correctamente");
+                                a.showAndWait();
+
+                                textFieldCedula.setText("");
+                                textFieldLastName.setText("");
+
+                                txt.removeElement("estudiantes.txt", s.secondToString());
+                            } else {
+                                if (exist2 == true && lastName == false) {
+                                    Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setHeaderText("No se puede eliminar este estudiante.\nHay alguien registrado con este id, pero no con el nombre ingresado");
+                                    a.showAndWait();
+                                }
+                                if (exist2 == false && lastName == true) {
+                                    Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setHeaderText("No se puede eliminar este estudiante.\nHay alguien registrado con este nombre, pero no con el Id ingresado");
+                                    a.showAndWait();
+                                }
+                                if(exist2==false && lastName==false){
+                                     Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setHeaderText("No se puede eliminar este estudiante.\nNo hay ningun estudiante registrado con este nombre y ID");
+                                    a.showAndWait();
                                 }
                             }
+
+                        } else {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("No se puede eliminar este estudiante\n Este estudiante ya hizo un proceso de matricula");
+                            a.showAndWait();
                         }
-                        if(exist==false){
-                        util.Utility.getEstudiantes().remove(s);
-
-                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                        a.setHeaderText("Estudiante eliminado correctamente");
-                        a.showAndWait();
-
-                        textFieldCedula.setText("");
-                        textFieldLastName.setText("");
-
-                        txt.removeElement("estudiantes.txt", s.secondToString());
-                        }else{
-                        Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("No se puede eliminar este estudiante\n Este estudiante ya hizo un proceso de matricula");
-                        a.showAndWait();
-                        }
-                    } else {
-                        Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("El estudiante no esta registrado");
-                        a.showAndWait();
-                        textFieldCedula.setText("");
-                        textFieldLastName.setText("");
-                    }
+                    
 
                 } else {
-                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                    Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("No hay estudiantes registrados\n Registre primero un estudiante");
                     a.showAndWait();
                 }
 
-            }catch(NullPointerException es){
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Error inesperado");
-            a.showAndWait();
-            }
-             catch (NumberFormatException en) {
+            } catch (NullPointerException es) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Error inesperado");
+                a.showAndWait();
+            } catch (NumberFormatException en) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Ingrese numeros en los campos que solo lo requieran");
                 a.showAndWait();
             } catch (ListException e) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setHeaderText("Lista vacia");
+                a.setHeaderText("No hay estudiantes registrados");
                 a.showAndWait();
             }
 //     
