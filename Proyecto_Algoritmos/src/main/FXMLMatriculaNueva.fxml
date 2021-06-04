@@ -18,5 +18,6 @@
       <TableView fx:id="tableView" layoutY="45.0" prefHeight="355.0" prefWidth="600.0" visible="false" />
       <Button fx:id="btnEnrollment" layoutX="7.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnEnrollment" prefHeight="25.0" prefWidth="81.0" text="Matricular" visible="false" />
       <Button fx:id="btnEmail" layoutX="265.0" layoutY="262.0" mnemonicParsing="false" onAction="#btnEmail" prefHeight="51.0" prefWidth="117.0" text="Enviar correo" visible="false" />
+      <ComboBox fx:id="cBoxCourse" layoutX="137.0" layoutY="113.0" onAction="#cBoxCourse" prefHeight="114.0" prefWidth="279.0" visible="false" />
    </children>
 </AnchorPane>

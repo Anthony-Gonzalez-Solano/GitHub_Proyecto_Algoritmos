@@ -2,6 +2,5 @@ Ninguna,0
 Fisiologo,2
 Ingles,9
 Diseño,6
-Astronomo,9
 Deporte,14
 Agronomia,3

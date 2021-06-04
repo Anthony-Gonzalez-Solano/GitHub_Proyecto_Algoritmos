@@ -65,5 +65,10 @@ public class Enrollment {
     public void setSchedule(String schedule) {
         this.schedule = schedule;
     }
+
+    @Override
+    public String toString() {
+        return "Enrollment{" + "iD=" + iD + ", date=" + date + ", studentID=" + studentID + ", courseID=" + courseID + ", schedule=" + schedule + '}';
+    }
     
 }

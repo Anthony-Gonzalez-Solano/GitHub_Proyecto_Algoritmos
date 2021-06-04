@@ -11,6 +11,7 @@ import Lists.DoublyLinkedList;
 import Lists.SinglyLinkedList;
 import domain.Career;
 import domain.Course;
+import domain.Enrollment;
 import domain.Security;
 import domain.Student;
 import domain.TimeTable;
@@ -223,11 +224,13 @@ public class Utility {
                 getHorarios().add(new TimeTable(datos[0], datos[1], datos[2], datos[3]));
             }
         }
-        if(file.existFile("a.txt")){
-            list = file.readFile("a.txt");
+        if(file.existFile("matricula.txt")){
+            list = file.readFile("matricula.txt");
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
-                getCarreras().add(new Career(datos[0], Integer.parseInt(datos[1])));
+                String[] date = datos[4].split("/");
+                Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1])-1,Integer.parseInt(date[0]));
+                getMatriculas().add(new Enrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]));
             }
         }
         
