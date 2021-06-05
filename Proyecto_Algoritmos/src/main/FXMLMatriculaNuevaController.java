@@ -127,45 +127,28 @@ public class FXMLMatriculaNuevaController implements Initializable {
     }
     try{
         tableView.getItems().clear();
-        List list = new ArrayList();
+       
         Course  c=null;
         boolean check=false;
         for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+             List list = new ArrayList();
             c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(stud.getCareerID()==c.getCareerID()){
                         list.add(c.getName());
                         System.out.print("\nadasd");
-              for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
-                  TimeTable tt=(TimeTable)util.Utility.getHorarios().getNode(j).data;
-                  if(tt.getCourseID().equals(c.getId())){
-                      list.add(tt.getPeriod()); 
-                      list.add(tt.getSchedule1());
-                      list.add(tt.getSchedule2());
-                      check=true;
-                      System.out.print("\nadasd");
-                  }//end if 
-            }//end for
-            
-                    
-//                if(c.getCareerID()==stud.getCareerID())
-//                        tableView.getItems().add(util.Utility.getHorarios().getNode(i).data);
-                
-//        for (int i = 1; i <= util.Utility.getHorarios().size(); i++) {
-//            this.tableView.getItems().add((TimeTable) util.Utility.getHorarios().getNode(i).data);
-//               TimeTable c = (TimeTable)util.Utility.getCursos().getNode(i).data;
-//                if((stud.getCareerID()==c.getCourseID())&&!(util.Utility.getHorarios().getNode(i).data==null)){
-//                    
-//                    tableView.getItems().add((Course)util.Utility.getCursos().getNode(i).data);
-////                    tableView.getItems().add((Course)util.Utility.getHorarios().getNode(i).data);
-//                }
+                    for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
+                        TimeTable tt=(TimeTable)util.Utility.getHorarios().getNode(j).data;
+                        if(tt.getCourseID().equals(c.getId())){
+                            list.add(tt.getPeriod()); 
+                            list.add(tt.getSchedule1());
+                            list.add(tt.getSchedule2());
+                            check=true;
+                            System.out.print("\nadasd");
+                        }//end if 
+                    }//end for
                 }
                 if(check==true){
-
                     tableView.getItems().add(list);
-                    list.clear();
-                    check=false;
-                }else{
-                    list.clear();
                     check=false;
                 }
         }

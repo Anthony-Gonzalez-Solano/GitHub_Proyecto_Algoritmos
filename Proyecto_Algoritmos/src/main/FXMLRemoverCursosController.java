@@ -34,10 +34,6 @@ public class FXMLRemoverCursosController implements Initializable {
     @FXML
     private TextField textFieldNombre;
     @FXML
-    private Text txtId;
-    @FXML
-    private Text txtName;
-    @FXML
     private Button btnRemover;
 
     /**
@@ -81,7 +77,7 @@ public class FXMLRemoverCursosController implements Initializable {
                         if (exist == false) {
                             util.Utility.getCursos().remove(c);
                             txt.removeElement("cursos.txt", c.secondToString());
-                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            Alert a = new Alert(Alert.AlertType.INFORMATION);
                             a.setHeaderText("El curso ha sido eleimiando corectamente");
                             a.showAndWait();
                         } else {

@@ -117,11 +117,11 @@ color text : #fefecc
 .context-menu {
     -fx-background-color: #032935;
 }
-.context-menu:hover {
-    -fx-background-color: #023c4f;
-}
 .menu-item:focused {
     -fx-background-color: none;
+}
+.menu-item:hover{
+    -fx-background-color: #023c4f;
 }
 .menu:hover {
     -fx-background-color: #023c4f;

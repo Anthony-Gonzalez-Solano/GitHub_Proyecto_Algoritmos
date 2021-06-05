@@ -2,13 +2,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLModificarCarreraController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLModificarCarreraController">
    <children>
-      <ComboBox fx:id="comboCarrera" layoutX="440.0" layoutY="2.0" onAction="#comboCarrera" prefWidth="150.0" promptText="Elegir Carrera" />
-      <TextField fx:id="textFieldModificar" layoutX="184.0" layoutY="188.0" prefHeight="25.0" prefWidth="139.0" visible="false" />
-      <Button fx:id="btnModificar" layoutX="172.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="93.0" prefWidth="163.0" text="Modificar" visible="false" />
+      <ComboBox fx:id="comboCarrera" layoutX="55.0" layoutY="56.0" onAction="#comboCarrera" prefHeight="33.0" prefWidth="235.0" promptText="Elegir Carrera" />
+      <TextField fx:id="textFieldModificar" layoutX="55.0" layoutY="174.0" prefHeight="34.0" prefWidth="235.0" visible="false" />
+      <Button fx:id="btnModificar" layoutX="27.0" layoutY="334.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="34.0" prefWidth="151.0" text="Modificar" visible="false" />
+      <Label layoutX="27.0" layoutY="26.0" text="Carrera" />
+      <Label fx:id="lbl1" layoutX="27.0" layoutY="144.0" text="Editar Descripción" />
    </children>
 </AnchorPane>

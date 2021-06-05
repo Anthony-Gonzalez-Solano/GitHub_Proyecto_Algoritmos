@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="main.FXMLEliminarCursosController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLEliminarCursosController">
    <children>
-      <Text fx:id="txtEliminar" layoutX="14.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eliminar" wrappingWidth="150.13671875" />
-      <TextField fx:id="textFieldEliminar" layoutX="116.0" layoutY="145.0" />
-      <Button fx:id="btnEliminar" layoutX="69.0" layoutY="308.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="64.0" prefWidth="122.0" text="Remover" />
+      <TextField fx:id="textFieldEliminar" layoutX="95.0" layoutY="183.0" prefHeight="34.0" prefWidth="411.0" />
+      <Button fx:id="btnEliminar" layoutX="151.0" layoutY="274.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="34.0" prefWidth="298.0" text="Remover" />
+      <Label layoutX="262.0" layoutY="129.0" text="Eliminar" />
    </children>
 </AnchorPane>

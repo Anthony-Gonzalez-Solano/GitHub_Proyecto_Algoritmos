@@ -3,11 +3,10 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMostrarEstudianteController">
+<AnchorPane id="AnchorPane" maxWidth="650.0" prefHeight="422.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMostrarEstudianteController">
    <children>
-      <TableView fx:id="tableStudent" layoutX="74.0" prefHeight="400.0" prefWidth="545.0">
+      <TableView fx:id="tableStudent" prefHeight="422.0" prefWidth="650.0">
          <columns>
             <TableColumn fx:id="columnCedula" prefWidth="75.0" text="Cedula" />
             <TableColumn fx:id="columnEstudiante" prefWidth="107.0" text="IdStudent" />
@@ -23,7 +22,5 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TableView fx:id="tableViewEstudiante" prefHeight="400.0" prefWidth="770.0" visible="false" />
-      <Text fx:id="txtMessage" layoutX="14.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="226.13671875" />
    </children>
 </AnchorPane>

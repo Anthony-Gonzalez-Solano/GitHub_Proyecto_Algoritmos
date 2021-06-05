@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import util.FileTXT;
@@ -36,13 +37,13 @@ public class FXMLModificarCursosController implements Initializable {
     @FXML
     private TextField textFieldCredits;
     @FXML
-    private Text txtNombre;
+    private Label txtNombre;
     @FXML
-    private Text txtCredits;
+    private Label txtCredits;
     @FXML
     private ComboBox<Course> comboCursos;
     @FXML
-    private Text txtId;
+    private Label txtId;
     @FXML
     private TextField textFieldId;
 

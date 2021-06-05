@@ -5,10 +5,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLVentanaPrincipalController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLVentanaPrincipalController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -59,11 +60,25 @@
    <center>
       <AnchorPane fx:id="ap" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="138.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proyecto">
+            <Text fill="#fefecc" layoutX="165.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UCR">
+               <font>
+                  <Font size="93.0" />
+               </font>
+            </Text>
+            <Text fill="#fefecc" layoutX="287.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FAKE">
                <font>
                   <Font size="96.0" />
-               </font></Text>
-         </children>
-      </AnchorPane>
+               </font>
+            </Text>
+            <Text fill="#fefecc" layoutX="114.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTER">
+               <font>
+                  <Font size="96.0" />
+               </font>
+            </Text>
+            <Line endX="50.0" layoutX="489.0" layoutY="160.0" startX="-324.0" stroke="#fefecc" strokeWidth="8.0" />
+            <Line endX="100.0" layoutX="476.0" layoutY="235.0" startX="-401.0" stroke="#fefecc" strokeWidth="8.0" />
+            <Line endX="-133.0" layoutX="474.0" layoutY="87.0" startX="-380.0" stroke="#fefecc" strokeWidth="8.0" />
+            <Line endX="57.0" layoutX="474.0" layoutY="310.0" startX="-380.0" stroke="#fefecc" strokeWidth="8.0" />
+         </children></AnchorPane>
    </center>
 </BorderPane>

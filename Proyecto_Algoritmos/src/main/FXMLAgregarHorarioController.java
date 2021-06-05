@@ -84,7 +84,7 @@ public class FXMLAgregarHorarioController implements Initializable {
                     boolean tf=false;
                 for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                         TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(j).data;
-                        if(c.getId()==tt.getCourseID())
+                        if(c.getId().equals(tt.getCourseID()));
                             tf=true;
                     }
                     if(tf==false)

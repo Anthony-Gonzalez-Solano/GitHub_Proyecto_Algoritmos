@@ -19,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import util.FileTXT;
@@ -44,15 +45,15 @@ public class FXMLModificarEstudianteController implements Initializable {
     @FXML
     private TextField textFieldAdress;
     @FXML
-    private Text txtLastName;
+    private Label txtLastName;
     @FXML
-    private Text txtFirstName;
+    private Label txtFirstName;
     @FXML
-    private Text txtPhone;
+    private Label txtPhone;
     @FXML
-    private Text txtEmail;
+    private Label txtEmail;
     @FXML
-    private Text txtAdress;
+    private Label txtAdress;
     @FXML
     private Button btnModificar;
 
