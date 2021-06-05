@@ -42,21 +42,21 @@ public class FXMLRemoverCursosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        txt = new FileTXT();
+        txt = new FileTXT();//creamos txt
     }
 
     @FXML
     private void btnRemover(ActionEvent event) {
 
-        if (textFieldId.getText().isEmpty() || textFieldNombre.getText().isEmpty()) {
+        if (textFieldId.getText().isEmpty() || textFieldNombre.getText().isEmpty()) {// validamos campos vacios
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
             try {
-                boolean exist = false;
-                Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), 0, 0);
-                if (!util.Utility.getCursos().isEmpty()) {
+                boolean exist = false;// variale para verificar si existe un horario asociado al curso a remover
+                Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), 0, 0); // objeto curso  
+                if (!util.Utility.getCursos().isEmpty()) { // si no esta vacia procede a hacer el ciclo y sino mandara error
 
                     if (util.Utility.getCursos().contains(c) == true) {
                         for (int i = 1; i <= util.Utility.getCursos().size(); i++) {

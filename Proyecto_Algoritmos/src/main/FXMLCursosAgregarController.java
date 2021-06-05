@@ -56,16 +56,16 @@ public class FXMLCursosAgregarController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.txt = new FileTXT();
+        this.txt = new FileTXT();// creamos txt
         try {
 
-            for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+            for (int i = 1; i <= util.Utility.getCarreras().size(); i++) { //recorremos la lista de carreras
 
-                comboCursos.getItems().add((Career)util.Utility.getCarreras().getNode(i).data );
+                comboCursos.getItems().add((Career) util.Utility.getCarreras().getNode(i).data);// casteamos para poder añadir al comboBox las carreas existentes
 
             }
 
-        } catch (ListException ex) {
+        } catch (ListException ex) { //errores de no estar llena 
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Lista vacia");
             a.showAndWait();
@@ -79,49 +79,49 @@ public class FXMLCursosAgregarController implements Initializable {
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-        if (textFieldId.getText().isEmpty() || textFieldNombre.getText().isEmpty() || textFieldCreditos.getText().isEmpty() || comboCursos.getSelectionModel().isEmpty()) {
+        if (textFieldId.getText().isEmpty() || textFieldNombre.getText().isEmpty() || textFieldCreditos.getText().isEmpty() || comboCursos.getSelectionModel().isEmpty()) {//validaciones de campos vacios
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
             try {
-               // String combo[] = comboCursos.getSelectionModel().getSelectedItem().;
-                Course c = new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()),comboCursos.getSelectionModel().getSelectedItem().getId());
-                boolean exist = false;
-                boolean exist2 = false;
-                if (util.Utility.getCursos().contains(c) == false) {
+             
+                Course c = new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()), comboCursos.getSelectionModel().getSelectedItem().getId());//creamos objeto tipo curso
+                boolean exist = false;  // id 
+                boolean exist2 = false;// variables para validar si existe un curso igual al ingresado(Nombre)
+                if (util.Utility.getCursos().contains(c) == false) {// si no hay ninguno recorre el ciclo for
                     for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                         Course s2 = (Course) util.Utility.getCursos().getNode(i).data;
-                        if (textFieldId.getText().equalsIgnoreCase(s2.getId())) {
+                        if (textFieldId.getText().equalsIgnoreCase(s2.getId())) {// validamos
                             exist = true;
                         }
-                        if (textFieldNombre.getText().equalsIgnoreCase(s2.getName())) {
+                        if (textFieldNombre.getText().equalsIgnoreCase(s2.getName())) {//validamos
                             exist2 = true;
                         }
 
                     }
-                    if (exist == false && exist2 == false) {
-                   util.Utility.getCursos().add(c);
-                    
-                    this.txt.writeFile("cursos.txt", c.secondToString());
-                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                    a.setHeaderText("Curso agregado correctamente");
-                    a.showAndWait();
-                    textFieldCreditos.setText("");
-                    textFieldId.setText("");
-                    textFieldNombre.setText("");
-                    comboCursos.getSelectionModel().clearSelection();
-       
-                    }else{
-                        if(exist==true &&exist2==false){
+                    if (exist == false && exist2 == false) {// si no hay ninguno igual lo agrega
+                        util.Utility.getCursos().add(c);
+
+                        this.txt.writeFile("cursos.txt", c.secondToString());// escribimos en los txt
+                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                        a.setHeaderText("Curso agregado correctamente");
+                        a.showAndWait();
+                        textFieldCreditos.setText("");
+                        textFieldId.setText("");
+                        textFieldNombre.setText("");
+                        comboCursos.getSelectionModel().clearSelection();//limpiamos
+
+                    } else { // errores
+                        if (exist == true && exist2 == false) {
                             Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setHeaderText("El id del curso a agregar ya existe para otro curso\n Ingrese uno nuevo");
-                    a.showAndWait();
+                            a.setHeaderText("El id del curso a agregar ya existe para otro curso\n Ingrese uno nuevo");
+                            a.showAndWait();
                         }
-                        if(exist==false && exist2==true){
-                                  Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setHeaderText("El   curso a agregar, ya existe pero con Id diferente\n Ingrese uno nuevo");
-                    a.showAndWait();
+                        if (exist == false && exist2 == true) {
+                            Alert a = new Alert(Alert.AlertType.ERROR);
+                            a.setHeaderText("El   curso a agregar, ya existe pero con Id diferente\n Ingrese uno nuevo");
+                            a.showAndWait();
                         }
                     }
 
@@ -139,7 +139,7 @@ public class FXMLCursosAgregarController implements Initializable {
                 a.setHeaderText("Formato incorrecto\n Coloque correctamente los numeros en los campos correspondientes");
                 a.showAndWait();
             } catch (ListException ex) {
-                         Alert a = new Alert(Alert.AlertType.ERROR);
+                Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Lista Vacia");
                 a.showAndWait();
             }

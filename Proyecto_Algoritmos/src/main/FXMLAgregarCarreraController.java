@@ -53,13 +53,13 @@ public class FXMLAgregarCarreraController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        txt = new FileTXT();
+        txt = new FileTXT(); // crear txt
 
     }
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-        if (textFieldDescription.getText().isEmpty() || textFieldId.getText().isEmpty()) {
+        if (textFieldDescription.getText().isEmpty() || textFieldId.getText().isEmpty()) { // si algun campo de texto esta vacio, mandara una alerta
 
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
@@ -71,29 +71,29 @@ public class FXMLAgregarCarreraController implements Initializable {
 
             try {
 
-                Career c = new Career(this.textFieldDescription.getText(), Integer.parseInt(this.textFieldId.getText()));
-                if (util.Utility.getCarreras().contains(c) == false) {
-                    boolean exist = false;
-                    boolean exist2 = false;
-                    for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
-                        Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
-                        if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {
+                Career c = new Career(this.textFieldDescription.getText(), Integer.parseInt(this.textFieldId.getText())); // creamos objeto tipo carrera, que va a tener los valores del textfield que se ingresen
+                if (util.Utility.getCarreras().contains(c) == false) { // si una carrera no esta agregada seguira el codigo, sino una alerta
+                    boolean exist = false; //variable para verificar si existe una carrera con un ID especifico
+                    boolean exist2 = false;//variable para verificar si existe una carrera con un nombre especifico
+                    for (int i = 1; i <= util.Utility.getCarreras().size(); i++) { //recorremos la lista de carreras
+                        Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;  // casteamos para tener acceso a los datos de las carreras
+                        if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {// validamos si el id ingresado existe
                             exist = true;
                         }
-                        if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {
+                        if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {// validamos si el nombre ingresado existe
                             exist2 = true;
                         }
 
                     }
-                    if (exist == false && exist2 == false) {
+                    if (exist == false && exist2 == false) { // si no existen se agregan
                         util.Utility.getCarreras().add(c);
-                        txt.writeFile("carreras.txt", c.secondToString());
+                        txt.writeFile("carreras.txt", c.secondToString());// escribimos en los txt
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                         a.setHeaderText("Carrera agregada correctamente");
                         a.showAndWait();
                         textFieldId.setText("");
                         this.textFieldDescription.setText("");
-                    } else {
+                    } else {   // errores al ingresar una carrera
                         if (exist == true) {
                             Alert a = new Alert(Alert.AlertType.ERROR);
                             a.setHeaderText("El Id ingresado ya existe para una carrera\n Ingrese uno nuevo");

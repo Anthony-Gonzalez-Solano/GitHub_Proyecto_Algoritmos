@@ -80,8 +80,8 @@ public class FXMLAgregarEstudianteController implements Initializable {
         try {
             txt = new FileTXT();
 
-            for (int i = 1; i < util.Utility.getCarreras().size(); i++) {
-                comboCarrera.getItems().add((Career)util.Utility.getCarreras().getNode(i).data );
+            for (int i = 1; i < util.Utility.getCarreras().size(); i++) {//recorremos lista carreras para agregarlos al comboBox
+                comboCarrera.getItems().add((Career) util.Utility.getCarreras().getNode(i).data); //casteamos para agregarlas
             }
         } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -93,33 +93,33 @@ public class FXMLAgregarEstudianteController implements Initializable {
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-
+// validacion de ho haber campos vacios
         if (textFieldAdress.getText().isEmpty() || comboCarrera.getSelectionModel().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldLastName.getText().isEmpty() || textFieldPhone.getText().isEmpty() || textFieldFirstName.getText().isEmpty() || datePickerEstudiante.getEditor().getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
-            Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
-                    this.datePickerEstudiante.getValue().getMonthValue(),
-                    this.datePickerEstudiante.getValue().getDayOfMonth());
-            Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());
+            Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(), // obtener la fecha ingresada en el datePicker
+                    this.datePickerEstudiante.getValue().getMonthValue(),//obtener mes
+                    this.datePickerEstudiante.getValue().getDayOfMonth());//dia
+            Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());// objeto estudiante, pasamos los valores de los texfield y coboBox
             try {
                 boolean exist = false;// validar si existe el dato en la lista
                 boolean exist2 = false;
-                if (util.Utility.ValidarMail(this.textFieldEmail.getText()) == true) {
-                    if (util.Utility.getEstudiantes().contains(s) == false) {
+                if (util.Utility.ValidarMail(this.textFieldEmail.getText()) == true) { // validar que la direccion de correo sea valida 
+                    if (util.Utility.getEstudiantes().contains(s) == false) { // si no esta en la lista procedera a hacer el for
                         for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
-                            Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                            if (Integer.parseInt(textFieldId.getText()) == (s2.getId())) {
+                            Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;//casteamos para obtener los datos de la lista estudiantes
+                            if (Integer.parseInt(textFieldId.getText()) == (s2.getId())) { //validar no haya estudiantes iguales
                                 exist = true;
                             }
-                            if (textFieldEmail.getText().equals(s2.getEmail())) {
+                            if (textFieldEmail.getText().equals(s2.getEmail())) { // validar que no haya corres iguales
                                 exist2 = true;
                             }
 
                         }
 
-                        if (exist == false && exist2 == false) {
+                        if (exist == false && exist2 == false) { // si no existen se agregan a la lista
 
                             util.Utility.getEstudiantes().add(s);
                             this.textFieldAdress.setText("");
@@ -128,20 +128,20 @@ public class FXMLAgregarEstudianteController implements Initializable {
                             this.textFieldPhone.setText("");
                             this.textFieldId.setText("");
                             this.textFieldLastName.setText("");
-                            datePickerEstudiante.getEditor().clear();
+                            datePickerEstudiante.getEditor().clear(); //limpiamos los comboBox
                             comboCarrera.getSelectionModel().clearSelection();
 
-                            txt.writeFile("estudiantes.txt", s.secondToString());
+                            txt.writeFile("estudiantes.txt", s.secondToString()); // escribimos en el TXT
                             txt.writeFile("Users.txt", s.getStudentID() + "," + util.Utility.binaryCodify("-"));
 
-                            this.txtMessage.setVisible(true);
+                           // this.txtMessage.setVisible(true);
 
                             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                             a.setHeaderText("Estudiante agregado correctamente");
                             a.showAndWait();
-                            autoID++;
-                        } else {
-                            if (exist == true) {
+                            autoID++; // aumenta el id
+                        } else { //errores
+                            if (exist == true) {// si existe la cedula manda alerta
                                 Alert a = new Alert(Alert.AlertType.ERROR);
                                 a.setHeaderText("La cedula ingresada ya existe para otra persona\n Ingrese un id diferente");
                                 a.showAndWait();
@@ -151,7 +151,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                                 this.textFieldPhone.setText("");
                                 this.textFieldId.setText("");
                                 this.textFieldLastName.setText("");
-                            } else {
+                            } else {//verifica el Email
                                 Alert a = new Alert(Alert.AlertType.ERROR);
                                 a.setHeaderText("La direccion de E-Mail ingresada ya existe");
                                 a.showAndWait();
@@ -171,7 +171,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                         this.textFieldEmail.setText("");
                         this.textFieldFirstName.setText("");
                         this.textFieldPhone.setText("");
-                        this.textFieldId.setText("");
+                        this.textFieldId.setText(""); // limpiamos campos de texto
                         this.textFieldLastName.setText("");
                     }
                 } else {
@@ -188,13 +188,13 @@ public class FXMLAgregarEstudianteController implements Initializable {
                 this.textFieldEmail.setText("");
                 this.textFieldFirstName.setText("");
                 this.textFieldPhone.setText("");
-                this.textFieldId.setText("");
+                this.textFieldId.setText(""); // limpiamos campos de texto
                 this.textFieldLastName.setText("");
             } catch (ListException ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Lista vacia");
                 a.showAndWait();
-                this.textFieldAdress.setText("");
+                this.textFieldAdress.setText(""); // limpiamos campos de texto
                 this.textFieldEmail.setText("");
                 this.textFieldFirstName.setText("");
                 this.textFieldPhone.setText("");

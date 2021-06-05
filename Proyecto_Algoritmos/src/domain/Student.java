@@ -16,7 +16,7 @@ public class Student {
     
     
     private int id;
-    private static int autoStudentID;
+    private static int autoStudentID;// variable para aumentar el id de los estudiantes
     private String studentID;
     private String lastname;
     private String firstname;
@@ -36,7 +36,7 @@ public class Student {
         this.email = email;
         this.address = address;
         this.careerID = careerID;
-        autoStudentID++;
+        autoStudentID++;                      // 2 constructores donde uno va a aumentar el id de estudiante
     }
     public Student(int id,String studentID, String lastname, String firstname, Date birthday, String phoneNumber, String email, String address, int careerID) {
         this.id = id;
@@ -139,13 +139,13 @@ public class Student {
 
     @Override
     public String toString() {
-        return lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address;
+        return lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address; // esto se mostrara en el comboBox
     }
     
 
     
     public String secondToString() {
-        return  id+"," + studentID+","+lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address+","+careerID ;
+        return  id+"," + studentID+","+lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address+","+careerID ;// escribir archivos
     }
     
 }

@@ -46,9 +46,9 @@ public class Career {
 
     @Override
     public String toString() {
-        return description;
+        return description;         // este se usa para mostrar en la parte grafica solo la descripcion de la carrera
     }
-   public String secondToString(){
+   public String secondToString(){  // se crea un secondToString para escribir en los archivos
        return description+","+id;
   } 
     

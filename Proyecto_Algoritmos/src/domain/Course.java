@@ -10,10 +10,11 @@ package domain;
  * @author Dell 7470
  */
 public class Course {
-   private String id;
-   private String name;
-   private int credits;
-   private int careerID;
+
+    private String id;
+    private String name;
+    private int credits;
+    private int careerID;
 
     public Course(String id, String name, int credits, int careerID) {
         this.id = id;
@@ -40,14 +41,11 @@ public class Course {
 
     @Override
     public String toString() {
-        return name;
+        return name;                // se usa para la parte grafica, para mostrar solo los cursos en el comboBox                    
     }
 
- 
     public String secondToString() {
-        return id+","+name+ ","+ credits+","+careerID;
+        return id + "," + name + "," + credits + "," + careerID; // se crea un secondToString para escribir en los archivos
     }
-   
-   
-    
+
 }
