@@ -9,40 +9,37 @@ import java.util.Date;
 
 /**
  *
- * @author ExtremeTech
+ * @author Adrian Ureña Moraga <Agitor Lucens V>
  */
-public class Enrollment {
+public class DeEnrollment {
     private int iD;
     private Date date;
     private String studentID;
     private String courseID;
     private String schedule;
-    private static int autoEnrollmentID;
-    
-    public Enrollment(Date date, String studentID, String courseID, String schedule){
-        this.iD = autoEnrollmentID;
+    private static int autoDeEnrollmentID;
+    public DeEnrollment(Date date, String studentID, String courseID, String schedule){
+        this.iD = autoDeEnrollmentID;
         this.date = date;
         this.courseID=courseID;
         this.schedule = schedule;
         this.studentID = studentID;
-        autoEnrollmentID++;
+        autoDeEnrollmentID++;
     }
-    public Enrollment(int iD,Date date, String studentID, String courseID, String schedule){
+    public DeEnrollment(int iD,Date date, String studentID, String courseID, String schedule){
         this.iD = iD;
         this.date = date;
         this.courseID=courseID;
         this.schedule = schedule;
         this.studentID = studentID;
     }
-
-    public int getAutoEnrollmentID() {
-        return autoEnrollmentID;
+    public int getAutoDeEnrollmentID() {
+        return autoDeEnrollmentID;
     }
 
-    public void setAutoEnrollmentID(int autoEnrollmentID) {
-        Enrollment.autoEnrollmentID = autoEnrollmentID;
+    public void setAutoDeEnrollmentID(int autoEnrollmentID) {
+        DeEnrollment.autoDeEnrollmentID = autoEnrollmentID;
     }
-    
     public int getiD() {
         return iD;
     }
@@ -83,9 +80,17 @@ public class Enrollment {
         this.schedule = schedule;
     }
 
+    public static int getAutoEnrollmentID() {
+        return autoDeEnrollmentID;
+    }
+
+    public static void setAutoEnrollmentID(int autoEnrollmentID) {
+        DeEnrollment.autoDeEnrollmentID = autoEnrollmentID;
+    }
+
     @Override
     public String toString() {
-        return iD + "," + util.Utility.dateFormat(date) + "," + studentID + "," + courseID + "," + schedule;
+        return iD + "," + util.Utility.dateFormat(date)+ "," + studentID + "," + courseID + "," + schedule;
     }
- 
+    
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaRetirarController">
+<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaRetirarController">
    <children>
       <Text fx:id="puTxt" layoutX="133.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingrese su ID" wrappingWidth="205.13671875">
          <font>
@@ -20,8 +21,8 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tableView" layoutY="54.0" prefHeight="351.0" prefWidth="507.0" visible="false" />
-      <Button fx:id="btnDeenrollment" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnDeenrollment" prefHeight="25.0" prefWidth="127.0" text="Retirar" visible="false" />
-      <Button fx:id="btnEmail" layoutX="220.0" layoutY="203.0" mnemonicParsing="false" onAction="#btnEmail" prefHeight="76.0" prefWidth="143.0" text="Enviar correo" visible="false" />
+      <TableView fx:id="tableView" layoutY="54.0" onMouseClicked="#tableViewAction" prefHeight="181.0" prefWidth="600.0" visible="false" />
+      <Button fx:id="btnDeenrollment" layoutY="241.0" mnemonicParsing="false" onAction="#btnDeenrollment" prefHeight="25.0" prefWidth="127.0" text="Retirar" visible="false" />
+      <Label fx:id="Label" alignment="TOP_LEFT" layoutY="280.0" prefHeight="121.0" prefWidth="377.0" />
    </children>
 </AnchorPane>

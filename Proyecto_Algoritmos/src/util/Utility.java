@@ -11,6 +11,7 @@ import Lists.DoublyLinkedList;
 import Lists.SinglyLinkedList;
 import domain.Career;
 import domain.Course;
+import domain.DeEnrollment;
 import domain.Enrollment;
 import domain.Security;
 import domain.Student;
@@ -30,11 +31,6 @@ import java.util.regex.Pattern;
  * @author Profesor Lic. Gilberth Chaves Avila
  */
 public class Utility {
-    
-
-    
-    
-    
     public static String dateFormat(Date date){
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
@@ -161,6 +157,7 @@ public class Utility {
     private static CircularDoublyLinkedList listCursos = new CircularDoublyLinkedList();
     private static SinglyLinkedList listHorarios = new SinglyLinkedList();
     private static CircularDoublyLinkedList listMatricula = new CircularDoublyLinkedList(); 
+    private static CircularDoublyLinkedList listRetiro = new CircularDoublyLinkedList();
     
     public static CircularLinkedList getUsers(){ return listUsers;}
     public void setUsers(CircularLinkedList list){listUsers=list;}
@@ -174,6 +171,8 @@ public class Utility {
     public void setHorarios(SinglyLinkedList list){listHorarios=list;}
     public static CircularDoublyLinkedList getMatriculas(){ return listMatricula;}
     public void setMatriculas(CircularDoublyLinkedList list){listMatricula=list;}
+    public static CircularDoublyLinkedList getRetiros(){ return listRetiro;}
+    public void setRetiros(CircularDoublyLinkedList list){listRetiro=list;}
     
     private static String Security = "security";
     public static void setSecurity(String admin_studnet){Security = admin_studnet;}
@@ -228,14 +227,25 @@ public class Utility {
             list = file.readFile("matricula.txt");
             for (int i = 0; i < list.size(); i++) {
                 String[] datos = list.get(i).split(",");
-                String[] date = datos[4].split("/");
+                String[] date = datos[1].split("/");
                 Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1])-1,Integer.parseInt(date[0]));
-                getMatriculas().add(new Enrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]));
+                Enrollment e=new Enrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]);
+                getMatriculas().add(e);
+                e.setAutoEnrollmentID(Integer.parseInt(datos[0]));
             }
         }
-        
+        if(file.existFile("retiro.txt")){
+            list = file.readFile("retiro.txt");
+            for (int i = 0; i < list.size(); i++) {
+                String[] datos = list.get(i).split(",");
+                String[] date = datos[1].split("/");
+                Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1])-1,Integer.parseInt(date[0]));
+                DeEnrollment e=new DeEnrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]);
+                getRetiros().add(e);
+                e.setAutoEnrollmentID(Integer.parseInt(datos[0]));
+            }
     }
-
+}
     public static String binaryCodify(String dato){
         String code="";
         int[] numberCode=new int[dato.length()];

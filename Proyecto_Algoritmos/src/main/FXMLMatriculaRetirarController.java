@@ -6,17 +6,29 @@
 package main;
 
 import Lists.ListException;
+import domain.Course;
+import domain.DeEnrollment;
+import domain.Enrollment;
 import domain.Student;
+import domain.TimeTable;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -32,7 +44,16 @@ import javax.mail.internet.MimeMessage;
  * @author ExtremeTech
  */
 public class FXMLMatriculaRetirarController implements Initializable {
-
+    private TableColumn <List<String>,String>column1;
+    private TableColumn <List<String>,String>column2;
+    private TableColumn <List<String>,String>column3;
+    private TableColumn <List<String>,String>column4;
+    private TableColumn <List<String>,String>column5;
+    private util.FileTXT txt;
+    private Student stud;
+    private DeEnrollment deR;
+    private int index;
+    private String cursos;
     @FXML
     private Text puTxt;
     @FXML
@@ -40,11 +61,11 @@ public class FXMLMatriculaRetirarController implements Initializable {
     @FXML
     private Button btnEnter;
     @FXML
-    private TableView<?> tableView;
+    private TableView<List<String>> tableView;
     @FXML
     private Button btnDeenrollment;
     @FXML
-    private Button btnEmail;
+    private Label Label;
 
     /**
      * Initializes the controller class.
@@ -61,8 +82,10 @@ public class FXMLMatriculaRetirarController implements Initializable {
     Student aux;
     for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
             aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-            if(studId.equals(aux.getStudentID()))
+            if(studId.equals(aux.getStudentID())){
                 findStud=true;
+                stud=aux;
+            }
     }
     if (txtFieldStudID.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -70,31 +93,105 @@ public class FXMLMatriculaRetirarController implements Initializable {
             a.showAndWait();
         } 
      else if(findStud==false){
-         Alert a = new Alert(Alert.AlertType.ERROR);
+            Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
             a.showAndWait();
      }
      else{
          this.txtFieldStudID.setVisible(false);
-         
          this.puTxt.setVisible(false);
          this.btnEnter.setVisible(false);
          this.tableView.setVisible(true);
          this.btnDeenrollment.setVisible(true);
     }
+    if(this.tableView.getColumns().isEmpty()){
+            column1=new TableColumn<>("Course");
+            column1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
+            column2=new TableColumn<>("Course ID");
+            column2.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
+            column3=new TableColumn<>("Student ID");
+            column3.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
+            column4=new TableColumn<>("Schedule");
+            column4.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
+            column5=new TableColumn<>("Date");
+            column5.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(4)));
+            this.tableView.getColumns().addAll(column1,column2,column3,column4,column5);//agregar columnas
     }
-    @FXML
-    private void btnDeenrollment(ActionEvent event) {
-        this.tableView.setVisible(false);
-        this.btnDeenrollment.setVisible(false);
-        this.puTxt.setVisible(true);
-        this.puTxt.setText("Proceso Completado");
-        this.btnEmail.setVisible(true);
+    
+        tableView.getItems().clear();
+       
+        Course  c=null;
+        Enrollment e=null;
+        boolean check=false;
+                for(int i = 1; i <= util.Utility.getMatriculas().size(); i++){
+                    List list = new ArrayList();
+                    e =(Enrollment)util.Utility.getMatriculas().getNode(i).data;
+                    if(e.getStudentID().equals(stud.getStudentID())){
+                    for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
+                        c = (Course)util.Utility.getCursos().getNode(j).data;
+                        if(e.getCourseID().equals(c.getId())){
+                            list.add(c.getName());
+                            list.add(e.getCourseID()); 
+                            list.add(e.getStudentID());
+                            list.add(e.getSchedule());
+                            list.add(String.valueOf(util.Utility.dateFormat(e.getDate())));
+                            
+                            check=true;
+                        }//end if 
+                    }//end for
+                     
+//                    if(!util.Utility.getMatriculas().isEmpty()){
+//                    for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
+//                       Enrollment m = (Enrollment)util.Utility.getMatriculas().getNode(j).data;
+//                        if(m.getCourseID().equals(c.getId())&&m.getStudentID().equals(stud.getStudentID()))
+//                            check=false;
+//                    }
+//                    }
+                    }
+                
+                if(check==true){
+                    tableView.getItems().add(list);
+                    check=false;
+                }
+        }
     }
 
     @FXML
-    private void btnEmail(ActionEvent event) {
-    String to = "adriure11@hotmail.com";
+    private void btnDeenrollment(ActionEvent event) throws ListException {
+        if(Label.getText().isEmpty()){
+        Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Necesita escoger un curso");
+            a.showAndWait();
+        }else{
+        String id="";
+        for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+                Course c = (Course)util.Utility.getCursos().getNode(i).data;
+                if(c.getCareerID()==stud.getCareerID()&&c.getName().equals(column1.getCellData(index)))
+                        id=c.getId();
+                                
+    }
+    Date date = new Date();
+    this.deR=new DeEnrollment(date,stud.getStudentID(),id,column4.getCellData(index));
+    txt.writeFile("retiro.txt", deR.toString());
+    btnEmail();
+    this.tableView.getSelectionModel().clearSelection();
+
+    Label.setText("");
+    tableView.getItems().remove(index);
+    }
+    }
+    @FXML
+    private void tableViewAction(MouseEvent event) {
+        Label.setText("");
+        index = tableView.getSelectionModel().getSelectedIndex();
+        
+           
+           cursos=column1.getCellData(index)+" "+column2.getCellData(index)+" "+column4.getCellData(index);
+           Label.setText(cursos+" ");
+    }
+
+    private void btnEmail() {
+        String to = "adriure11@hotmail.com";
         // Mention the Sender's email address
         String from = "xx.ucrfake.xx@gmail.com";
         // Mention the SMTP server address. Below Gmail's SMTP server is being used to send email
@@ -133,5 +230,6 @@ public class FXMLMatriculaRetirarController implements Initializable {
             mex.printStackTrace();
         }
     }
+    
 }
 
