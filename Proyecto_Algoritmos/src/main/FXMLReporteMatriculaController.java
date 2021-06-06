@@ -18,6 +18,7 @@ import domain.Course;
 import domain.Enrollment;
 import domain.Student;
 import domain.TimeTable;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -54,7 +55,9 @@ import javafx.scene.text.Text;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import org.icepdf.ri.util.FontPropertiesManager;
@@ -89,6 +92,12 @@ public class FXMLReporteMatriculaController implements Initializable {
             Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         }
       
     }
@@ -110,9 +119,7 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
                 if(eR.getStudentID().equals(st.getStudentID())){
                         content+=util.Utility.getMatriculas().getNode(i).data+"\n";
                         found=true;
-                }
-                
-            
+                }   
         }
         if(found==false)
         content+="Este estudiante no tiene matriculas\n";
@@ -134,35 +141,63 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
 }
 
     
-private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException {
+private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    
     try {
-        SwingUtilities.invokeAndWait(() -> {
-            swingController = new SwingController();
-            swingController.setIsEmbeddedComponent(true);
-            PropertiesManager properties = new PropertiesManager(System.getProperties(),
-                    ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
-            properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
-            properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
-            ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
-            new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-            swingController.getDocumentViewController().setAnnotationCallback(
-                    new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
-            SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
-            viewerPanel = factory.buildViewerPanel();
-            viewerPanel.revalidate();
-            SwingNode swingNode = new SwingNode();
-            swingNode.setContent(viewerPanel);
-            borderPane.setCenter(swingNode);
-            swingController.setToolBarVisible(false);
-            swingController.setUtilityPaneVisible(false);
-            
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                swingController = new SwingController();
+                swingController.setIsEmbeddedComponent(true);
+                PropertiesManager properties = new PropertiesManager(System.getProperties(),
+                        ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
+                properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
+                properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
+                ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
+                new FontPropertiesManager(properties, System.getProperties(), messageBundle);
+                swingController.getDocumentViewController().setAnnotationCallback(
+                        new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
+                SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
+                viewerPanel = factory.buildViewerPanel();
+                viewerPanel.setOpaque(true);
+                factory.buildToolToolBar().setOpaque(true);
+                viewerPanel.revalidate();
+                SwingNode swingNode = new SwingNode();
+                swingNode.setContent(viewerPanel);
+                borderPane.setCenter(swingNode);
+                swingController.setToolBarVisible(false);
+                swingController.setUtilityPaneVisible(false);
+            }
         });
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch (InvocationTargetException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        ColorUIResource backgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource textUI = new ColorUIResource(0xFFFAFA);
+        ColorUIResource controlBackgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource infoBackgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource infoUI = new ColorUIResource(0x023c4f);
+        ColorUIResource lightBackgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource focusUI = new ColorUIResource(0x023c4f);
+
+        UIManager.put("control", backgroundUI);
+        UIManager.put("text", textUI);
+        UIManager.put("nimbusLightBackground", lightBackgroundUI);
+        UIManager.put("info", infoUI);
+        UIManager.put("nimbusInfoBlue", infoBackgroundUI);
+        UIManager.put("nimbusBase", controlBackgroundUI);
+        
+        UIManager.put("nimbusBlueGrey", controlBackgroundUI);
+        UIManager.put("nimbusFocus", focusUI);
+          for (LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(lafInfo.getName())) {
+            UIManager.setLookAndFeel(lafInfo.getClassName());
+            break;
+        }
+        
+          }
+    } catch (InvocationTargetException   ex) {
         Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
     }
 
