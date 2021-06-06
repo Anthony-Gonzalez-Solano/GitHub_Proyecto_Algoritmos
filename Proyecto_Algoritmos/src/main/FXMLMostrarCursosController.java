@@ -9,14 +9,15 @@ import Lists.ListException;
 import domain.Career;
 import domain.Course;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -25,39 +26,50 @@ import javafx.scene.text.Text;
  */
 public class FXMLMostrarCursosController implements Initializable {
 
+    private List<String> list;
+   
     @FXML
-    private TableView<Course> tableViewCursos;
+    private TableView<List<String>> tableCourse;
     @FXML
-    private Text txtError;
+    private TableColumn<List<String>, String> table1;
+    @FXML
+    private TableColumn<List<String>, String> table2;
+    @FXML
+    private TableColumn<List<String>, String>table3;
+    @FXML
+    private TableColumn<List<String>, String> table4;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if (this.tableViewCursos.getColumns().isEmpty()) {
-            TableColumn<Course, String> column1 = new TableColumn<>("Id");
-            column1.setCellValueFactory(new PropertyValueFactory<>("id"));
-            TableColumn<Course, String> column2 = new TableColumn<>("Nombre");
-            column2.setCellValueFactory(new PropertyValueFactory<>("name"));
-            TableColumn<Course, String> column3 = new TableColumn<>("Creditos");
-            column3.setCellValueFactory(new PropertyValueFactory<>("credits"));
-            TableColumn<Course, String> column4 = new TableColumn<>("ID Carrera");
-            column4.setCellValueFactory(new PropertyValueFactory<>("careerID"));
-
-            this.tableViewCursos.getColumns().add(column1);//agregar columnas
-            this.tableViewCursos.getColumns().add(column2);
-            this.tableViewCursos.getColumns().add(column3);
-            this.tableViewCursos.getColumns().add(column4);
-        }
-        //}
+        table1.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(0)));
+        table2.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(1)));
+        table3.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(2)));
+        table4.setCellValueFactory(d->new SimpleStringProperty(d.getValue().get(3)));
         try {
-            while (!this.tableViewCursos.getItems().isEmpty()) {
-                this.tableViewCursos.getItems().remove(0);
-            }
+//            while (!this.tableStudent.getItems().isEmpty()) {
+//                this.tableStudent.getItems().remove(0);
+//            }
             for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-                this.tableViewCursos.getItems().add((Course) util.Utility.getCursos().getNode(i).data);
+                list = new ArrayList<>();
+                Course c1 = (Course) util.Utility.getCursos().getNode(i).data;
 
+                list.add(c1.getId() + "");
+                list.add(c1.getName() + "");
+                list.add(c1.getCredits() + "");
+             
+                for (int j = 1; j <= util.Utility.getCarreras().size(); j++) {
+                    Career c = (Career) util.Utility.getCarreras().getNode(j).data;
+                    if (c1.getCareerID() == c.getId()) {
+                        list.add(c.getDescription());
+                   
+                    }
+                  
+                }
+
+                tableCourse.getItems().add(list);
             }
         } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -68,5 +80,6 @@ public class FXMLMostrarCursosController implements Initializable {
             a.setHeaderText("Error inesperado");
             a.showAndWait();
         }
+
     }
 }

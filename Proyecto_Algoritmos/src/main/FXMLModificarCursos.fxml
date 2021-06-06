@@ -12,7 +12,6 @@
       <TextField fx:id="textFieldNombre" layoutX="344.0" layoutY="127.0" visible="false" />
       <TextField fx:id="textFieldCredits" layoutX="69.0" layoutY="213.0" visible="false" />
       <ComboBox fx:id="comboCursos" layoutX="69.0" layoutY="50.0" onAction="#comboCursos" prefWidth="150.0" promptText="Cursos" />
-      <TextField fx:id="textFieldId" layoutX="69.0" layoutY="127.0" visible="false" />
       <Label layoutX="35.0" layoutY="25.0" text="Curso" />
       <Label fx:id="txtNombre" layoutX="307.0" layoutY="101.0" text="Nombre" visible="false" />
       <Label fx:id="txtCredits" layoutX="34.0" layoutY="188.0" text="Creditos" visible="false" />

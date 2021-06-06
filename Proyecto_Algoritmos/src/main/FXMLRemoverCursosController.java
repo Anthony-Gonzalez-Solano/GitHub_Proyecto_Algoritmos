@@ -55,39 +55,44 @@ public class FXMLRemoverCursosController implements Initializable {
         } else {
             try {
                 boolean exist = false;// variale para verificar si existe un horario asociado al curso a remover
+               
                 Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), 0, 0); // objeto curso  
                 if (!util.Utility.getCursos().isEmpty()) { // si no esta vacia procede a hacer el ciclo y sino mandara error
 
-                    if (util.Utility.getCursos().contains(c) == true) {
-                        for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-                            Course c2 = (Course) util.Utility.getCursos().getNode(i).data;
+                    for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+                        Course c2 = (Course) util.Utility.getCursos().getNode(i).data;
 
-                            if (c2.equals(c)) {
-                                c = (Course) util.Utility.getCursos().getNode(i).data;
+                        if (c2.equals(c)) {
+                          c = (Course) util.Utility.getCursos().getNode(i).data;
+                      
+                        }
+                        for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
+                            TimeTable t = (TimeTable) util.Utility.getHorarios().getNode(j).data;
+                            if (t.getCourseID().equalsIgnoreCase(c.getId())) {
+                                exist = true;
                             }
-                            for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
-                                TimeTable t = (TimeTable) util.Utility.getHorarios().getNode(j).data;
-                                if (t.getCourseID().equalsIgnoreCase(c.getId())) {
-                                    exist = true;
-                                }
-                            }
-
                         }
 
-                        if (exist == false) {
-                            util.Utility.getCursos().remove(c);
+                    }
+
+                    if (exist == false) {
+                        if (util.Utility.getCursos().contains(c) == true) {
                             txt.removeElement("cursos.txt", c.secondToString());
+                            util.Utility.getCursos().remove(c);
+
                             Alert a = new Alert(Alert.AlertType.INFORMATION);
-                            a.setHeaderText("El curso ha sido eleimiando corectamente");
+                            a.setHeaderText("El curso ha sido eliminado corectamente");
                             a.showAndWait();
+                            textFieldId.setText("");
+                            textFieldNombre.setText("");
                         } else {
                             Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("Este curso no se puede eliminar\n Este curso ya tiene un horario establecido");
+                            a.setHeaderText("El curso ingresado no esta registrado");
                             a.showAndWait();
                         }
                     } else {
                         Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("El curso ingresado no esta registrado");
+                        a.setHeaderText("Este curso no se puede eliminar\n Este curso ya tiene un horario establecido");
                         a.showAndWait();
                     }
 

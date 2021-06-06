@@ -44,8 +44,7 @@ public class FXMLModificarCursosController implements Initializable {
     private ComboBox<Course> comboCursos;
     @FXML
     private Label txtId;
-    @FXML
-    private TextField textFieldId;
+
 
     /**
      * Initializes the controller class.
@@ -67,17 +66,19 @@ public class FXMLModificarCursosController implements Initializable {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Lista vacia");
             a.showAndWait();
+            textFieldNombre.setText("");
+            textFieldCredits.setText("");
         }
     }
 
     @FXML
     private void btnModificar(ActionEvent event) {
-        if (textFieldNombre.getText().isEmpty() || textFieldCredits.getText().isEmpty() || textFieldId.getText().isEmpty()) {
+        if (textFieldNombre.getText().isEmpty() || textFieldCredits.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
-            Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), Integer.parseInt(textFieldCredits.getText()), comboCursos.getSelectionModel().getSelectedItem().getCareerID());
+            Course c = new Course(comboCursos.getSelectionModel().getSelectedItem().getId(), textFieldNombre.getText(), Integer.parseInt(textFieldCredits.getText()), comboCursos.getSelectionModel().getSelectedItem().getCareerID());
             try {
                 boolean curso = false;
                 if (!util.Utility.getCursos().isEmpty()) {
@@ -103,20 +104,20 @@ public class FXMLModificarCursosController implements Initializable {
                         comboCursos.getSelectionModel().clearSelection();
                         textFieldNombre.setText("");
                         textFieldCredits.setText("");
-                        textFieldId.setText("");
+             
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                         a.setHeaderText("El curso ha sido mofificado correctamente");
                         a.showAndWait();
                         txtCredits.setVisible(false);
                         txtId.setVisible(false);
                         txtNombre.setVisible(false);
-                        textFieldId.setVisible(false);
+                       
                         textFieldCredits.setVisible(false);
                         textFieldNombre.setVisible(false);
                         btnModificar.setVisible(false);
                         textFieldNombre.setText("");
                         textFieldCredits.setText("");
-                        textFieldId.setText("");
+
                     } else {
                         Alert a = new Alert(Alert.AlertType.ERROR);
                         a.setHeaderText("No se puede eliminar este curso.\nYa hay un estudiante que ha hecho un proceso de matricula con este curso");
@@ -127,6 +128,8 @@ public class FXMLModificarCursosController implements Initializable {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText("La lista de estudiantes esta vacia\nAgregue uno primero");
                     a.showAndWait();
+                    textFieldNombre.setText("");
+                    textFieldCredits.setText("");
                 }
             } catch (NullPointerException epe) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
@@ -144,14 +147,14 @@ public class FXMLModificarCursosController implements Initializable {
     private void comboCursos(ActionEvent event) {
         if (comboCursos.getSelectionModel().getSelectedIndex() != -1) {
             txtCredits.setVisible(true);
-            txtId.setVisible(true);
+          
             txtNombre.setVisible(true);
-            textFieldId.setVisible(true);
+           
             textFieldCredits.setVisible(true);
             textFieldNombre.setVisible(true);
             btnModificar.setVisible(true);
             textFieldCredits.setText(comboCursos.getSelectionModel().getSelectedItem().getCredits() + "");
-            textFieldId.setText(comboCursos.getSelectionModel().getSelectedItem().getId() + "");
+           
             textFieldNombre.setText(comboCursos.getSelectionModel().getSelectedItem().getName() + "");
 
         }

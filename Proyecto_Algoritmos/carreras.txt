@@ -4,3 +4,4 @@ Ingles,9
 Diseño,6
 Deporte,14
 Agronomia,3
+Informatica Empresarial,1

@@ -112,8 +112,7 @@ public class FXMLMostrarEstudianteController implements Initializable {
             for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                 list = new ArrayList<>();
                 Student s = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                // this.tableViewEstudiante.getItems().add((Student) util.Utility.getEstudiantes().getNode(i).data);
-//            if(i==util.Utility.getEstudiantes().size())
+
                 list.add(s.getId() + "");
                 list.add(s.getStudentID() + "");
                 list.add(s.getLastname() + "");
@@ -128,7 +127,7 @@ public class FXMLMostrarEstudianteController implements Initializable {
                         list.add(c.getDescription() + "");
                     }
                 }
-//                tableStudent.getItems().add((Career)util.Utility.getCarreras().)
+
                 tableStudent.getItems().add(list);
             }
 

@@ -2,5 +2,8 @@
 2,Mate Discreta,5,1
 1,Estadistica,4,1
 IF-4011,Introduccion,4,9
-IF21,Abdominales,2,14
+IF21,Danza Aerobica,0,14
 213323,Intro ingles,4,9
+D,Humanidades,4,2
+A,Logica,6,1
+S,Alg,3,1

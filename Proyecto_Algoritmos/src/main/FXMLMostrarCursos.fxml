@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="422.0" prefWidth="650.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMostrarCursosController">
    <children>
-      <TableView fx:id="tableViewCursos" prefHeight="425.0" prefWidth="650.0">
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy></TableView>
+      <TableView fx:id="tableCourse" prefHeight="422.0" prefWidth="650.0">
+        <columns>
+          <TableColumn fx:id="table1" prefWidth="108.0" text="ID" />
+          <TableColumn fx:id="table2" prefWidth="112.0" text="Nombre" />
+            <TableColumn fx:id="table3" prefWidth="67.0" text="Creditos" />
+            <TableColumn fx:id="table4" prefWidth="189.0" text="Descripcion" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
