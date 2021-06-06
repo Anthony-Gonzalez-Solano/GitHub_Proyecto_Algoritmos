@@ -62,7 +62,7 @@ public class FXMLRemoverCursosController implements Initializable {
                     for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                         Course c2 = (Course) util.Utility.getCursos().getNode(i).data;
 
-                        if (c2.equals(c)) {
+                        if (util.Utility.equals(c2,c )) {
                           c = (Course) util.Utility.getCursos().getNode(i).data;
                       
                         }
