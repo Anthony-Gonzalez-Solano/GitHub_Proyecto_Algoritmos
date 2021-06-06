@@ -14,7 +14,10 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import domain.Course;
+import domain.Enrollment;
 import domain.Student;
+import domain.TimeTable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,6 +29,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,11 +44,6 @@ import javafx.fxml.Initializable;
  *
  * @author Adrian Ureña Moraga <Agitor Lucens V>
  */
-//import java.io.*;
-//import java.awt.Color;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
-//import org.faceless.pdf2.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -53,7 +53,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
-//import org.icepdf.core.pobjects.Document;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import org.icepdf.ri.util.FontPropertiesManager;
@@ -62,6 +63,7 @@ import util.FileTXT;
 
 public class FXMLReporteMatriculaController implements Initializable {
     private static String pdfPath;
+    private Student stud;
     private SwingController swingController;
     private JComponent viewerPanel;
     private util.FileTXT txt ;
@@ -83,32 +85,9 @@ public class FXMLReporteMatriculaController implements Initializable {
         this.bp.setVisible(false);
         try {
             createViewer(bp);
-//org.icepdf.core.pobjects.Document currentDocument = new Document();
-//        OutputStream out = null;
-//        try {
-//            PDF pdf = new PDF();
-//            PDFPage page = pdf.newPage("A4");
-//            PDFStyle mystyle = new PDFStyle();
-//            mystyle.setFont(new StandardFont(StandardFont.TIMES), 24);
-//            mystyle.setFillColor(Color.black);
-//            page.setStyle(mystyle);
-//            page.drawText("Hello, World!", 100, page.getHeight()-100);
-//            out = new FileOutputStream("HelloWorld.pdf");
-//   
-//            pdf.render(out);
-//            out.close();
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                out.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
         } catch (InterruptedException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         }
       
@@ -120,17 +99,33 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
     String content = "";
     document.open();
     // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
+    Enrollment eR=null;
+    Student st=null;
+    boolean found=false;
+    for (int k = 1; k <= util.Utility.getEstudiantes().size(); k++) {
+        st = (Student)util.Utility.getEstudiantes().getNode(k).data;
+        content+=st.getFirstname()+" "+st.getLastname()+"\n";
+        for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
+            eR = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
+                if(eR.getStudentID().equals(st.getStudentID())){
+                        content+=util.Utility.getMatriculas().getNode(i).data+"\n";
+                        found=true;
+                }
+                
+            
+        }
+        if(found==false)
+        content+="Este estudiante no tiene matriculas\n";
+        found=false;
+    }
 
-    for(int i=1;i<util.Utility.getCarreras().size();i++)
-                content +=util.Utility.getEstudiantes().getNode(i).data+"\n";
-    Paragraph retiro = new Paragraph("Lista de personas \n\n"+content,
+    Paragraph retiro = new Paragraph("Lista de matriculas \n\n"+content,
                 FontFactory.getFont("arial",
-                        22,
+                        12,
                         Font.BOLD,
-                        BaseColor.BLUE
+                        BaseColor.BLACK
                         ));
     document.add(retiro);
-    System.out.println("Your PDF file has been generated!(¡Se ha generado tu hoja PDF!");
     document.addTitle("Lista de cursos retirados");
     document.addKeywords("Java, PDF, Lista de Cursos Retirados");
     document.addAuthor("Projecto Algoritmos");
@@ -138,7 +133,8 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
     document.close();
 }
 
-    private void createViewer(BorderPane borderPane) throws InterruptedException {
+    
+private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException {
     try {
         SwingUtilities.invokeAndWait(() -> {
             swingController = new SwingController();
@@ -163,8 +159,10 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
             borderPane.setCenter(swingNode);
             swingController.setToolBarVisible(false);
             swingController.setUtilityPaneVisible(false);
+            
         });
-    } catch (InvocationTargetException ex) {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (InvocationTargetException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
         Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
     }
 
@@ -179,7 +177,6 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
         });
     }
     public String loadPDF(String adresse) throws IOException {
-        System.out.println("In load PDf");
         if (!adresse.toLowerCase().endsWith("pdf")) {
             return null;
         }
@@ -207,8 +204,10 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
     Student aux;
     for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
             aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-            if(studId.equals(aux.getStudentID()))
+            if(studId.equals(aux.getStudentID())){
                 findStud=true;
+                stud=aux;
+            }
     }
     if (TxtFieldStudId.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);

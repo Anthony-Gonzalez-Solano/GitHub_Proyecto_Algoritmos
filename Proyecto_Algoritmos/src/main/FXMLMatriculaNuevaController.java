@@ -32,6 +32,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
@@ -42,6 +43,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javax.mail.Message;
@@ -64,7 +66,13 @@ public class FXMLMatriculaNuevaController implements Initializable {
     private Enrollment eR;
     private Student stud;
     private int studNum;
-    private ComboBox<String> cBoxStud2;
+    private List matricula;
+    private String cursos;
+    private int index;
+    private TableColumn <List<String>,String>column1;
+    private TableColumn <List<String>,String>column2;
+    private TableColumn <List<String>,String>column3;
+    private TableColumn <List<String>,String>column4;
     @FXML
     private Text putTxt;
     @FXML
@@ -74,9 +82,9 @@ public class FXMLMatriculaNuevaController implements Initializable {
     @FXML
     private Button btnEnrollment;
     @FXML
-    private Button btnEmail;
+    private ComboBox<String> cBoxCourse;
     @FXML
-    private ComboBox<?> cBoxCourse;
+    private Label labelCursos;
     /**
      * Initializes the controller class.
      */
@@ -98,28 +106,39 @@ public class FXMLMatriculaNuevaController implements Initializable {
             a.setHeaderText("Lista vacia");
             a.showAndWait();
         }
-    }    
+    }  
     @FXML
-    private void cBoxCourse(ActionEvent event) {
+    private void tableViewAction(MouseEvent event) throws ListException {
+        cBoxCourse.getItems().clear();
+        labelCursos.setText("");
+        index = tableView.getSelectionModel().getSelectedIndex();
         
+           cBoxCourse.getItems().add(column3.getCellData(index));
+           cBoxCourse.getItems().add(column4.getCellData(index));
+           cursos=column1.getCellData(index);
+    }
+    @FXML
+    private void cBoxCourse(ActionEvent event) throws ListException {
+        String scheduleSelect = cBoxCourse.getSelectionModel().getSelectedItem();
+        labelCursos.setText(cursos+" "+scheduleSelect);
     }
     @FXML
     private void cBoxStud(ActionEvent event) throws ListException {
     putTxt.setText("");
     cBoxStud.setVisible(false);
+    cBoxCourse.setVisible(true);
     btnEnrollment.setVisible(true);
     tableView.setVisible(true);
     studNum = (cBoxStud.getSelectionModel().getSelectedIndex())+1;
     stud = (Student)util.Utility.getEstudiantes().getNode(studNum).data;
-    System.out.print(stud.secondToString());
     if(this.tableView.getColumns().isEmpty()){
-            TableColumn<List<String>,String>column1=new TableColumn<>("courseID");
+            column1=new TableColumn<>("Course");
             column1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
-            TableColumn<List<String>,String>column2=new TableColumn<>("period");
+            column2=new TableColumn<>("Period");
             column2.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
-            TableColumn<List<String>,String>column3=new TableColumn<>("schedule1");
+            column3=new TableColumn<>("Schedule 1");
             column3.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
-            TableColumn<List<String>,String>column4=new TableColumn<>("schedule2");
+            column4=new TableColumn<>("Schedule 2");
             column4.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
             
             this.tableView.getColumns().addAll(column1,column2,column3,column4);//agregar columnas
@@ -135,7 +154,6 @@ public class FXMLMatriculaNuevaController implements Initializable {
             c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(stud.getCareerID()==c.getCareerID()){
                         list.add(c.getName());
-                        System.out.print("\nadasd");
                     for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                         TimeTable tt=(TimeTable)util.Utility.getHorarios().getNode(j).data;
                         if(tt.getCourseID().equals(c.getId())){
@@ -143,15 +161,22 @@ public class FXMLMatriculaNuevaController implements Initializable {
                             list.add(tt.getSchedule1());
                             list.add(tt.getSchedule2());
                             check=true;
-                            System.out.print("\nadasd");
                         }//end if 
                     }//end for
+                    if(!util.Utility.getMatriculas().isEmpty()){
+                    for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
+                       Enrollment m = (Enrollment)util.Utility.getMatriculas().getNode(j).data;
+                        if(m.getCourseID().equals(c.getId())&&m.getStudentID().equals(stud.getStudentID()))
+                            check=false;
+                    }
+                    }
                 }
                 if(check==true){
                     tableView.getItems().add(list);
                     check=false;
                 }
         }
+        
 } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setHeaderText(" La lista esta vacia");
@@ -164,41 +189,33 @@ public class FXMLMatriculaNuevaController implements Initializable {
         }
     }
     
-
     @FXML
     private void btnEnrollment(ActionEvent event) throws ListException {
-    this.tableView.setVisible(false);
-    this.btnEnrollment.setVisible(false);
-    btnEmail.setVisible(true);
-    this.putTxt.setText("Proceso completado");
-     
-    Date date = new Date();
-    date.getTime();
-
-//    TablePosition pos = (TablePosition) tableView.getSelectionModel().getSelectedCells().get(5);
-    
-    
-//    for(int row =0; row<tableView.getItems().size();row++){
-////       int id=tableView.getSelectionModel().getSelectedItem().getCourseID();
-        
-//            for (int i = 1; i <=tableView.getItems().size() ; i++) {
-//                System.out.print((Boolean)column5.getCellData(i));
-//            if((Boolean)column5.getCellData(i)==true){
-//                   eR = new Enrollment(stud.getId(),date,stud.getStudentID(),tableView.getSelectionModel().getSelectedItem().getCourseID(),(tableView.getSelectionModel().getSelectedItem().getSchedule1()+tableView.getSelectionModel().getSelectedItem().getSchedule1())) ; 
-//                }
-        
-    
+        if(labelCursos.getText().isEmpty()){
+        Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Necesita escoger un curso");
+            a.showAndWait();
+    }else{
+    String id="";
+    for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+                Course c = (Course)util.Utility.getCursos().getNode(i).data;
+                if(c.getCareerID()==stud.getCareerID()&&c.getName().equals(this.cursos)){
+                        id=c.getId();
+                                }
     }
-//     util.Utility.getMatriculas().add(eR);
-//    txt.writeFile("matricula.txt", eR.toString());       
-//       
-        
+    Date date = new Date();
+    this.eR=new Enrollment(date,stud.getStudentID(),id,cBoxCourse.getSelectionModel().getSelectedItem());
+    txt.writeFile("matricula.txt", eR.toString());
+    btnEmail();
+    this.tableView.getSelectionModel().clearSelection();
+    cBoxCourse.getSelectionModel().clearSelection();
+    labelCursos.setText("");
+    tableView.getItems().remove(index);
+            }
+}
     
-
-
-    @FXML
-    private void btnEmail(ActionEvent event) {
-     String to = "adriure11@hotmail.com";
+    private void btnEmail() {
+        String to = "adriure11@hotmail.com";
         // Mention the Sender's email address
         String from = "xx.ucrfake.xx@gmail.com";
         // Mention the SMTP server address. Below Gmail's SMTP server is being used to send email
@@ -227,17 +244,19 @@ public class FXMLMatriculaNuevaController implements Initializable {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Set Subject: header field
             message.setSubject("Proceso de matricula completado "+stud.getFirstname()+" "+stud.getLastname());
-            String content = "Id curso:"+eR.getCourseID()+",Horario: "+eR.getSchedule()+", Fecha de matricula:"+eR.getDate();
+            String content = "Id curso: "+eR.getCourseID()+"\nNombre de curso: "+cursos+"\nHorario: " +eR.getSchedule()+"\nFecha de matricula: "+util.Utility.dateFormat(eR.getDate());
+            
             // Now set the actual message
             message.setText(content);
-            System.out.println("sending...");
             // Send message
             Transport.send(message);
-            System.out.println("Sent message successfully....");
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
 }
+
+
+    
 
     
 }
