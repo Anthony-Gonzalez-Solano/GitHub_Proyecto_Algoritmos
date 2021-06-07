@@ -37,6 +37,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import util.FileTXT;
 
 /**
  * FXML Controller class
@@ -72,7 +73,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       txt =new FileTXT();
     }    
 
     @FXML
@@ -123,6 +124,11 @@ public class FXMLMatriculaRetirarController implements Initializable {
         Course  c=null;
         Enrollment e=null;
         boolean check=false;
+        if(util.Utility.getRetiros().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
+            a.showAndWait();
+        }else{
                 for(int i = 1; i <= util.Utility.getMatriculas().size(); i++){
                     List list = new ArrayList();
                     e =(Enrollment)util.Utility.getMatriculas().getNode(i).data;
@@ -140,13 +146,6 @@ public class FXMLMatriculaRetirarController implements Initializable {
                         }//end if 
                     }//end for
                      
-//                    if(!util.Utility.getMatriculas().isEmpty()){
-//                    for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
-//                       Enrollment m = (Enrollment)util.Utility.getMatriculas().getNode(j).data;
-//                        if(m.getCourseID().equals(c.getId())&&m.getStudentID().equals(stud.getStudentID()))
-//                            check=false;
-//                    }
-//                    }
                     }
                 
                 if(check==true){
@@ -154,10 +153,12 @@ public class FXMLMatriculaRetirarController implements Initializable {
                     check=false;
                 }
         }
+        }
     }
 
     @FXML
     private void btnDeenrollment(ActionEvent event) throws ListException {
+        
         if(Label.getText().isEmpty()){
         Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Necesita escoger un curso");
@@ -167,15 +168,17 @@ public class FXMLMatriculaRetirarController implements Initializable {
         for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                 Course c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(c.getCareerID()==stud.getCareerID()&&c.getName().equals(column1.getCellData(index)))
-                        id=c.getId();
-                                
+                        id=c.getId();                         
     }
     Date date = new Date();
     this.deR=new DeEnrollment(date,stud.getStudentID(),id,column4.getCellData(index));
+    Enrollment eR=new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
     txt.writeFile("retiro.txt", deR.toString());
+    util.Utility.getRetiros().add(deR);
+    txt.removeElement("matricula.txt",eR.toString());
+    util.Utility.getMatriculas().remove(eR);
     btnEmail();
     this.tableView.getSelectionModel().clearSelection();
-
     Label.setText("");
     tableView.getItems().remove(index);
     }
@@ -219,13 +222,11 @@ public class FXMLMatriculaRetirarController implements Initializable {
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Set Subject: header field
-            message.setSubject("Que paaaaaaaaaaa, tooo bieeeeeeeeen");
+            message.setSubject("Proceso de retiro completado "+stud.getFirstname()+" "+stud.getLastname());
             // Now set the actual message
-            message.setText("ds2 is trash");
-            System.out.println("sending...");
+            message.setText("Curso Retirado:\nId curso: "+deR.getCourseID()+"\nNombre de curso: "+cursos+"\nHorario: " +deR.getSchedule()+"\nFecha de matricula: "+util.Utility.dateFormat(deR.getDate()));
             // Send message
             Transport.send(message);
-            System.out.println("Sent message successfully....");
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }

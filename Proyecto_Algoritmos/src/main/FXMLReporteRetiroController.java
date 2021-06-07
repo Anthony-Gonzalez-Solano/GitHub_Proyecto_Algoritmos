@@ -13,7 +13,10 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import domain.DeEnrollment;
+import domain.Enrollment;
 import domain.Student;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,6 +42,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import org.icepdf.ri.util.FontPropertiesManager;
@@ -54,6 +60,7 @@ public class FXMLReporteRetiroController implements Initializable {
     private SwingController swingController;
     private JComponent viewerPanel;
     private util.FileTXT txt ;
+    private Student stud;
     @FXML
     private TextField txtFieldId;
     @FXML
@@ -69,34 +76,53 @@ public class FXMLReporteRetiroController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.bp.setVisible(false);
-        
-            try {
-                createViewer(bp);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FXMLReporteRetiroController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-    }    
-    public void createPDF(File newPDF) throws DocumentException, FileNotFoundException, ListException {
+        try {
+            createViewer(bp);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    }
+     
+public void createPDF(File newPDF) throws DocumentException, FileNotFoundException, ListException {
     Document document = new Document();
-    PdfWriter.getInstance(document, new FileOutputStream("ReporteRetiros.pdf"));
+    PdfWriter.getInstance(document, new FileOutputStream("ReporteRetiro.pdf"));
     String content = "";
     document.open();
     // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
-        if(util.Utility.getMatriculas().isEmpty())
-                    content ="No existe matricula para este estudiante";
-        else{
-                for(int i=1;i<util.Utility.getCarreras().size();i++)
-                content +=util.Utility.getMatriculas().getNode(i).data+"\n";
+    DeEnrollment deR=null;
+    Student st=null;
+    boolean found=false;
+    for (int k = 1; k <= util.Utility.getEstudiantes().size(); k++) {
+        st = (Student)util.Utility.getEstudiantes().getNode(k).data;
+        content+=st.getFirstname()+" "+st.getLastname()+"\n";
+        for (int i = 1; i <= util.Utility.getRetiros().size(); i++) {
+            deR = (DeEnrollment)util.Utility.getRetiros().getNode(i).data;
+                if(deR.getStudentID().equals(st.getStudentID())){
+                        content+=util.Utility.getRetiros().getNode(i).data+"\n";
+                        found=true;
+                }   
         }
-    Paragraph retiro = new Paragraph("Lista de personas \n\n"+content,
+        if(found==false)
+        content+="Este estudiante no tiene retiro\n";
+        found=false;
+    }
+
+    Paragraph retiro = new Paragraph("Lista de retiro \n\n"+content,
                 FontFactory.getFont("arial",
-                        22,
+                        12,
                         Font.BOLD,
-                        BaseColor.BLUE
+                        BaseColor.BLACK
                         ));
     document.add(retiro);
-    System.out.println("Your PDF file has been generated!(¡Se ha generado tu hoja PDF!");
     document.addTitle("Lista de cursos retirados");
     document.addKeywords("Java, PDF, Lista de Cursos Retirados");
     document.addAuthor("Projecto Algoritmos");
@@ -104,33 +130,65 @@ public class FXMLReporteRetiroController implements Initializable {
     document.close();
 }
 
-    private void createViewer(BorderPane borderPane) throws InterruptedException {
+    
+private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    ColorUIResource backgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource textUI = new ColorUIResource(0xFFFAFA);
+        ColorUIResource controlBackgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource infoBackgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource infoUI = new ColorUIResource(0x023c4f);
+        ColorUIResource lightBackgroundUI = new ColorUIResource(0x023c4f);
+        ColorUIResource focusUI = new ColorUIResource(0x023c4f);
+
+        UIManager.put("control", backgroundUI);
+        UIManager.put("text", textUI);
+        UIManager.put("nimbusLightBackground", lightBackgroundUI);
+        UIManager.put("info", infoUI);
+        UIManager.put("nimbusInfoBlue", infoBackgroundUI);
+        UIManager.put("nimbusBase", controlBackgroundUI);
+        
+        UIManager.put("nimbusBlueGrey", controlBackgroundUI);
+        UIManager.put("nimbusFocus", focusUI);
+          for (UIManager.LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(lafInfo.getName())) {
+            UIManager.setLookAndFeel(lafInfo.getClassName());
+            break;
+        }
+        
+          }
     try {
-        SwingUtilities.invokeAndWait(() -> {
-            swingController = new SwingController();
-            swingController.setIsEmbeddedComponent(true);
-            PropertiesManager properties = new PropertiesManager(System.getProperties(),
-                    ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
-            properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
-            properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
-            properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
-            ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
-            new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-            swingController.getDocumentViewController().setAnnotationCallback(
-                    new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
-            SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
-            viewerPanel = factory.buildViewerPanel();
-            viewerPanel.revalidate();
-            SwingNode swingNode = new SwingNode();
-            swingNode.setContent(viewerPanel);
-            borderPane.setCenter(swingNode);
-            swingController.setToolBarVisible(false);
-            swingController.setUtilityPaneVisible(false);
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                swingController = new SwingController();
+                swingController.setIsEmbeddedComponent(true);
+                PropertiesManager properties = new PropertiesManager(System.getProperties(),
+                        ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
+                properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
+                properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
+                ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
+                new FontPropertiesManager(properties, System.getProperties(), messageBundle);
+               
+                swingController.getDocumentViewController().setAnnotationCallback(
+                        new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
+                SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
+                viewerPanel = factory.buildViewerPanel();
+                viewerPanel.setForeground(Color.red);
+                factory.buildToolToolBar().setOpaque(true);    
+                viewerPanel.revalidate();
+                SwingNode swingNode = new SwingNode();
+                swingNode.setContent(viewerPanel);
+                borderPane.setCenter(swingNode);
+                swingController.setToolBarVisible(false);
+                swingController.setUtilityPaneVisible(false);
+            }
         });
-    } catch (InvocationTargetException ex) {
+        
+    } catch (InvocationTargetException   ex) {
         Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
     }
 
@@ -145,7 +203,6 @@ public class FXMLReporteRetiroController implements Initializable {
         });
     }
     public String loadPDF(String adresse) throws IOException {
-        System.out.println("In load PDf");
         if (!adresse.toLowerCase().endsWith("pdf")) {
             return null;
         }
@@ -165,15 +222,24 @@ public class FXMLReporteRetiroController implements Initializable {
     }
         return temp.getAbsolutePath();
     }
+
     @FXML
     private void btnEnter(ActionEvent event) throws ListException {
     String studId = this.txtFieldId.getText();
     boolean findStud = false;
     Student aux;
+    if(util.Utility.getRetiros().isEmpty()){
+        Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No hay retiros");
+            a.showAndWait();
+    }
+    else{
     for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
             aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-            if(studId.equals(aux.getStudentID()))
+            if(studId.equals(aux.getStudentID())){
                 findStud=true;
+                stud=aux;
+            }
     }
     if (txtFieldId.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -191,11 +257,12 @@ public class FXMLReporteRetiroController implements Initializable {
          this.putTxt.setVisible(false);
          this.btnEnter.setVisible(false);
          File stud = new File("estudiantes.txt");
+     
         try {
             
             createPDF(stud);
 //            createViewer(bp);
-            openDocument("ReporteRetiros.pdf");
+            openDocument("ReporteRetiro.pdf");
         } catch (DocumentException ex) {
             Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -203,7 +270,7 @@ public class FXMLReporteRetiroController implements Initializable {
         } catch (ListException ex) {
             Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         }
+     } 
     }
-    
-}
+    }
 }

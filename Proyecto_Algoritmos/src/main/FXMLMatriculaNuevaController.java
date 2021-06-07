@@ -191,11 +191,53 @@ public class FXMLMatriculaNuevaController implements Initializable {
     
     @FXML
     private void btnEnrollment(ActionEvent event) throws ListException {
+        boolean crash=false;
+        if(cBoxCourse.getSelectionModel().getSelectedIndex()!=-1){
+        if(!util.Utility.getMatriculas().isEmpty()){
+         for (int i = 1; i <= util.Utility.getMatriculas().size(); i++){
+             Enrollment e=(Enrollment)util.Utility.getMatriculas().getNode(i).data;
+             if(e.getStudentID().equals(stud.getStudentID())){
+                        String split[]=cBoxCourse.getSelectionModel().getSelectedItem().split("-");
+                        String split2[]=e.getSchedule().split("-");
+                        if(split[0].equals(split2[0])){
+                        String crashSchedule=split[1];
+                        String crashSchedule2=split[2];
+                        String crashSchedule3=split2[1];
+                        String crashSchedule4=split2[2];
+                        int hour1=0;
+                        int hour2=0;
+                        int hour3=0;
+                        int hour4=0;
+                        String cS[]=crashSchedule.split(",");
+                        String cS2[]=crashSchedule2.split(",");
+                        String cS3[]=crashSchedule3.split(",");
+                        String cS4[]=crashSchedule4.split(",");
+                        if(cS[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
+                            hour1=Integer.valueOf(cS[0])+12;
+                        else if(cS2[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
+                            hour2=Integer.valueOf(cS2[0])+12;
+                        else if(cS3[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
+                            hour3=Integer.valueOf(cS3[0])+12;
+                        else if(cS4[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
+                            hour4=Integer.valueOf(cS4[0])+12;
+                        {
+                            hour1=Integer.valueOf(cS[0]);
+                            hour2=Integer.valueOf(cS2[0]);
+                            hour3=Integer.valueOf(cS3[0]);
+                            hour4=Integer.valueOf(cS4[0]);
+                        }
+                        if(hour1<=hour3||hour2>=hour4)
+                            crash=true;
+             }
+             }                    
+         }
+        }
+        if(crash==false){
         if(labelCursos.getText().isEmpty()){
         Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Necesita escoger un curso");
-            a.showAndWait();
-    }else{
+        a.setHeaderText("Necesita escoger un curso");
+        a.showAndWait();
+        }else{
     String id="";
     for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                 Course c = (Course)util.Utility.getCursos().getNode(i).data;
@@ -204,7 +246,9 @@ public class FXMLMatriculaNuevaController implements Initializable {
                                 }
     }
     Date date = new Date();
+    
     this.eR=new Enrollment(date,stud.getStudentID(),id,cBoxCourse.getSelectionModel().getSelectedItem());
+    util.Utility.getMatriculas().add(eR);
     txt.writeFile("matricula.txt", eR.toString());
     btnEmail();
     this.tableView.getSelectionModel().clearSelection();
@@ -212,6 +256,16 @@ public class FXMLMatriculaNuevaController implements Initializable {
     labelCursos.setText("");
     tableView.getItems().remove(index);
             }
+         }else if(crash==true){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Horario chochan. Escoga otro horario");
+            a.showAndWait(); 
+         }   
+        }else{
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Escoga un curso");
+            a.showAndWait(); 
+        }
 }
     
     private void btnEmail() {
@@ -244,7 +298,7 @@ public class FXMLMatriculaNuevaController implements Initializable {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Set Subject: header field
             message.setSubject("Proceso de matricula completado "+stud.getFirstname()+" "+stud.getLastname());
-            String content = "Id curso: "+eR.getCourseID()+"\nNombre de curso: "+cursos+"\nHorario: " +eR.getSchedule()+"\nFecha de matricula: "+util.Utility.dateFormat(eR.getDate());
+            String content = "Curso matriculado:\nId curso: "+eR.getCourseID()+"\nNombre de curso: "+cursos+"\nHorario: " +eR.getSchedule()+"\nFecha de matricula: "+util.Utility.dateFormat(eR.getDate());
             
             // Now set the actual message
             message.setText(content);
@@ -253,12 +307,7 @@ public class FXMLMatriculaNuevaController implements Initializable {
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-}
-
-
-    
-
-    
+}   
 }
 
 

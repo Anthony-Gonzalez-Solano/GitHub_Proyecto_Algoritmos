@@ -142,38 +142,7 @@ public void createPDF(File newPDF) throws DocumentException, FileNotFoundExcepti
 
     
 private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-    
-    try {
-        SwingUtilities.invokeAndWait(new Runnable() {
-            @Override
-            public void run() {
-                swingController = new SwingController();
-                swingController.setIsEmbeddedComponent(true);
-                PropertiesManager properties = new PropertiesManager(System.getProperties(),
-                        ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
-                properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
-                properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
-                ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
-                new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-                swingController.getDocumentViewController().setAnnotationCallback(
-                        new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
-                SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
-                viewerPanel = factory.buildViewerPanel();
-                viewerPanel.setOpaque(true);
-                factory.buildToolToolBar().setOpaque(true);
-                viewerPanel.revalidate();
-                SwingNode swingNode = new SwingNode();
-                swingNode.setContent(viewerPanel);
-                borderPane.setCenter(swingNode);
-                swingController.setToolBarVisible(false);
-                swingController.setUtilityPaneVisible(false);
-            }
-        });
-        ColorUIResource backgroundUI = new ColorUIResource(0x023c4f);
+    ColorUIResource backgroundUI = new ColorUIResource(0x023c4f);
         ColorUIResource textUI = new ColorUIResource(0xFFFAFA);
         ColorUIResource controlBackgroundUI = new ColorUIResource(0x023c4f);
         ColorUIResource infoBackgroundUI = new ColorUIResource(0x023c4f);
@@ -197,6 +166,38 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
         }
         
           }
+    try {
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                swingController = new SwingController();
+                swingController.setIsEmbeddedComponent(true);
+                PropertiesManager properties = new PropertiesManager(System.getProperties(),
+                        ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
+                properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
+                properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
+                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
+                ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
+                new FontPropertiesManager(properties, System.getProperties(), messageBundle);
+               
+                swingController.getDocumentViewController().setAnnotationCallback(
+                        new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
+                SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
+                viewerPanel = factory.buildViewerPanel();
+                viewerPanel.setForeground(Color.red);
+                factory.buildToolToolBar().setOpaque(true);    
+                viewerPanel.revalidate();
+                SwingNode swingNode = new SwingNode();
+                swingNode.setContent(viewerPanel);
+                borderPane.setCenter(swingNode);
+                swingController.setToolBarVisible(false);
+                swingController.setUtilityPaneVisible(false);
+            }
+        });
+        
     } catch (InvocationTargetException   ex) {
         Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -237,6 +238,12 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
     String studId = this.TxtFieldStudId.getText();
     boolean findStud = false;
     Student aux;
+    if(util.Utility.getRetiros().isEmpty()){
+        Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No hay matriculas");
+            a.showAndWait();
+    }
+    else{
     for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
             aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
             if(studId.equals(aux.getStudentID())){
@@ -274,7 +281,7 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
         }
          
     }
-
+    }
     }
 }
 

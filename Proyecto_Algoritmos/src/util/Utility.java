@@ -229,7 +229,7 @@ public class Utility {
                 String[] datos = list.get(i).split(",");
                 String[] date = datos[1].split("/");
                 Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1])-1,Integer.parseInt(date[0]));
-                Enrollment e=new Enrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]);
+                Enrollment e=new Enrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]+","+datos[5]+","+datos[6]);
                 getMatriculas().add(e);
                 e.setAutoEnrollmentID(Integer.parseInt(datos[0]));
             }
@@ -240,7 +240,7 @@ public class Utility {
                 String[] datos = list.get(i).split(",");
                 String[] date = datos[1].split("/");
                 Calendar c = new GregorianCalendar(Integer.parseInt(date[2]),Integer.parseInt(date[1])-1,Integer.parseInt(date[0]));
-                DeEnrollment e=new DeEnrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]);
+                DeEnrollment e=new DeEnrollment(Integer.parseInt(datos[0]), c.getTime(),datos[2],datos[3],datos[4]+","+datos[5]+","+datos[6]);
                 getRetiros().add(e);
                 e.setAutoEnrollmentID(Integer.parseInt(datos[0]));
             }
