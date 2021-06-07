@@ -4,19 +4,19 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" maxWidth="650.0" prefHeight="422.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMostrarEstudianteController">
+<AnchorPane id="AnchorPane" maxWidth="796.0" prefHeight="422.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMostrarEstudianteController">
    <children>
-      <TableView fx:id="tableStudent" prefHeight="422.0" prefWidth="650.0">
+      <TableView fx:id="tableStudent" prefHeight="422.0" prefWidth="617.0">
          <columns>
             <TableColumn fx:id="columnCedula" prefWidth="75.0" text="Cedula" />
             <TableColumn fx:id="columnEstudiante" prefWidth="107.0" text="IdStudent" />
-            <TableColumn fx:id="columnLast" prefWidth="72.0" text="LastName" />
-            <TableColumn fx:id="columnFirst" prefWidth="72.0" text="FirstName" />
-            <TableColumn fx:id="columnBirthday" prefWidth="124.0" text="Fecha de nacimiento" />
-            <TableColumn fx:id="columnPhone" minWidth="0.0" prefWidth="62.0" text="Telefono" />
-            <TableColumn fx:id="columnEmail" minWidth="6.0" prefWidth="58.0" text="E-Mail" />
-            <TableColumn fx:id="columnAdress" prefWidth="105.0" text="Direccion" />
-            <TableColumn fx:id="columnCarrera" prefWidth="75.0" text="Carrera" />
+            <TableColumn fx:id="columnLast" text="LastName" />
+            <TableColumn fx:id="columnFirst" prefWidth="106.0" text="FirstName" />
+            <TableColumn fx:id="columnBirthday" prefWidth="154.0" text="Fecha de nacimiento" />
+            <TableColumn fx:id="columnPhone" minWidth="0.0" prefWidth="24.0" text="Telefono" />
+            <TableColumn fx:id="columnEmail" minWidth="6.0" prefWidth="123.0" text="E-Mail" />
+            <TableColumn fx:id="columnAdress" prefWidth="125.0" text="Direccion" />
+            <TableColumn fx:id="columnCarrera" prefWidth="62.0" text="Carrera" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

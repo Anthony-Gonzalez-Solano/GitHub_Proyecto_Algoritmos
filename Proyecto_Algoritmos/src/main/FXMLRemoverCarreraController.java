@@ -65,26 +65,26 @@ public class FXMLRemoverCarreraController implements Initializable {
         } else {
             Career c = new Career(textFieldDescription.getText(), Integer.parseInt(textFieldId.getText()));
             try {
-                boolean exist = false;
-                boolean exist2 = false;
-                boolean student = false;
-                boolean career = false;
+                boolean exist = false;// variable  para ver si existe el id de carrera
+                boolean exist2 = false;// verificar la descripcion de la carrera
+                boolean student = false;// verificar el id estudiante
+                boolean career = false;// verificar id carrera de cursos
                 if (!util.Utility.getCarreras().isEmpty()) {
 
                     for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
                         Career c2 = (Career) util.Utility.getCarreras().getNode(i).data;
                         if (c2.equals(c)) {
-                            c = (Career) util.Utility.getCarreras().getNode(i).data;
+                            c = (Career) util.Utility.getCarreras().getNode(i).data;// si los datos son iguales, c se iguala al dato de la lista
                         }
-                        if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {
+                        if (Integer.parseInt(textFieldId.getText()) == c2.getId()) {// verifica si el id ingresado existe
                             exist = true;
                         }
-                        if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {
+                        if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {//verifica si existe la carrera
                             exist2 = true;
                         }
                         for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
                             Course c3 = (Course) util.Utility.getCursos().getNode(j).data;
-                            if (c3.getCareerID() == c.getId()) {
+                            if (c3.getCareerID() == c.getId()) {// si el id de carrera en el curso seleccionado es igual al ingresado lo pone en verdadero 
                                 career = true;
                             }
 
@@ -92,7 +92,7 @@ public class FXMLRemoverCarreraController implements Initializable {
                     }
                     for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                         Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                        if (Integer.parseInt(textFieldId.getText()) == s2.getCareerID()) {
+                        if (Integer.parseInt(textFieldId.getText()) == s2.getCareerID()) {//verificar si hay un estudiante en esta carrera
                             student = true;
                         }
 
@@ -109,7 +109,7 @@ public class FXMLRemoverCarreraController implements Initializable {
 
                                 txt.removeElement("carreras.txt", c.secondToString());
                             } else {
-                                if (exist == false && exist2 == false) {
+                                if (exist == false && exist2 == false) {// si ambos son falsas no hay carrera registrada
                                     Alert a = new Alert(Alert.AlertType.ERROR);
                                     a.setHeaderText("La carrera no esta registrada");
                                     a.showAndWait();
@@ -117,12 +117,12 @@ public class FXMLRemoverCarreraController implements Initializable {
                                     textFieldDescription.setText("");
 
                                 }
-                                if (exist2 == true && exist == false) {
+                                if (exist2 == true && exist == false) {// existe la carrera, pero no con el id ingresado, mandara una alerta
                                     Alert a = new Alert(Alert.AlertType.ERROR);
                                     a.setHeaderText("Existe esta  carrera, pero no con el Id ingresado");
                                     a.showAndWait();
                                 }
-                                if (exist == true && exist2 == false) {
+                                if (exist == true && exist2 == false) {// existe el ID pero no con la carrera ingresado, mandara una alerta
                                     Alert a = new Alert(Alert.AlertType.ERROR);
                                     a.setHeaderText("SI existe el iD, pero no con esta carrera asociada");
                                     a.showAndWait();

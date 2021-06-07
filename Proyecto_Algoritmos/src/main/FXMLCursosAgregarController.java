@@ -112,20 +112,20 @@ public class FXMLCursosAgregarController implements Initializable {
                         textFieldNombre.setText("");
                         comboCursos.getSelectionModel().clearSelection();//limpiamos
 
-                    } else { // errores
+                    } else { // si existe el ID en otro curso se mandara una alerta
                         if (exist == true && exist2 == false) {
                             Alert a = new Alert(Alert.AlertType.ERROR);
                             a.setHeaderText("El id del curso a agregar ya existe para otro curso\n Ingrese uno nuevo");
                             a.showAndWait();
                         }
-                        if (exist == false && exist2 == true) {
+                        if (exist == false && exist2 == true) {//  si existe el curso, mandara alerta
                             Alert a = new Alert(Alert.AlertType.ERROR);
                             a.setHeaderText("El   curso a agregar, ya existe pero con Id diferente\n Ingrese uno nuevo");
                             a.showAndWait();
                         }
                     }
 
-                } else {
+                } else { // si existe el curso con el mismo nombre, id
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setHeaderText(" El curso ingresado ya existe\n Ingrese uno nuevo");
                     a.showAndWait();

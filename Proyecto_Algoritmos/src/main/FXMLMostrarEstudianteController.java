@@ -32,8 +32,7 @@ public class FXMLMostrarEstudianteController implements Initializable {
     private List<String> list;
     @FXML
     private TableView<Student> tableViewEstudiante;
-    @FXML
-    private Text txtMessage;
+
     @FXML
     private TableView<List<String>> tableStudent;
 
@@ -73,62 +72,28 @@ public class FXMLMostrarEstudianteController implements Initializable {
         columnAdress.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().get(7)));
         columnCarrera.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().get(8)));
 
-//          if(this.tableViewEstudiante.getColumns().isEmpty()){
-//             TableColumn<Student,String>column1=new TableColumn<>("Id");
-//            column1.setCellValueFactory(new PropertyValueFactory<>("id"));
-//            TableColumn<Student,String>column2=new TableColumn<>("ID Estudiante");
-//            column2.setCellValueFactory(new PropertyValueFactory<>("studentID"));
-//              TableColumn<Student,String>column3=new TableColumn<>("LastName");
-//            column3.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-//                TableColumn<Student,String>column4=new TableColumn<>("FirstName");
-//            column4.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-//                 TableColumn<Student,String>column5=new TableColumn<>("Fecha de nacimiento");
-//            column5.setCellValueFactory(new PropertyValueFactory<>("birthday"));
-//                 TableColumn<Student,String>column6=new TableColumn<>("Telefono");
-//            column6.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-//                 TableColumn<Student,String>column7=new TableColumn<>("E-Mail");
-//            column7.setCellValueFactory(new PropertyValueFactory<>("email"));
-//                 TableColumn<Student,String>column8=new TableColumn<>("Direccion");
-//            column8.setCellValueFactory(new PropertyValueFactory<>("address"));
-////                 TableColumn<Student,String>column9=new TableColumn<>("ID Carrera");
-////            column9.setCellValueFactory(new PropertyValueFactory<>("careerID"));
-//       
-//            
-//            this.tableViewEstudiante.getColumns().add(column1);//agregar columnas
-//            this.tableViewEstudiante.getColumns().add(column2);
-//            this.tableViewEstudiante.getColumns().add(column3);
-//            this.tableViewEstudiante.getColumns().add(column4);
-//            this.tableViewEstudiante.getColumns().add(column5);
-//            this.tableViewEstudiante.getColumns().add(column6);
-//            this.tableViewEstudiante.getColumns().add(column7);
-//            this.tableViewEstudiante.getColumns().add(column8);
-//            this.tableViewEstudiante.getColumns().add(column9);
-//
-//     Career c=new Career(combo, 0)
         try {
-//            while (!this.tableStudent.getItems().isEmpty()) {
-//                this.tableStudent.getItems().remove(0);
-//            }
+
             for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                 list = new ArrayList<>();
-                Student s = (Student) util.Utility.getEstudiantes().getNode(i).data;
+                Student s = (Student) util.Utility.getEstudiantes().getNode(i).data;// casteamos para obtener los datos de la lista estudiantes
 
-                list.add(s.getId() + "");
-                list.add(s.getStudentID() + "");
-                list.add(s.getLastname() + "");
-                list.add(s.getFirstname() + "");
-                list.add(util.Utility.dateFormat(s.getBirthday()) + "");
-                list.add(s.getPhoneNumber() + "");
-                list.add(s.getEmail() + "");
-                list.add(s.getAddress() + "");
+                list.add(s.getId() + "");//agregamos en el primer indice el ID
+                list.add(s.getStudentID() + "");//agregamos en el segundo indice el student ID
+                list.add(s.getLastname() + "");//agregamos en el tercer indice el lastName
+                list.add(s.getFirstname() + "");//agregamos en el cuarto indice el firstName
+                list.add(util.Utility.dateFormat(s.getBirthday()) + "");//agregamos en el quinto indice la fecha de nacimiento
+                list.add(s.getPhoneNumber() + "");//agregamos en el sexto indice el telefono
+                list.add(s.getEmail() + "");//agregamos en el septimo indice el Email
+                list.add(s.getAddress() + "");//agregamos en el octavo indice la direccion
                 for (int j = 1; j <= util.Utility.getCarreras().size(); j++) {
                     Career c = (Career) util.Utility.getCarreras().getNode(j).data;
-                    if (s.getCareerID() == c.getId()) {
-                        list.add(c.getDescription() + "");
+                    if (s.getCareerID() == c.getId()) { // si el Id de carrera que se escoje en el estudiante es igual al id de carrera se agrega a la lista en el ultimo indice la descripcion de la carrera
+                        list.add(c.getDescription() + "");//agregamos en el noveno indice la descripcion de la carrera
                     }
                 }
 
-                tableStudent.getItems().add(list);
+                tableStudent.getItems().add(list);// se agregan los datos a la tabla
             }
 
         } catch (ListException ex) {

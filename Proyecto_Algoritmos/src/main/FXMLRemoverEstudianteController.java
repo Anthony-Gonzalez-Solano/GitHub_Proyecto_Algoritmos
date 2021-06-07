@@ -56,9 +56,7 @@ public class FXMLRemoverEstudianteController implements Initializable {
 
     @FXML
     private void btnRemover(ActionEvent event) {
-//         Calendar cal=new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(),
-//                this.datePickerEstudiante.getValue().getMonthValue(),
-//                this.datePickerEstudiante.getValue().getDayOfMonth());
+
         if (textFieldCedula.getText().isEmpty() || textFieldLastName.getText().isEmpty()) {
 
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -78,63 +76,61 @@ public class FXMLRemoverEstudianteController implements Initializable {
                 boolean lastName = false;
                 if (!util.Utility.getEstudiantes().isEmpty()) {
 
-                    
-                        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
-                            Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                            if (s2.equals(s)) {
-                                s = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                            }
-                            if (s2.getId() == s.getId()) {
-                                exist2 = true;
-                            }
-                            if (s2.getLastname().equalsIgnoreCase(textFieldLastName.getText())) {
-                                lastName = true;
-                            }
+                    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
+                        Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;//casteamos para obtener los datos lista estudiantes
+                        if (s2.equals(s)) { // si son iguales se iguala s al dato de la lista
+                            s = (Student) util.Utility.getEstudiantes().getNode(i).data;
+                        }
+                        if (s2.getId() == s.getId()) {// compara los id para ver si existen
+                            exist2 = true;
+                        }
+                        if (s2.getLastname().equalsIgnoreCase(textFieldLastName.getText())) { //compara los nombres para ver si existen
+                            lastName = true;
+                        }
 //                            for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
 //                                Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(j).data;
 //                                if (e.getiD() == s.getId()) {
 //                                    exist = true;
 //                                }
 //                            }
-                        }
+                    }
 
-                        if (exist == false) {
-                            if (exist2 == true && lastName == true) {
+                    if (exist == false) {
+                        if (exist2 == true && lastName == true) {
 
-                                util.Utility.getEstudiantes().remove(s);
+                            util.Utility.getEstudiantes().remove(s);
 
-                                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                                a.setHeaderText("Estudiante eliminado correctamente");
-                                a.showAndWait();
-
-                                textFieldCedula.setText("");
-                                textFieldLastName.setText("");
-
-                                txt.removeElement("estudiantes.txt", s.secondToString());
-                            } else {
-                                if (exist2 == true && lastName == false) {
-                                    Alert a = new Alert(Alert.AlertType.ERROR);
-                                    a.setHeaderText("No se puede eliminar este estudiante.\nHay alguien registrado con este id, pero no con el nombre ingresado");
-                                    a.showAndWait();
-                                }
-                                if (exist2 == false && lastName == true) {
-                                    Alert a = new Alert(Alert.AlertType.ERROR);
-                                    a.setHeaderText("No se puede eliminar este estudiante.\nHay alguien registrado con este nombre, pero no con el Id ingresado");
-                                    a.showAndWait();
-                                }
-                                if(exist2==false && lastName==false){
-                                     Alert a = new Alert(Alert.AlertType.ERROR);
-                                    a.setHeaderText("No se puede eliminar este estudiante.\nNo hay ningun estudiante registrado con este nombre y ID");
-                                    a.showAndWait();
-                                }
-                            }
-
-                        } else {
-                            Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("No se puede eliminar este estudiante\n Este estudiante ya hizo un proceso de matricula");
+                            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                            a.setHeaderText("Estudiante eliminado correctamente");
                             a.showAndWait();
+
+                            textFieldCedula.setText("");
+                            textFieldLastName.setText("");
+
+                            txt.removeElement("estudiantes.txt", s.secondToString());// se remueve en el TXT
+                        } else {
+                            if (exist2 == true && lastName == false) {// Existe el id , pero no con el nombre ingresado
+                                Alert a = new Alert(Alert.AlertType.ERROR);
+                                a.setHeaderText("No se puede eliminar este estudiante.\nHay alguien registrado con este id, pero no con el nombre ingresado");
+                                a.showAndWait();
+                            }
+                            if (exist2 == false && lastName == true) {// Existe el nombre , pero no con el id ingresado
+                                Alert a = new Alert(Alert.AlertType.ERROR);
+                                a.setHeaderText("No se puede eliminar este estudiante.\nHay alguien registrado con este nombre, pero no con el Id ingresado");
+                                a.showAndWait();
+                            }
+                            if (exist2 == false && lastName == false) {// No existe el id ni el nombre
+                                Alert a = new Alert(Alert.AlertType.ERROR);
+                                a.setHeaderText("No se puede eliminar este estudiante.\nNo hay ningun estudiante registrado con este nombre y ID");
+                                a.showAndWait();
+                            }
                         }
-                    
+
+                    } else {
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setHeaderText("No se puede eliminar este estudiante\n Este estudiante ya hizo un proceso de matricula");
+                        a.showAndWait();
+                    }
 
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR);

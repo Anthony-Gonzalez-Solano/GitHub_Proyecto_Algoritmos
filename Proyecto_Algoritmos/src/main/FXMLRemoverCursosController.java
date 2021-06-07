@@ -60,25 +60,25 @@ public class FXMLRemoverCursosController implements Initializable {
                 if (!util.Utility.getCursos().isEmpty()) { // si no esta vacia procede a hacer el ciclo y sino mandara error
 
                     for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-                        Course c2 = (Course) util.Utility.getCursos().getNode(i).data;
+                        Course c2 = (Course) util.Utility.getCursos().getNode(i).data;//casteamos, para obtener los datos de la lista cursos
 
-                        if (util.Utility.equals(c2,c )) {
+                        if (util.Utility.equals(c2,c )) { // si los datos son iguales, c se iguala al dato de la lista
                           c = (Course) util.Utility.getCursos().getNode(i).data;
                       
                         }
                         for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                             TimeTable t = (TimeTable) util.Utility.getHorarios().getNode(j).data;
-                            if (t.getCourseID().equalsIgnoreCase(c.getId())) {
+                            if (t.getCourseID().equalsIgnoreCase(c.getId())) { //verificar  si existe un horario para este curso
                                 exist = true;
                             }
                         }
 
                     }
 
-                    if (exist == false) {
-                        if (util.Utility.getCursos().contains(c) == true) {
-                            txt.removeElement("cursos.txt", c.secondToString());
-                            util.Utility.getCursos().remove(c);
+                    if (exist == false) {// si no existe un horario, se remueve
+                        if (util.Utility.getCursos().contains(c) == true) {//verifica si esta contenido en la lista
+                            txt.removeElement("cursos.txt", c.secondToString());// se remueve en el Txt
+                            util.Utility.getCursos().remove(c);// se remueve
 
                             Alert a = new Alert(Alert.AlertType.INFORMATION);
                             a.setHeaderText("El curso ha sido eliminado corectamente");

@@ -139,7 +139,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return lastname+","+firstname+","+util.Utility.dateFormat(birthday)+","+phoneNumber+","+email+","+address; // esto se mostrara en el comboBox
+        return lastname+" "+firstname+" (" + studentID+")"; // esto se mostrara en el comboBox
     }
     
 

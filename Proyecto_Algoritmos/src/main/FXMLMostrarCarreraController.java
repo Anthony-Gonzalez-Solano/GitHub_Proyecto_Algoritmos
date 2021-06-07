@@ -26,12 +26,8 @@ public class FXMLMostrarCarreraController implements Initializable {
 
     @FXML
     private TableView<Career> tableViewCarrera;
-    @FXML
-    private Text txtMessage;
+  
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -47,13 +43,13 @@ public class FXMLMostrarCarreraController implements Initializable {
             this.tableViewCarrera.getColumns().add(column2);
                
 }
-        //}
+     
            try{
         while(!this.tableViewCarrera.getItems().isEmpty()){
             this.tableViewCarrera.getItems().remove(0);
         }
         for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
-            this.tableViewCarrera.getItems().add((Career) util.Utility.getCarreras().getNode(i).data);
+            this.tableViewCarrera.getItems().add((Career) util.Utility.getCarreras().getNode(i).data);//recorremos la lista de carreras y casteamos para agregar los datos de la lista a la tabla 
             
         }
     } catch (ListException ex) {

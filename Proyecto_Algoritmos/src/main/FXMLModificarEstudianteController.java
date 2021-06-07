@@ -69,7 +69,7 @@ public class FXMLModificarEstudianteController implements Initializable {
 
                 comboEstudiantes.getItems().add((Student) util.Utility.getEstudiantes().getNode(i).data);
 
-            }
+            }//recorremos la lista de estudiantes para agregarlas al comboBox, para poder modificarlas
 
         } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -80,28 +80,28 @@ public class FXMLModificarEstudianteController implements Initializable {
 
     @FXML
     private void btnModificar(ActionEvent event) {
-        if (textFieldAdress.getText().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldFirstName.getText().isEmpty() || textFieldPhoneNumber.getText().isEmpty() || textFieldLastName.getText().isEmpty()) {
+        if (textFieldAdress.getText().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldFirstName.getText().isEmpty() || textFieldPhoneNumber.getText().isEmpty() || textFieldLastName.getText().isEmpty()) {//validamos campos vacios
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
-            Student s = new Student(comboEstudiantes.getSelectionModel().getSelectedItem().getId(), comboEstudiantes.getSelectionModel().getSelectedItem().getStudentID(), textFieldLastName.getText(), textFieldFirstName.getText(), comboEstudiantes.getSelectionModel().getSelectedItem().getBirthday(), textFieldPhoneNumber.getText(), textFieldEmail.getText(), textFieldAdress.getText(), comboEstudiantes.getSelectionModel().getSelectedItem().getCareerID());
+            Student s = new Student(comboEstudiantes.getSelectionModel().getSelectedItem().getId(), comboEstudiantes.getSelectionModel().getSelectedItem().getStudentID(), textFieldLastName.getText(), textFieldFirstName.getText(), comboEstudiantes.getSelectionModel().getSelectedItem().getBirthday(), textFieldPhoneNumber.getText(), textFieldEmail.getText(), textFieldAdress.getText(), comboEstudiantes.getSelectionModel().getSelectedItem().getCareerID());//creamos objeto tipo Student, donde se toman los valores de los textField y los comboBox
             try {
-                if (!util.Utility.getEstudiantes().isEmpty()) {
+                if (!util.Utility.getEstudiantes().isEmpty()) {// si no esta vacia la lista, recorre el ciclo for 
 
-                    if (util.Utility.ValidarMail(this.textFieldEmail.getText()) == true) {
+                    if (util.Utility.ValidarMail(this.textFieldEmail.getText()) == true) { //validacion del Email
 
                         for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
-                            Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                            if (s2.equals(comboEstudiantes.getSelectionModel().getSelectedItem())) {
+                            Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;//casteamos para obtener los datos de la lista
+                            if (s2.equals(comboEstudiantes.getSelectionModel().getSelectedItem())) {// comparamos con el objeto del ComboBox
                                 util.Utility.getEstudiantes().getNode(i).data = s;
 
                             }
                         }
                         txt.modifyFile("estudiantes.txt", comboEstudiantes.getSelectionModel().getSelectedItem().secondToString(), s.secondToString());
-                        int x = comboEstudiantes.getSelectionModel().getSelectedIndex();
-                        comboEstudiantes.getItems().remove(x);
-                        comboEstudiantes.getItems().add(x, s);
+                        int x = comboEstudiantes.getSelectionModel().getSelectedIndex();//tomamos el indice del elemento
+                        comboEstudiantes.getItems().remove(x);// se remueve el valor del indice
+                        comboEstudiantes.getItems().add(x, s);// se agrega en ese indice el elemento modificado
                         comboEstudiantes.getSelectionModel().clearSelection();
                         textFieldAdress.setText("");
                         textFieldEmail.setText("");
@@ -122,12 +122,8 @@ public class FXMLModificarEstudianteController implements Initializable {
                         txtPhone.setVisible(false);
                         txtEmail.setVisible(false);
                         btnModificar.setVisible(false);
-                        textFieldAdress.setText("");
-                        textFieldEmail.setText("");
-                        textFieldFirstName.setText("");
-                        textFieldLastName.setText("");
-                        textFieldPhoneNumber.setText("");
-                    } else {
+//                
+                    } else { //alerta de direccion de Email
                         Alert a = new Alert(Alert.AlertType.ERROR);
                         a.setHeaderText("La direccion de E-Mail no es valida ");
                         a.showAndWait();
@@ -152,12 +148,13 @@ public class FXMLModificarEstudianteController implements Initializable {
 
     @FXML
     private void comboEstudiantes(ActionEvent event) {
-        if (comboEstudiantes.getSelectionModel().getSelectedIndex() != -1) {
-            textFieldLastName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getLastname() + "");
-            textFieldFirstName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getFirstname() + "");
-            textFieldPhoneNumber.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getPhoneNumber() + "");
-            textFieldEmail.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getEmail() + "");
-            textFieldAdress.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getAddress() + "");
+        if (comboEstudiantes.getSelectionModel().getSelectedIndex() != -1) { // evitar errores cuando se activa el evento del comboBox, porque tomaba datos vacios
+            textFieldLastName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getLastname() + "");// agregamos al textField el LastName del estudiante seleccionado
+            textFieldFirstName.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getFirstname() + "");// agregamos al textField el FirstName del estudiante seleccionado
+            textFieldPhoneNumber.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getPhoneNumber() + "");// agregamos al textField el telefono del estudiante seleccionado
+            textFieldEmail.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getEmail() + "");// agregamos al textField el Email del estudiante seleccionado
+            textFieldAdress.setText(comboEstudiantes.getSelectionModel().getSelectedItem().getAddress() + "");// agregamos al textField la direccion del estudiante seleccionado
+
             textFieldAdress.setVisible(true);
             textFieldFirstName.setVisible(true);
             textFieldLastName.setVisible(true);

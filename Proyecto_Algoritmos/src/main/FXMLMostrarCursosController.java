@@ -27,15 +27,15 @@ import javafx.scene.control.TableView;
 public class FXMLMostrarCursosController implements Initializable {
 
     private List<String> list;
-   
+
     @FXML
-    private TableView<List<String>> tableCourse;
+    private TableView<List<String>> tableCourse; //tabla de tipo List String
     @FXML
     private TableColumn<List<String>, String> table1;
     @FXML
     private TableColumn<List<String>, String> table2;
     @FXML
-    private TableColumn<List<String>, String>table3;
+    private TableColumn<List<String>, String> table3;
     @FXML
     private TableColumn<List<String>, String> table4;
 
@@ -44,32 +44,30 @@ public class FXMLMostrarCursosController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        table1.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(0)));
+        table1.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(0))); // obtener los valores por indices
         table2.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(1)));
         table3.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(2)));
-        table4.setCellValueFactory(d->new SimpleStringProperty(d.getValue().get(3)));
+        table4.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().get(3)));
         try {
-//            while (!this.tableStudent.getItems().isEmpty()) {
-//                this.tableStudent.getItems().remove(0);
-//            }
+
             for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                 list = new ArrayList<>();
-                Course c1 = (Course) util.Utility.getCursos().getNode(i).data;
+                Course c1 = (Course) util.Utility.getCursos().getNode(i).data;// casteamos para obtener los datos de la lista Curso
 
-                list.add(c1.getId() + "");
-                list.add(c1.getName() + "");
-                list.add(c1.getCredits() + "");
-             
-                for (int j = 1; j <= util.Utility.getCarreras().size(); j++) {
-                    Career c = (Career) util.Utility.getCarreras().getNode(j).data;
-                    if (c1.getCareerID() == c.getId()) {
+                list.add(c1.getId() + ""); //agregamos en el primer indice el ID
+                list.add(c1.getName() + "");// En el segundo agregamos el nombre
+                list.add(c1.getCredits() + "");// En tercero agregamos los creditos del curso
+
+                for (int j = 1; j <= util.Utility.getCarreras().size(); j++) { //recorremos lista carreras
+                    Career c = (Career) util.Utility.getCarreras().getNode(j).data;//casteamos para obtener los datos de la lista carreras
+                    if (c1.getCareerID() == c.getId()) { // si el Id de carrera que se escoje en el curso es igual al id de carrera se agrega a la lista en el ultimo indice la descripcion de la carrera
                         list.add(c.getDescription());
-                   
+
                     }
-                  
+
                 }
 
-                tableCourse.getItems().add(list);
+                tableCourse.getItems().add(list); // se agregan los datos a la tabla
             }
         } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
