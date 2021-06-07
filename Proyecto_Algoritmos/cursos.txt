@@ -4,3 +4,7 @@
 IF-4011,Introduccion,4,9
 IF21,Danza Aerobica,0,14
 213323,Intro ingles,4,9
+A,Avanzado,1,9
+n,sa,3,9
+FGFDG,Avanzado Ingles,6,2
+R,GC,5,2

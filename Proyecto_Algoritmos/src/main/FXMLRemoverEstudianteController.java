@@ -78,7 +78,7 @@ public class FXMLRemoverEstudianteController implements Initializable {
 
                     for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                         Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;//casteamos para obtener los datos lista estudiantes
-                        if (s2.equals(s)) { // si son iguales se iguala s al dato de la lista
+                        if (util.Utility.equals(s2, s)) { // si son iguales se iguala s al dato de la lista
                             s = (Student) util.Utility.getEstudiantes().getNode(i).data;
                         }
                         if (s2.getId() == s.getId()) {// compara los id para ver si existen
@@ -87,12 +87,12 @@ public class FXMLRemoverEstudianteController implements Initializable {
                         if (s2.getLastname().equalsIgnoreCase(textFieldLastName.getText())) { //compara los nombres para ver si existen
                             lastName = true;
                         }
-//                            for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
-//                                Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(j).data;
-//                                if (e.getiD() == s.getId()) {
-//                                    exist = true;
-//                                }
-//                            }
+                            for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
+                                Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(j).data;
+                                if (e.getiD() == s.getId()) {
+                                    exist = true;
+                                }
+                            }
                     }
 
                     if (exist == false) {
