@@ -76,7 +76,10 @@ public class FXMLAgregarHorarioController implements Initializable {
     @FXML
     private void CB_CareerSelect(ActionEvent event) {
         CB_Course.getItems().clear();
-        int id = CB_Carrer.getSelectionModel().getSelectedItem().getId();
+        int id = 0;
+        if(CB_Carrer.getSelectionModel().getSelectedItem()!=null){
+            id = CB_Carrer.getSelectionModel().getSelectedItem().getId();
+        }
         try {
             for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
                 Course c = (Course)util.Utility.getCursos().getNode(i).data;
@@ -84,7 +87,7 @@ public class FXMLAgregarHorarioController implements Initializable {
                     boolean tf=false;
                 for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                         TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(j).data;
-                        if(c.getId().equals(tt.getCourseID()));
+                        if(c.getId().equals(tt.getCourseID()))
                             tf=true;
                     }
                     if(tf==false)
