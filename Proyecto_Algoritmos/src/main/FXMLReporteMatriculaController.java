@@ -48,6 +48,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -237,31 +238,37 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
     private void btnEnter(ActionEvent event) throws ListException {
     String studId = this.TxtFieldStudId.getText();
     boolean findStud = false;
+    boolean findEnrollment = false;
     Student aux;
-    if(util.Utility.getRetiros().isEmpty()){
-        Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("No hay matriculas");
-            a.showAndWait();
-    }
-    else{
-    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
+        for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
+            Enrollment m=(Enrollment)util.Utility.getMatriculas().getNode(i).data;
+                if(this.TxtFieldStudId.getText().equals(m.getStudentID()))
+                    findEnrollment=true;
+        }
+        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
             aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-            if(studId.equals(aux.getStudentID())){
+            if(this.TxtFieldStudId.getText().equals(aux.getStudentID())){
                 findStud=true;
                 stud=aux;
             }
-    }
-    if (TxtFieldStudId.getText().isEmpty()) {
+        }
+    if(util.Utility.getMatriculas().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No hay matriculas");
+            a.showAndWait();
+    }else if(TxtFieldStudId.getText().isEmpty()){
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-        } 
-     else if(findStud==false){
+    }else if(findStud==false){
          Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
             a.showAndWait();
-     }
-     else{
+     }else if(findEnrollment==false){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No hay matricula para este estudiante");
+            a.showAndWait();
+     }else{
          this.TxtFieldStudId.setVisible(false);
          this.bp.setVisible(true);
          this.putTxt.setVisible(false);
@@ -281,7 +288,8 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
         }
          
     }
+    
     }
     }
-}
+
 

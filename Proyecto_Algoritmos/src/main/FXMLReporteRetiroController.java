@@ -225,39 +225,43 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
 
     @FXML
     private void btnEnter(ActionEvent event) throws ListException {
-    String studId = this.txtFieldId.getText();
     boolean findStud = false;
+    boolean findEnrollment=false;
     Student aux;
-    if(util.Utility.getRetiros().isEmpty()){
-        Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("No hay retiros");
-            a.showAndWait();
-    }
-    else{
-    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
+    for (int i = 1; i <= util.Utility.getRetiros().size(); i++) {
+            Enrollment m=(Enrollment)util.Utility.getRetiros().getNode(i).data;
+                if(this.txtFieldId.getText().equals(m.getStudentID()))
+                    findEnrollment=true;
+        }
+        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
             aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-            if(studId.equals(aux.getStudentID())){
+            if(this.txtFieldId.getText().equals(aux.getStudentID())){
                 findStud=true;
                 stud=aux;
             }
-    }
-    if (txtFieldId.getText().isEmpty()) {
+        }
+    if(util.Utility.getRetiros().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No hay matriculas");
+            a.showAndWait();
+    }else if(txtFieldId.getText().isEmpty()){
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-        } 
-     else if(findStud==false){
+    }else if(findStud==false){
          Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
+            a.setHeaderText("Estudiante con id "+txtFieldId.getText()+" no ha sido encontrado");
             a.showAndWait();
-     }
-     else{
+     }else if(findEnrollment==false){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("No hay matricula para este estudiante");
+            a.showAndWait();
+     }else{
          this.txtFieldId.setVisible(false);
          this.bp.setVisible(true);
          this.putTxt.setVisible(false);
          this.btnEnter.setVisible(false);
          File stud = new File("estudiantes.txt");
-     
         try {
             
             createPDF(stud);
@@ -270,7 +274,7 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
         } catch (ListException ex) {
             Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-     } 
-    }
+         
     }
 }
+    }
