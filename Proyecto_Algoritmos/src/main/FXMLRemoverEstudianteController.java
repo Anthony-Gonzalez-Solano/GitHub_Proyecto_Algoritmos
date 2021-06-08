@@ -89,7 +89,7 @@ public class FXMLRemoverEstudianteController implements Initializable {
                         }
                             for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
                                 Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(j).data;
-                                if (e.getiD() == s.getId()) {
+                                if (e.getStudentID().equalsIgnoreCase(s.getStudentID())) {
                                     exist = true;
                                 }
                             }

@@ -88,12 +88,12 @@ public class FXMLModificarCursosController implements Initializable {
                             util.Utility.getCursos().getNode(i).data = c;
 
                         }
-//                        for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {//recorremos lista de matriculas
-//                            Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(i).data;// casteamos para obtener los datos de la lista
-//                            if (comboCursos.getSelectionModel().getSelectedItem().getId().equalsIgnoreCase(e.getCourseID())) {// condicion para si existe una matricula hecha con este curso
-//                                curso = true;
-//                            }
-//                        }// No puede hacerse todavia
+                        for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {//recorremos lista de matriculas
+                            Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(j).data;// casteamos para obtener los datos de la lista
+                            if (comboCursos.getSelectionModel().getSelectedItem().getId().equalsIgnoreCase(e.getCourseID())) {// condicion para si existe una matricula hecha con este curso
+                                curso = true;
+                            }
+                        }
                     }
                     if (curso == false) { // si no existe una matricula lo modifica
                         txt.modifyFile("cursos.txt", comboCursos.getSelectionModel().getSelectedItem().secondToString(), c.secondToString());// modifica el txt
@@ -119,7 +119,7 @@ public class FXMLModificarCursosController implements Initializable {
 
                     } else {//alerta de si ya hay un estudiante que hizo matricula con el curso a  modificar
                         Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setHeaderText("No se puede eliminar este curso.\nYa hay un estudiante que ha hecho un proceso de matricula con este curso");
+                        a.setHeaderText("No se puede modificar este curso.\nYa hay un estudiante que ha hecho un proceso de matricula con este curso");
                         a.showAndWait();
                     }
 
@@ -130,10 +130,10 @@ public class FXMLModificarCursosController implements Initializable {
                     textFieldNombre.setText("");
                     textFieldCredits.setText("");
                 }
-            } catch (NullPointerException epe) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setHeaderText("Error inesperado");
-                a.showAndWait();
+//            } catch (NullPointerException epe) {
+//                Alert a = new Alert(Alert.AlertType.ERROR);
+//                a.setHeaderText("Error inesperado");
+//                a.showAndWait();
             } catch (ListException ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Lista vacia");

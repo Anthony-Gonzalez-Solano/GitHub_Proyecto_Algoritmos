@@ -3,7 +3,6 @@
 342432,0008,Adrian,dsfsf,13/06/2021,0,k@gmail.com,gfgf,0
 4645,0010,Mario,Castillo,04/06/2021,60984321,fc@gmail.com,Monterrey,0
 355,0017,Fabricio,Perez,01/06/2021,90763212,perromiedo@gmail.com,Represa,0
-45,0020,Carlos,fg,28/05/2021,345,dgdg@gmail.com,gfdg,0
 9993,0021,Sofia,Perez,26/05/2021,1233,graa@gmail.com,1323,0
 21334214,0024,chorixo,glande,23/07/2021,1241234414,adri@gmail.com,241qwrrqwe12,9
-4,0026,Q,f,18/07/2021,24,F@GMAIL.COM,sfs,2
+2423,0025,Adrian,f,30/07/2021,324,ee@gail.com,dgd,2
