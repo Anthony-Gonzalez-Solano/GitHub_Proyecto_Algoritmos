@@ -46,11 +46,18 @@ import javafx.fxml.Initializable;
  * @author Adrian Ureña Moraga <Agitor Lucens V>
  */
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -237,38 +244,62 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
     private void btnEnter(ActionEvent event) throws ListException {
     String studId = this.TxtFieldStudId.getText();
     boolean findStud = false;
+    boolean findEnrollment = false;
     Student aux;
-    if(util.Utility.getRetiros().isEmpty()){
-        Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("No hay matriculas");
-            a.showAndWait();
-    }
-    else{
-    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
+    Alert a = new Alert(Alert.AlertType.ERROR);
+      DialogPane dialogPane = a.getDialogPane();
+// root
+    dialogPane.setStyle("-fx-background-color: #02475e;");
+
+// 1. Grid
+    // remove style to customize header
+    dialogPane.getStyleClass().remove("alert");
+
+    GridPane grid = (GridPane)dialogPane.lookup(".header-panel"); 
+    grid.setStyle("-fx-background-color: cadetblue; "
+            + "-fx-font-style: italic;"+"-fx-font-size: 24px; "+"-fx-font-color: #e2e2e2;");
+
+// 2. ContentText with just a Label
+    dialogPane.lookup(".content.label").setStyle("-fx-font-size: 24px; "
+            + "-fx-font-weight: bold; -fx-fill: blue;");
+
+// 3- ButtonBar
+    ButtonBar buttonBar = (ButtonBar)a.getDialogPane().lookup(".button-bar");
+    buttonBar.setStyle("-fx-font-size: 24px;"
+            + "-fx-background-color: 687980;");
+    buttonBar.getButtons().forEach(b->b.setStyle("-fx-font-family: \"Andalus\";"));
+    
+        for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
+            Enrollment m=(Enrollment)util.Utility.getMatriculas().getNode(i).data;
+                if(this.TxtFieldStudId.getText().equals(m.getStudentID()))
+                    findEnrollment=true;
+        }
+        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
             aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-            if(studId.equals(aux.getStudentID())){
+            if(this.TxtFieldStudId.getText().equals(aux.getStudentID())){
                 findStud=true;
                 stud=aux;
             }
-    }
-    if (TxtFieldStudId.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.ERROR);
+        }
+    if(util.Utility.getMatriculas().isEmpty()){            
+            a.setHeaderText("No hay matriculas");
+            a.showAndWait();
+    }else if(TxtFieldStudId.getText().isEmpty()){           
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-        } 
-     else if(findStud==false){
-         Alert a = new Alert(Alert.AlertType.ERROR);
+    }else if(findStud==false){        
             a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
             a.showAndWait();
-     }
-     else{
+     }else if(findEnrollment==false){           
+            a.setHeaderText("No hay matricula para este estudiante");
+            a.showAndWait();
+     }else{
          this.TxtFieldStudId.setVisible(false);
          this.bp.setVisible(true);
          this.putTxt.setVisible(false);
          this.btnEnter.setVisible(false);
          File stud = new File("estudiantes.txt");
-        try {
-            
+        try {            
             createPDF(stud);
 //            createViewer(bp);
             openDocument("ReporteMatricula.pdf");
@@ -281,7 +312,8 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
         }
          
     }
+    
     }
     }
-}
+
 
