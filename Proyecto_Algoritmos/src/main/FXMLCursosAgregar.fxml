@@ -12,7 +12,7 @@
       <ComboBox fx:id="comboCursos" layoutX="63.0" layoutY="274.0" onAction="#comboCursos" prefHeight="33.0" prefWidth="212.0" promptText="Carrera" />
       <Button fx:id="btnAgregar" layoutX="435.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnAgregar" prefHeight="42.0" prefWidth="127.0" text="Agregar" />
       <TextField fx:id="textFieldNombre" layoutX="63.0" layoutY="123.0" />
-      <TextField fx:id="textFieldCreditos" layoutX="60.0" layoutY="200.0" />
+      <TextField fx:id="textFieldCreditos" layoutX="60.0" layoutY="200.0" onKeyPressed="#numericCredits" onKeyTyped="#numericCredits" />
       <TextField fx:id="textFieldId" layoutX="60.0" layoutY="52.0" />
       <Text fx:id="txtError" layoutX="326.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="96.13671875" />
       <Text fx:id="txtMessage" layoutX="14.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Curso agregado" visible="false" wrappingWidth="160.13671875" />

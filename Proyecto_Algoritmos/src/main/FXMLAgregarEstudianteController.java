@@ -15,6 +15,8 @@ import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;// librerias para manejar expresiones regulares
 import java.util.regex.Pattern;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import util.FileTXT;
 
@@ -49,21 +52,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
     @FXML
     private TextField textFieldAdress;
     @FXML
-    private Text txtCedula;
-    @FXML
-    private Text txtLastName;
-    @FXML
-    private Text txtPhone;
-    @FXML
-    private Text txtFirstName;
-    @FXML
-    private Text txtEmail;
-    @FXML
-    private Text txtDireccion;
-    @FXML
     private DatePicker datePickerEstudiante;
-    @FXML
-    private Text txtFecha;
     @FXML
     private Button btnAgregar;
     @FXML
@@ -202,6 +191,45 @@ public class FXMLAgregarEstudianteController implements Initializable {
                 this.textFieldLastName.setText("");
             }
         }
+    }
+
+    @FXML
+    private void numericCed(KeyEvent event) {
+        textFieldId.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textFieldId.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+         });
+    }
+
+    @FXML
+    private void numericAddress(KeyEvent event) {
+        textFieldPhone.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textFieldPhone.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+         });
+    }
+
+    @FXML
+    private void numericDate(KeyEvent event) {
+        datePickerEstudiante.getEditor().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    datePickerEstudiante.getEditor().setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+         });
     }
 
 }

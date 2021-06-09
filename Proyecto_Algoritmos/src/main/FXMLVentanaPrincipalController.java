@@ -218,14 +218,17 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Matricula_Nueva_student(ActionEvent event) {
+        loadPage("FXMLMatriculaNueva_Student");
     }
 
     @FXML
     private void Mi_Matricula_Retiro_student(ActionEvent event) {
+        loadPage("FXMLMatriculaRetirar_Student");
     }
 
     @FXML
     private void MI_Reportes_Matricula_student(ActionEvent event) {
+        loadPage("FXMLReporteMatricula_Student");
     }
 
     @FXML

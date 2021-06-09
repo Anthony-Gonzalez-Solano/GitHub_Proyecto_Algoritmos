@@ -10,13 +10,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLAgregarEstudianteController">
    <children>
-      <TextField fx:id="textFieldId" layoutX="45.0" layoutY="38.0" />
+      <TextField fx:id="textFieldId" layoutX="45.0" layoutY="38.0" onKeyPressed="#numericCed" onKeyTyped="#numericCed" />
       <TextField fx:id="textFieldLastName" layoutX="317.0" layoutY="111.0" />
       <TextField fx:id="textFieldFirstName" layoutX="45.0" layoutY="111.0" />
-      <TextField fx:id="textFieldPhone" layoutX="45.0" layoutY="194.0" />
+      <TextField fx:id="textFieldPhone" layoutX="45.0" layoutY="194.0" onKeyPressed="#numericAddress" onKeyTyped="#numericAddress" />
       <TextField fx:id="textFieldEmail" layoutX="317.0" layoutY="194.0" />
       <TextField fx:id="textFieldAdress" layoutX="317.0" layoutY="38.0" />
-      <DatePicker fx:id="datePickerEstudiante" layoutX="46.0" layoutY="273.0" prefHeight="34.0" prefWidth="212.0" />
+      <DatePicker fx:id="datePickerEstudiante" layoutX="46.0" layoutY="273.0" onKeyPressed="#numericDate" onKeyTyped="#numericDate" prefHeight="34.0" prefWidth="212.0" />
       <Button fx:id="btnAgregar" layoutX="217.0" layoutY="339.0" mnemonicParsing="false" onAction="#btnAgregar" prefHeight="40.0" prefWidth="143.0" text="Agregar" />
       <Text fx:id="txtMessage" layoutX="411.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="163.13671875" />
       <ComboBox fx:id="comboCarrera" layoutX="317.0" layoutY="274.0" prefHeight="33.0" prefWidth="212.0" promptText="Carrera" />
