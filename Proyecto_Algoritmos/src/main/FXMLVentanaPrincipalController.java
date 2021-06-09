@@ -66,13 +66,46 @@ public class FXMLVentanaPrincipalController implements Initializable {
     private MenuItem MI_Carreras_Suprimir;
     @FXML
     private MenuItem MI_Horarios;
+    @FXML
+    private Menu M_carreras;
+    @FXML
+    private Menu M_estudiantes;
+    @FXML
+    private Menu M_cursos;
+    @FXML
+    private Menu M_horarios;
+    @FXML
+    private Menu M_maricula;
+    @FXML
+    private Menu M_reportes;
+    @FXML
+    private Menu M_matricula_student;
+    @FXML
+    private MenuItem MI_Matricula_Nueva_student;
+    @FXML
+    private MenuItem Mi_Matricula_Retiro_student;
+    @FXML
+    private Menu M_reportes_student;
+    @FXML
+    private MenuItem MI_Reportes_Matricula_student;
+    @FXML
+    private MenuItem MI_Reportes_Retiros_student;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if(util.Utility.getIntro()!=null){
+            M_carreras.setVisible(false);
+            M_cursos.setVisible(false);
+            M_estudiantes.setVisible(false);
+            M_horarios.setVisible(false);
+            M_maricula.setVisible(false);
+            M_reportes.setVisible(false);
+            M_matricula_student.setVisible(true);
+            M_reportes_student.setVisible(true);
+        }
     }    
 
     @FXML
@@ -171,7 +204,33 @@ public class FXMLVentanaPrincipalController implements Initializable {
              this.bp.setCenter(root);   
     }
 
+//            private void idOnKeyPressedTyped(KeyEvent event) {
+    //            textFieldID.textProperty().addListener(new ChangeListener<String>() {
+    //                @Override
+    //                public void changed(ObservableValue<? extends String> observable, String oldValue, 
+    //                    String newValue) {
+    //                    if (!newValue.matches("\\d*")) {
+    //                        textFieldID.setText(newValue.replaceAll("[^\\d]", ""));
+    //                    }
+    //                }
+    //             });
+    //          }
 
+    @FXML
+    private void MI_Matricula_Nueva_student(ActionEvent event) {
+    }
+
+    @FXML
+    private void Mi_Matricula_Retiro_student(ActionEvent event) {
+    }
+
+    @FXML
+    private void MI_Reportes_Matricula_student(ActionEvent event) {
+    }
+
+    @FXML
+    private void MI_Reportes_Retiros_student(ActionEvent event) {
+    }
 
 
 }

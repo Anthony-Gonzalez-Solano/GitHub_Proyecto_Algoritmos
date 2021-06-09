@@ -24,11 +24,9 @@ import javafx.stage.Stage;
  */
 public class NewFXMain extends Application {
     
-    private String Security;
     
     @Override
     public void start(Stage primaryStage) {
-        Security = util.Utility.getSecurity();
         
         try {
             primaryStage = new Stage();

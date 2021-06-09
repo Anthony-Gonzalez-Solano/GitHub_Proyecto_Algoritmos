@@ -98,6 +98,9 @@ public class Utility {
                   case "Course":
                       Course course1=(Course)a;Course course2=(Course)b;
                       return course1.getId().equalsIgnoreCase(course2.getId()) && course1.getName().equalsIgnoreCase(course2.getName());
+                  case "enrollment":
+                      Enrollment e1 =(Enrollment)a;Enrollment e2=(Enrollment)b;
+                      return e1.getiD()==e2.getiD() && e1.getCourseID().equals(e2.getCourseID()) && e1.getStudentID().equals(e2.getStudentID());
         }
         
         return false; //en cualquier otro caso
@@ -108,7 +111,8 @@ public class Utility {
         if(a instanceof String && b instanceof String) return "string";
         if(a instanceof Career && b instanceof Career)return "Career";
         if(a instanceof Student && b instanceof Student)return "Student";
-        if(a instanceof Course && b instanceof Course)return "Course";        
+        if(a instanceof Course && b instanceof Course)return "Course";
+        if(a instanceof Enrollment && b instanceof Enrollment)return "enrollment";
         return "unknown"; //desconocido
     }
     
@@ -174,9 +178,9 @@ public class Utility {
     public static CircularDoublyLinkedList getRetiros(){ return listRetiro;}
     public void setRetiros(CircularDoublyLinkedList list){listRetiro=list;}
     
-    private static String Security = "security";
-    public static void setSecurity(String admin_studnet){Security = admin_studnet;}
-    public static String getSecurity(){return Security;}
+    private static Student introStudent = null;
+    public static void setIntro(Student s){introStudent = s;}
+    public static Student getIntro(){return introStudent;}
     
     public static void fillList(){
         FileTXT file = new FileTXT();

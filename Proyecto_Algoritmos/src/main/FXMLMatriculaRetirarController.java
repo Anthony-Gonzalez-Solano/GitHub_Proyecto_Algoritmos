@@ -173,10 +173,17 @@ public class FXMLMatriculaRetirarController implements Initializable {
     }
     Date date = new Date();
     this.deR=new DeEnrollment(date,stud.getStudentID(),id,column4.getCellData(index));
-    Enrollment eR=new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
+    Enrollment eR=null;//new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
+    for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
+        Enrollment eR2 = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
+        if(eR2.getCourseID().equals(id)&& eR2.getStudentID().equals(stud.getStudentID())){
+            eR=eR2;
+        }
+    }
     txt.writeFile("retiro.txt", deR.toString());
     util.Utility.getRetiros().add(deR);
     txt.removeElement("matricula.txt",eR);
+            System.out.println(eR);
     util.Utility.getMatriculas().remove(eR);
     btnEmail();
     this.tableView.getSelectionModel().clearSelection();

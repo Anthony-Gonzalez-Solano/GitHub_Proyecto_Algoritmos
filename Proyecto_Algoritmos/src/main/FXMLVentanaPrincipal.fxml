@@ -13,7 +13,7 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="Carreras">
+          <Menu fx:id="M_carreras" mnemonicParsing="false" text="Carreras">
             <items>
               <MenuItem fx:id="MI_Carreras_Agregar" mnemonicParsing="false" onAction="#MI_Carreras_Agregar" text="Agregar Carrera" />
                   <MenuItem fx:id="MI_Carreras_Modificar" mnemonicParsing="false" onAction="#MI_Carreras_Modificar" text="Modificar Carrera" />
@@ -21,7 +21,7 @@
                   <MenuItem fx:id="MI_Carreras_Mostrar" mnemonicParsing="false" onAction="#MI_Carreras_Mostrar" text="Mostrar Carreras" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Estudiantes">
+          <Menu fx:id="M_estudiantes" mnemonicParsing="false" text="Estudiantes">
             <items>
               <MenuItem fx:id="MI_Estudiante_Agregar" mnemonicParsing="false" onAction="#MI_Estudiante_Agregar" text="Agregar Estudiante" />
                   <MenuItem fx:id="MI_Estudiante_Modificarr" mnemonicParsing="false" onAction="#MI_Estudiante_Modificarr" text="Modificar Estudiante" />
@@ -29,7 +29,7 @@
                   <MenuItem fx:id="MI_Estudiante_Mostrar" mnemonicParsing="false" onAction="#MI_Estudiante_Mostrar" text="Mostrar Estudiantes" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Cursos">
+          <Menu fx:id="M_cursos" mnemonicParsing="false" text="Cursos">
             <items>
               <MenuItem fx:id="MI_Cursos_Agregar" mnemonicParsing="false" onAction="#MI_Cursos_Agregar" text="Agregar Curso" />
                   <MenuItem fx:id="MI_Cursos_Modificar" mnemonicParsing="false" onAction="#MI_Cursos_Modificar" text="Modificar Curso" />
@@ -37,22 +37,34 @@
                   <MenuItem fx:id="MI_Cursos_Mostrar" mnemonicParsing="false" onAction="#MI_Cursos_Mostrar" text="Mostrar Cursos" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Horarios">
+            <Menu fx:id="M_horarios" mnemonicParsing="false" text="Horarios">
               <items>
                 <MenuItem fx:id="MI_Horarios" mnemonicParsing="false" onAction="#MI_Horarios" text="Agregar Horario" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Matricula">
+            <Menu fx:id="M_maricula" mnemonicParsing="false" text="Matricula">
               <items>
                 <MenuItem fx:id="MI_Matricula_Nueva" mnemonicParsing="false" onAction="#MI_Matricula_Nueva" text="Nueva Matricula" />
                   <MenuItem fx:id="Mi_Matricula_Retiro" mnemonicParsing="false" onAction="#Mi_Matricula_Retiro" text="Retiro de Cursos" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Reportes">
+            <Menu fx:id="M_reportes" mnemonicParsing="false" text="Reportes">
               <items>
                 <MenuItem fx:id="MI_Reportes_Matricula" mnemonicParsing="false" onAction="#MI_Reportes_Matricula" text="Reporte de Matricula" />
                   <MenuItem fx:id="MI_Reportes_Retiros" mnemonicParsing="false" onAction="#MI_Reportes_Retiros" text="Reporte de Retiro de Cursos" />
               </items>
+            </Menu>
+            <Menu fx:id="M_matricula_student" mnemonicParsing="false" text="Matricula" visible="false">
+               <items>
+                  <MenuItem fx:id="MI_Matricula_Nueva_student" mnemonicParsing="false" onAction="#MI_Matricula_Nueva_student" text="Nueva Matricula" />
+                  <MenuItem fx:id="Mi_Matricula_Retiro_student" mnemonicParsing="false" onAction="#Mi_Matricula_Retiro_student" text="Retiro de Cursos" />
+               </items>
+            </Menu>
+            <Menu fx:id="M_reportes_student" mnemonicParsing="false" text="Reportes" visible="false">
+               <items>
+                  <MenuItem fx:id="MI_Reportes_Matricula_student" mnemonicParsing="false" onAction="#MI_Reportes_Matricula_student" text="Reporte de Matricula" />
+                  <MenuItem fx:id="MI_Reportes_Retiros_student" mnemonicParsing="false" onAction="#MI_Reportes_Retiros_student" text="Reporte de Retiro de Cursos" />
+               </items>
             </Menu>
         </menus>
       </MenuBar>

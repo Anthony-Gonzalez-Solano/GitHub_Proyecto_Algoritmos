@@ -117,7 +117,13 @@ public class FXMLSecurityController implements Initializable {
                     if(tf_canet.getText().equals(s.getUser())){
                         if(!s.getPassword().equals("-")){
                             if(tf_canet.getText().equals(s.getUser()) && tf_Password_Student.getText().equals(s.getPassword())){
-                                util.Utility.setSecurity("student");
+                                
+                                for (int j = 1; j <= util.Utility.getEstudiantes().size(); j++) {
+                                    Student st = (Student)util.Utility.getEstudiantes().getNode(j).data;
+                                    if(st.getStudentID().equals(tf_canet.getText())){
+                                        util.Utility.setIntro(st);
+                                    }
+                                }
                                 Parent root = null;
                                 try {
                                     root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
@@ -167,7 +173,7 @@ public class FXMLSecurityController implements Initializable {
                     Security s2 = (Security)util.Utility.getUsers().getNode(i).getData();
                     Security s1 = new Security(tf_user.getText(), tf_password.getText());
                    if(s1.equals(s2)){
-                        util.Utility.setSecurity("admin");
+                        util.Utility.setIntro(null);
                         Parent root = null;
                         try {
                             root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
