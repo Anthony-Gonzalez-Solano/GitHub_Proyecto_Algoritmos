@@ -11,7 +11,7 @@
       <ComboBox fx:id="comboEstudiantes" layoutX="80.0" layoutY="38.0" onAction="#comboEstudiantes" prefWidth="150.0" promptText="Estudiantes" />
       <TextField fx:id="textFieldLastName" layoutX="354.0" layoutY="121.0" visible="false" />
       <TextField fx:id="textFieldFirstName" layoutX="80.0" layoutY="121.0" visible="false" />
-      <TextField fx:id="textFieldPhoneNumber" layoutX="80.0" layoutY="200.0" visible="false" />
+      <TextField fx:id="textFieldPhoneNumber" layoutX="80.0" layoutY="200.0" onKeyPressed="#numericPhone" onKeyTyped="#numericPhone" visible="false" />
       <TextField fx:id="textFieldEmail" layoutX="354.0" layoutY="200.0" visible="false" />
       <TextField fx:id="textFieldAdress" layoutX="354.0" layoutY="279.0" visible="false" />
       <Button fx:id="btnModificar" layoutX="35.0" layoutY="319.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="40.0" prefWidth="150.0" text="Modificar" visible="false" />

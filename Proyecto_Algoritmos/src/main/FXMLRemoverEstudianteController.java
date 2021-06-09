@@ -13,12 +13,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import util.FileTXT;
 
@@ -34,10 +37,6 @@ public class FXMLRemoverEstudianteController implements Initializable {
     private TextField textFieldLastName;
     @FXML
     private TextField textFieldCedula;
-    @FXML
-    private Text txtLastName;
-    @FXML
-    private Text txtCedula;
     @FXML
     private Button btnRemover;
     @FXML
@@ -153,5 +152,22 @@ public class FXMLRemoverEstudianteController implements Initializable {
             }
 //     
         }
+    }
+
+    @FXML
+    private void numericCel(KeyEvent event) {
+        textFieldCedula.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textFieldCedula.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+         });
+    }
+
+    @FXML
+    private void initialize(KeyEvent event) {
     }
 }

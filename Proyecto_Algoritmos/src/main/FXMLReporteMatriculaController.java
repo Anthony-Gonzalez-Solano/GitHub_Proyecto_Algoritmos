@@ -298,7 +298,7 @@ public class FXMLReporteMatriculaController implements Initializable {
         } else if (findEnrollment == false) {
             a.setHeaderText("No hay matricula para este estudiante");
             a.showAndWait();
-        } else {
+        } else{
             this.TxtFieldStudId.setVisible(false);
             this.bp.setVisible(true);
             this.putTxt.setVisible(false);

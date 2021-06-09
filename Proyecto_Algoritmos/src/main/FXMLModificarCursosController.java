@@ -11,6 +11,8 @@ import domain.Enrollment;
 import domain.Student;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import util.FileTXT;
 
@@ -157,6 +160,19 @@ public class FXMLModificarCursosController implements Initializable {
             textFieldNombre.setText(comboCursos.getSelectionModel().getSelectedItem().getName() + "");//agregamos el nombre del curso al textField
 
         }
+    }
+
+    @FXML
+    private void numericCredits(KeyEvent event) {
+        textFieldCredits.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textFieldCredits.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+         });
     }
 
 }

@@ -13,12 +13,15 @@ import domain.Course;
 import domain.Student;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import util.FileTXT;
 
@@ -31,8 +34,6 @@ public class FXMLRemoverCarreraController implements Initializable {
 
     private util.FileTXT txt;
     @FXML
-    private Text txtDesciption;
-    @FXML
     private Text txtMessage;
     @FXML
     private Button btnRemover;
@@ -40,10 +41,6 @@ public class FXMLRemoverCarreraController implements Initializable {
     private TextField textFieldDescription;
     @FXML
     private TextField textFieldId;
-    @FXML
-    private Text txtId;
-    @FXML
-    private Text txtError;
 
     /**
      * Initializes the controller class.
@@ -171,5 +168,18 @@ public class FXMLRemoverCarreraController implements Initializable {
             }
 
         }
+    }
+
+    @FXML
+    private void numericID(KeyEvent event) {
+        textFieldId.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textFieldId.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+         });
     }
 }

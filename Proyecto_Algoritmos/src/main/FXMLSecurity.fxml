@@ -26,7 +26,7 @@
                   <Button fx:id="btn_acept_student" layoutX="23.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_acept_student" text="Aceptar" />
                   <Button fx:id="btn_cancel_student" layoutX="232.0" layoutY="181.0" mnemonicParsing="false" onAction="#btn_cancel_student" text="Cancelar" />
                   <TextField fx:id="tf_canet" layoutX="38.0" layoutY="47.0" onAction="#btn_acept_student" />
-                  <TextField fx:id="tf_Password_Student" layoutX="38.0" layoutY="122.0" />
+                  <PasswordField fx:id="tf_Password_Student" layoutX="38.0" layoutY="122.0" />
                   <Label layoutX="23.0" layoutY="14.0" text="Carnet" />
                   <Label layoutX="23.0" layoutY="91.0" text="Contraseña" />
                </children>

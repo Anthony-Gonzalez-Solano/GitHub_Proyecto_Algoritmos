@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import util.FileTXT;
 
@@ -40,12 +43,6 @@ public class FXMLCursosAgregarController implements Initializable {
     private TextField textFieldCreditos;
     @FXML
     private TextField textFieldId;
-    @FXML
-    private Text txtId;
-    @FXML
-    private Text txtNombre;
-    @FXML
-    private Text txtCredits;
     @FXML
     private Text txtError;
     @FXML
@@ -145,5 +142,19 @@ public class FXMLCursosAgregarController implements Initializable {
             }
 
         }
+    }
+
+    @FXML
+    private void numericCredits(KeyEvent event) {
+        textFieldCreditos.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textFieldCreditos.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+         });
+        
     }
 }
