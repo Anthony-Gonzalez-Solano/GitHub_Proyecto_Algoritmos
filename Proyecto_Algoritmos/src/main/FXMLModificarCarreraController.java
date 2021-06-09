@@ -42,7 +42,7 @@ public class FXMLModificarCarreraController implements Initializable {
         this.txt = new FileTXT();
         try {
 
-            for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+            for (int i = 2; i <= util.Utility.getCarreras().size(); i++) {
 
                 comboCarrera.getItems().add((Career) util.Utility.getCarreras().getNode(i).data);
 
