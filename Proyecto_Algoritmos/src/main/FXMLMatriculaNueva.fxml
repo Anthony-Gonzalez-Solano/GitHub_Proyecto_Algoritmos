@@ -5,20 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaNuevaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaNuevaController">
    <children>
-      <Text fx:id="putTxt" layoutX="215.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="134.13671875">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <ComboBox fx:id="cBoxStud" layoutX="133.0" layoutY="109.0" onAction="#cBoxStud" prefHeight="121.0" prefWidth="286.0" />
-      <TableView fx:id="tableView" layoutY="45.0" onMouseClicked="#tableViewAction" prefHeight="186.0" prefWidth="600.0" visible="false" />
-      <Button fx:id="btnEnrollment" layoutY="243.0" mnemonicParsing="false" onAction="#btnEnrollment" prefHeight="25.0" prefWidth="81.0" text="Curso Matriculados" visible="false" />
-      <ComboBox fx:id="cBoxCourse" layoutX="265.0" layoutY="17.0" onAction="#cBoxCourse" prefHeight="4.0" prefWidth="279.0" visible="false" />
-      <Label fx:id="labelCursos" alignment="TOP_LEFT" layoutY="275.0" prefHeight="127.0" prefWidth="384.0" />
+      <ComboBox fx:id="cBoxStud" layoutX="41.0" layoutY="165.0" onAction="#cBoxStud" prefHeight="54.0" prefWidth="392.0" />
+      <TableView fx:id="tableView" layoutY="14.0" onMouseClicked="#tableViewAction" prefHeight="186.0" prefWidth="600.0" visible="false" />
+      <Button fx:id="btnEnrollment" layoutX="14.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnEnrollment" prefHeight="29.0" prefWidth="211.0" text="Matricular curso" visible="false" />
+      <ComboBox fx:id="cBoxCourse" layoutX="14.0" layoutY="243.0" onAction="#cBoxCourse" prefHeight="4.0" prefWidth="279.0" promptText="Horario" visible="false" visibleRowCount="5" />
+      <Label fx:id="labelCursos" alignment="TOP_LEFT" layoutX="14.0" layoutY="292.0" prefHeight="42.0" prefWidth="377.0" />
+      <Label fx:id="putTxt" layoutX="41.0" layoutY="111.0" prefHeight="42.0" prefWidth="472.0" text="Label" />
+      <Label fx:id="lbl" layoutX="14.0" layoutY="219.0" text="Escoja un horario" visible="false" />
    </children>
 </AnchorPane>

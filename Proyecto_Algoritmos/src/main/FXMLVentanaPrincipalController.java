@@ -247,18 +247,6 @@ public class FXMLVentanaPrincipalController implements Initializable {
              this.bp.setCenter(root);   
     }
 
-//            private void idOnKeyPressedTyped(KeyEvent event) {
-    //            textFieldID.textProperty().addListener(new ChangeListener<String>() {
-    //                @Override
-    //                public void changed(ObservableValue<? extends String> observable, String oldValue, 
-    //                    String newValue) {
-    //                    if (!newValue.matches("\\d*")) {
-    //                        textFieldID.setText(newValue.replaceAll("[^\\d]", ""));
-    //                    }
-    //                }
-    //             });
-    //          }
-
     @FXML
     private void MI_Matricula_Nueva_student(ActionEvent event) {
         loadPage("FXMLMatriculaNueva_Student");

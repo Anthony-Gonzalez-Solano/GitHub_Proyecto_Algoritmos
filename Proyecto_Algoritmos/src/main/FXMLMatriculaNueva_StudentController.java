@@ -90,6 +90,7 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        index=-1;
         column1=new TableColumn<>("Course");
             column1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
             column2=new TableColumn<>("Period");
@@ -167,7 +168,10 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
     @FXML
     private void cBoxCourse(ActionEvent event) throws ListException {
         String scheduleSelect = cBoxCourse.getSelectionModel().getSelectedItem();
-        labelCursos.setText(cursos+" "+scheduleSelect);
+        if(index>=0){
+            labelCursos.setText(cursos+" "+scheduleSelect);
+        }
+        
     }
     @FXML
     private void cBoxStud(ActionEvent event) throws ListException {
@@ -242,6 +246,15 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
     cBoxCourse.getSelectionModel().clearSelection();
     labelCursos.setText("");
     tableView.getItems().remove(index);
+    
+               Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setHeaderText("Se a matriculado correctamente");
+            a.setContentText("Se le a emviado un correo al estudiante");
+            a.showAndWait(); 
+            index=-1;
+            this.cBoxCourse.getItems().clear();
+            this.cBoxCourse.setPromptText("Horario");
+            
             }
          }else if(crash==true){
             Alert a = new Alert(Alert.AlertType.ERROR);

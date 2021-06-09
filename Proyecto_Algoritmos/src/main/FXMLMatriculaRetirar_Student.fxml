@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaRetirar_StudentController">
+<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="600.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaRetirar_StudentController">
    <children>
       <Text fx:id="puTxt" layoutX="133.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingrese su ID" wrappingWidth="205.13671875">
          <font>
@@ -22,7 +22,7 @@
          </font>
       </Button>
       <TableView fx:id="tableView" layoutY="54.0" onMouseClicked="#tableViewAction" prefHeight="181.0" prefWidth="600.0" visible="false" />
-      <Button fx:id="btnDeenrollment" layoutY="241.0" mnemonicParsing="false" onAction="#btnDeenrollment" prefHeight="25.0" prefWidth="127.0" text="Retirar" visible="false" />
-      <Label fx:id="Label" alignment="TOP_LEFT" layoutY="280.0" prefHeight="121.0" prefWidth="377.0" />
+      <Button fx:id="btnDeenrollment" layoutX="203.0" layoutY="257.0" mnemonicParsing="false" onAction="#btnDeenrollment" prefHeight="47.0" prefWidth="195.0" text="Retirar" visible="false" />
+      <Label fx:id="Label" alignment="TOP_LEFT" layoutX="108.0" layoutY="314.0" prefHeight="73.0" prefWidth="386.0" />
    </children>
 </AnchorPane>

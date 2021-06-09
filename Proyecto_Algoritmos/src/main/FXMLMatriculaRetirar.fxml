@@ -6,23 +6,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaRetirarController">
+<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="600.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMatriculaRetirarController">
    <children>
-      <Text fx:id="puTxt" layoutX="133.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingrese su ID" wrappingWidth="205.13671875">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <TextField fx:id="txtFieldStudID" layoutX="125.0" layoutY="121.0" prefHeight="47.0" prefWidth="205.0" />
-      <Button fx:id="btnEnter" layoutX="176.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnEnter" prefHeight="47.0" prefWidth="103.0" text="Ingresar">
+      <TextField fx:id="txtFieldStudID" layoutX="198.0" layoutY="121.0" prefHeight="47.0" prefWidth="205.0" />
+      <Button fx:id="btnEnter" layoutX="192.0" layoutY="212.0" mnemonicParsing="false" onAction="#btnEnter" prefHeight="47.0" prefWidth="217.0" text="Ingresar">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <TableView fx:id="tableView" layoutY="54.0" onMouseClicked="#tableViewAction" prefHeight="181.0" prefWidth="600.0" visible="false" />
-      <Button fx:id="btnDeenrollment" layoutY="241.0" mnemonicParsing="false" onAction="#btnDeenrollment" prefHeight="25.0" prefWidth="127.0" text="Retirar" visible="false" />
-      <Label fx:id="Label" alignment="TOP_LEFT" layoutY="280.0" prefHeight="121.0" prefWidth="377.0" />
+      <Button fx:id="btnDeenrollment" layoutX="198.0" layoutY="249.0" mnemonicParsing="false" onAction="#btnDeenrollment" prefHeight="47.0" prefWidth="205.0" text="Retirar" visible="false" />
+      <Label fx:id="Label" alignment="TOP_LEFT" layoutX="121.0" layoutY="305.0" prefHeight="74.0" prefWidth="359.0" />
+      <Label fx:id="puTxt" layoutX="172.0" layoutY="70.0" text="Ingrese el ID de estudiante" />
    </children>
 </AnchorPane>

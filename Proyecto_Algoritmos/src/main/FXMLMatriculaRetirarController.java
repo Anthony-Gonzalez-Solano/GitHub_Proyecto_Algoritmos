@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -57,7 +59,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
     private int index;
     private String cursos;
     @FXML
-    private Text puTxt;
+    private Label puTxt;
     @FXML
     private TextField txtFieldStudID;
     @FXML
@@ -165,31 +167,42 @@ public class FXMLMatriculaRetirarController implements Initializable {
             a.setHeaderText("Necesita escoger un curso");
             a.showAndWait();
         }else{
-        String id="";
-        for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-                Course c = (Course)util.Utility.getCursos().getNode(i).data;
-                if(c.getCareerID()==stud.getCareerID()&&c.getName().equals(column1.getCellData(index)))
-                        id=c.getId();                         
-    }
-    Date date = new Date();
-    this.deR=new DeEnrollment(date,stud.getStudentID(),id,column4.getCellData(index));
-    Enrollment eR=null;//new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
-    for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
-        Enrollment eR2 = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
-        if(eR2.getCourseID().equals(id)&& eR2.getStudentID().equals(stud.getStudentID())){
-            eR=eR2;
+            
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("¿Esta seguro que quiere retirar el curso?");
+            ButtonType yes = new ButtonType("Sí");
+            ButtonType no = new ButtonType("No");
+            a.getButtonTypes().clear();
+            a.getButtonTypes().addAll(yes,no);
+            
+            Optional<ButtonType> option = a.showAndWait(); 
+            if (option.get() == yes) {
+                String id="";
+                for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+                        Course c = (Course)util.Utility.getCursos().getNode(i).data;
+                        if(c.getCareerID()==stud.getCareerID()&&c.getName().equals(column1.getCellData(index)))
+                                id=c.getId();                         
+                }
+                Date date = new Date();
+                this.deR=new DeEnrollment(date,stud.getStudentID(),id,column4.getCellData(index));
+                Enrollment eR=null;//new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
+                for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
+                    Enrollment eR2 = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
+                    if(eR2.getCourseID().equals(id)&& eR2.getStudentID().equals(stud.getStudentID())){
+                        eR=eR2;
+                    }
+                }
+                txt.writeFile("retiro.txt", deR.toString());
+                util.Utility.getRetiros().add(deR);
+                txt.removeElement("matricula.txt",eR);
+                        System.out.println(eR);
+                util.Utility.getMatriculas().remove(eR);
+                btnEmail();
+                this.tableView.getSelectionModel().clearSelection();
+                Label.setText("");
+                tableView.getItems().remove(index);
+            }
         }
-    }
-    txt.writeFile("retiro.txt", deR.toString());
-    util.Utility.getRetiros().add(deR);
-    txt.removeElement("matricula.txt",eR);
-            System.out.println(eR);
-    util.Utility.getMatriculas().remove(eR);
-    btnEmail();
-    this.tableView.getSelectionModel().clearSelection();
-    Label.setText("");
-    tableView.getItems().remove(index);
-    }
     }
     @FXML
     private void tableViewAction(MouseEvent event) {

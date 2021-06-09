@@ -74,7 +74,7 @@ public class FXMLMatriculaNuevaController implements Initializable {
     private TableColumn <List<String>,String>column3;
     private TableColumn <List<String>,String>column4;
     @FXML
-    private Text putTxt;
+    private Label putTxt;
     @FXML
     private ComboBox<String> cBoxStud;
     @FXML
@@ -85,13 +85,17 @@ public class FXMLMatriculaNuevaController implements Initializable {
     private ComboBox<String> cBoxCourse;
     @FXML
     private Label labelCursos;
+    @FXML
+    private Label lbl;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        index=-1;
        this.txt = new FileTXT();
        putTxt.setText("Escoga estudiante");
+       lbl.setVisible(false);
        Student aux;
        String stud;
         try {
@@ -120,7 +124,9 @@ public class FXMLMatriculaNuevaController implements Initializable {
     @FXML
     private void cBoxCourse(ActionEvent event) throws ListException {
         String scheduleSelect = cBoxCourse.getSelectionModel().getSelectedItem();
-        labelCursos.setText(cursos+" "+scheduleSelect);
+        if(index>=0){
+            labelCursos.setText(cursos+" "+scheduleSelect);
+        }
     }
     @FXML
     private void cBoxStud(ActionEvent event) throws ListException {
@@ -129,6 +135,7 @@ public class FXMLMatriculaNuevaController implements Initializable {
     cBoxCourse.setVisible(true);
     btnEnrollment.setVisible(true);
     tableView.setVisible(true);
+    lbl.setVisible(true);
     studNum = (cBoxStud.getSelectionModel().getSelectedIndex())+1;
     stud = (Student)util.Utility.getEstudiantes().getNode(studNum).data;
     if(this.tableView.getColumns().isEmpty()){
@@ -255,6 +262,13 @@ public class FXMLMatriculaNuevaController implements Initializable {
     cBoxCourse.getSelectionModel().clearSelection();
     labelCursos.setText("");
     tableView.getItems().remove(index);
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setHeaderText("Se a matriculado correctamente");
+            a.setContentText("Se le a emviado un correo al estudiante");
+            a.showAndWait(); 
+            index=-1;
+            this.cBoxCourse.getItems().clear();
+            this.cBoxCourse.setPromptText("Horario");
             }
          }else if(crash==true){
             Alert a = new Alert(Alert.AlertType.ERROR);
