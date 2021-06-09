@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -115,13 +116,27 @@ public class FXMLVentanaPrincipalController implements Initializable {
     
         @FXML
     private void MI_Carreras_Suprimir(ActionEvent event) {
+        if(util.Utility.getCarreras().isEmpty()){
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No hay carreras agregadas\n Agregue primero una carrera");
+                    a.showAndWait();
+                 
+
+        }else{
         loadPage("FXMLRemoverCarrera");
-    }
+    }}
 
     @FXML
     private void MI_Carreras_Modificar(ActionEvent event) {
+         if(util.Utility.getCarreras().isEmpty()){
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No hay carreras agregadas\n Agregue primero una carrera");
+                    a.showAndWait();
+                 
+
+        }else{
         loadPage("FXMLModificarCarrera");
-    }
+    }}
 
     @FXML
     private void MI_Carreras_Mostrar(ActionEvent event) {
@@ -135,13 +150,27 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Estudiante_Modificarr(ActionEvent event) {
+            if(util.Utility.getEstudiantes().isEmpty()){
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No hay estudiantes agregados\n Agregue primero un estudiante");
+                    a.showAndWait();
+                 
+
+        }else{
         loadPage("FXMLModificarEstudiante");
-    }
+    }}
 
     @FXML
     private void MI_Estudiante_Suprimir(ActionEvent event) {
+         if(util.Utility.getEstudiantes().isEmpty()){
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No hay estudiantes agregados\n Agregue primero un estudiante");
+                    a.showAndWait();
+                 
+
+        }else{
         loadPage("FXMLRemoverEstudiante");
-    }
+    }}
 
     @FXML
     private void MI_Estudiante_Mostrar(ActionEvent event) {
@@ -155,13 +184,27 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Cursos_Modificar(ActionEvent event) {
+            if(util.Utility.getCursos().isEmpty()){
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No hay cursos agregados\n Agregue primero un curso");
+                    a.showAndWait();
+                 
+
+        }else{
         loadPage("FXMLModificarCursos");
-    }
+    }}
 
     @FXML
     private void MI_Cursos_Suprimir(ActionEvent event) {
+              if(util.Utility.getCursos().isEmpty()){
+                 Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setHeaderText("No hay cursos agregados\n Agregue primero un curso");
+                    a.showAndWait();
+                 
+
+        }else{
         loadPage("FXMLRemoverCursos");
-    }
+    }}
 
     @FXML
     private void MI_Cursos_Mostrar(ActionEvent event) {
