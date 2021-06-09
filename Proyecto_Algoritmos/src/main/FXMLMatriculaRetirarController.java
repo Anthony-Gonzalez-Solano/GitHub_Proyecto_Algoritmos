@@ -121,7 +121,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
     }
     
         tableView.getItems().clear();
-       
+        tableView.setPlaceholder(new Label("No hay cursos para retirar"));
         Course  c=null;
         Enrollment e=null;
         boolean check=false;
@@ -131,7 +131,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
             a.showAndWait();
         }else{
                 for(int i = 1; i <= util.Utility.getMatriculas().size(); i++){
-                    List list = new ArrayList();
+                    list = new ArrayList();
                     e =(Enrollment)util.Utility.getMatriculas().getNode(i).data;
                     if(e.getStudentID().equals(stud.getStudentID())){
                     for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
@@ -176,7 +176,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
     Enrollment eR=new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
     txt.writeFile("retiro.txt", deR.toString());
     util.Utility.getRetiros().add(deR);
-    txt.removeElement("matricula.txt",eR.toString());
+    txt.removeElement("matricula.txt",eR);
     util.Utility.getMatriculas().remove(eR);
     btnEmail();
     this.tableView.getSelectionModel().clearSelection();
@@ -187,13 +187,22 @@ public class FXMLMatriculaRetirarController implements Initializable {
     @FXML
     private void tableViewAction(MouseEvent event) {
         Label.setText("");
+        try{
+        if(!list.isEmpty())
         index = tableView.getSelectionModel().getSelectedIndex();
         
            
            cursos=column1.getCellData(index)+" "+column2.getCellData(index)+" "+column4.getCellData(index);
            if(!column1.getCellData(index).equals(""))
             Label.setText(cursos+" ");
+          
+        } catch (NullPointerException npe) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Necesita escoger un curso");
+            a.showAndWait();
+        }
     }
+    
 
     private void btnEmail() {
         String to = stud.getEmail();
