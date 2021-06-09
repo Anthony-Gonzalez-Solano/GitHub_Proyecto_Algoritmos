@@ -51,6 +51,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
     private TableColumn <List<String>,String>column4;
     private TableColumn <List<String>,String>column5;
     private util.FileTXT txt;
+    private List list;
     private Student stud;
     private DeEnrollment deR;
     private int index;
@@ -124,9 +125,9 @@ public class FXMLMatriculaRetirarController implements Initializable {
         Course  c=null;
         Enrollment e=null;
         boolean check=false;
-        if(util.Utility.getRetiros().isEmpty()){
+        if(util.Utility.getMatriculas().isEmpty()){
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
+            a.setHeaderText("No hay matriculas hechas");
             a.showAndWait();
         }else{
                 for(int i = 1; i <= util.Utility.getMatriculas().size(); i++){
@@ -190,11 +191,12 @@ public class FXMLMatriculaRetirarController implements Initializable {
         
            
            cursos=column1.getCellData(index)+" "+column2.getCellData(index)+" "+column4.getCellData(index);
-           Label.setText(cursos+" ");
+           if(!column1.getCellData(index).equals(""))
+            Label.setText(cursos+" ");
     }
 
     private void btnEmail() {
-        String to = "adriure11@hotmail.com";
+        String to = stud.getEmail();
         // Mention the Sender's email address
         String from = "xx.ucrfake.xx@gmail.com";
         // Mention the SMTP server address. Below Gmail's SMTP server is being used to send email

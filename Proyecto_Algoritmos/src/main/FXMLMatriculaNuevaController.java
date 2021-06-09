@@ -269,7 +269,7 @@ public class FXMLMatriculaNuevaController implements Initializable {
 }
     
     private void btnEmail() {
-        String to = "adriure11@hotmail.com";
+        String to = stud.getEmail();
         // Mention the Sender's email address
         String from = "xx.ucrfake.xx@gmail.com";
         // Mention the SMTP server address. Below Gmail's SMTP server is being used to send email
