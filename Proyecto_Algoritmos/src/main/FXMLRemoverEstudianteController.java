@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
@@ -97,16 +99,27 @@ public class FXMLRemoverEstudianteController implements Initializable {
                     if (exist == false) {
                         if (exist2 == true && lastName == true) {
 
-                            util.Utility.getEstudiantes().remove(s);
-
                             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                            a.setHeaderText("Estudiante eliminado correctamente");
-                            a.showAndWait();
+                            a.setHeaderText("¿Esta seguro que quiere remover el estudiante?");
+                            ButtonType yes = new ButtonType("Sí");
+                            ButtonType no = new ButtonType("No");
+                            a.getButtonTypes().clear();
+                            a.getButtonTypes().addAll(yes,no);
 
-                            textFieldCedula.setText("");
-                            textFieldLastName.setText("");
+                            Optional<ButtonType> option = a.showAndWait(); 
+                            if (option.get() == yes) {
+                                util.Utility.getEstudiantes().remove(s);
 
-                            txt.removeElement("estudiantes.txt", s.secondToString());// se remueve en el TXT
+                                Alert a2 = new Alert(Alert.AlertType.CONFIRMATION);
+                                a2.setHeaderText("Estudiante eliminado correctamente");
+                                a2.showAndWait();
+
+                                textFieldCedula.setText("");
+                                textFieldLastName.setText("");
+
+                                txt.removeElement("estudiantes.txt", s.secondToString());// se remueve en el TXT
+                            }
+                            
                         } else {
                             if (exist2 == true && lastName == false) {// Existe el id , pero no con el nombre ingresado
                                 Alert a = new Alert(Alert.AlertType.ERROR);

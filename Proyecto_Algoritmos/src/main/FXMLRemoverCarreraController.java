@@ -12,6 +12,7 @@ import domain.Career;
 import domain.Course;
 import domain.Student;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
@@ -97,14 +99,24 @@ public class FXMLRemoverCarreraController implements Initializable {
                     if (student == false) {
                         if (career == false) {
                             if (exist == true && exist2 == true) {
-                                util.Utility.getCarreras().remove(c);
                                 Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                                a.setHeaderText("Carrera eliminada correctamente");
-                                a.showAndWait();
-                                textFieldDescription.setText("");
-                                textFieldId.setText("");
+                                a.setHeaderText("¿Esta seguro que quiere remover la carrera?");
+                                ButtonType yes = new ButtonType("Sí");
+                                ButtonType no = new ButtonType("No");
+                                a.getButtonTypes().clear();
+                                a.getButtonTypes().addAll(yes,no);
 
-                                txt.removeElement("carreras.txt", c.secondToString());
+                                Optional<ButtonType> option = a.showAndWait(); 
+                                if (option.get() == yes) {
+                                    util.Utility.getCarreras().remove(c);
+                                    Alert a2 = new Alert(Alert.AlertType.CONFIRMATION);
+                                    a2.setHeaderText("Carrera eliminada correctamente");
+                                    a2.showAndWait();
+                                    textFieldDescription.setText("");
+                                    textFieldId.setText("");
+                                    txt.removeElement("carreras.txt", c.secondToString());
+                                }
+                                
                             } else {
                                 if (exist == false && exist2 == false) {// si ambos son falsas no hay carrera registrada
                                     Alert a = new Alert(Alert.AlertType.ERROR);

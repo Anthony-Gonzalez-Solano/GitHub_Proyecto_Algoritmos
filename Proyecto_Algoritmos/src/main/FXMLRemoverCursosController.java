@@ -9,6 +9,7 @@ import Lists.ListException;
 import domain.Course;
 import domain.TimeTable;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import util.FileTXT;
@@ -77,14 +79,25 @@ public class FXMLRemoverCursosController implements Initializable {
 
                     if (exist == false) {// si no existe un horario, se remueve
                         if (util.Utility.getCursos().contains(c) == true) {//verifica si esta contenido en la lista
-                            txt.removeElement("cursos.txt", c.secondToString());// se remueve en el Txt
-                            util.Utility.getCursos().remove(c);// se remueve
+                            
+                            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                            a.setHeaderText("¿Esta seguro que quiere remover la carrera?");
+                            ButtonType yes = new ButtonType("Sí");
+                            ButtonType no = new ButtonType("No");
+                            a.getButtonTypes().clear();
+                            a.getButtonTypes().addAll(yes,no);
 
-                            Alert a = new Alert(Alert.AlertType.INFORMATION);
-                            a.setHeaderText("El curso ha sido eliminado corectamente");
-                            a.showAndWait();
-                            textFieldId.setText("");
-                            textFieldNombre.setText("");
+                            Optional<ButtonType> option = a.showAndWait(); 
+                            if (option.get() == yes) {
+                                txt.removeElement("cursos.txt", c.secondToString());// se remueve en el Txt
+                                util.Utility.getCursos().remove(c);// se remueve
+
+                                Alert a2 = new Alert(Alert.AlertType.INFORMATION);
+                                a2.setHeaderText("El curso ha sido eliminado corectamente");
+                                a2.showAndWait();
+                                textFieldId.setText("");
+                                textFieldNombre.setText("");
+                            }
                         } else {
                             Alert a = new Alert(Alert.AlertType.ERROR);
                             a.setHeaderText("El curso ingresado no esta registrado");
