@@ -7,6 +7,7 @@ package main;
 
 import Lists.ListException;
 import domain.Enrollment;
+import domain.Security;
 import domain.Student;
 import java.net.URL;
 import java.util.Calendar;
@@ -118,6 +119,13 @@ public class FXMLRemoverEstudianteController implements Initializable {
                                 textFieldLastName.setText("");
 
                                 txt.removeElement("estudiantes.txt", s.secondToString());// se remueve en el TXT
+                                for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
+                                    Security sc = (Security)util.Utility.getUsers().getNode(i).data;
+                                    if(sc.getUser().equals(s.getStudentID())){
+                                        txt.removeElement("Users.txt", sc);
+                                    }
+                                }
+                                
                             }
                             
                         } else {
