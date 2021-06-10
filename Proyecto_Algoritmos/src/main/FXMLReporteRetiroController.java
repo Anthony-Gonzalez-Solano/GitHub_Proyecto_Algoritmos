@@ -59,10 +59,11 @@ import org.icepdf.ri.util.PropertiesManager;
  * @author Adrian Ureña Moraga <Agitor Lucens V>
  */
 public class FXMLReporteRetiroController implements Initializable {
+
     private static String pdfPath;
     private SwingController swingController;
     private JComponent viewerPanel;
-    private util.FileTXT txt ;
+    private util.FileTXT txt;
     private Student stud;
     @FXML
     private TextField txtFieldId;
@@ -84,7 +85,7 @@ public class FXMLReporteRetiroController implements Initializable {
         try {
             createViewer(bp);
             File stud = new File("estudiantes.txt");
-            
+
             createPDF(stud);
 //            createViewer(bp);
             openDocument("ReporteRetiro.pdf");
@@ -105,56 +106,56 @@ public class FXMLReporteRetiroController implements Initializable {
         } catch (ListException ex) {
             Logger.getLogger(FXMLReporteRetiroController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
-    }
-     
-public void createPDF(File newPDF) throws DocumentException, FileNotFoundException, ListException {
-    Document document = new Document();
-    PdfWriter.getInstance(document, new FileOutputStream("ReporteRetiro.pdf"));
-    String content = "";
-    document.open();
-    // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
-    DeEnrollment deR=null;
-    Student st=null;
-    boolean found=false;
-    if(util.Utility.getMatriculas().isEmpty()==true)
-        content+="No hay matriculas hechas por estudiantes\n";
-    else if(util.Utility.getEstudiantes().isEmpty()==true)
-        content+="No estudiantes matriculados\n";
-    else{
-    for (int k = 1; k <= util.Utility.getEstudiantes().size(); k++) {
-        st = (Student)util.Utility.getEstudiantes().getNode(k).data;
-        content+="\n"+st.getFirstname()+" "+st.getLastname()+"\n";
-        for (int i = 1; i <= util.Utility.getRetiros().size(); i++) {
-            deR = (DeEnrollment)util.Utility.getRetiros().getNode(i).data;
-                if(deR.getStudentID().equals(st.getStudentID())){
-                        content+=util.Utility.getRetiros().getNode(i).data+"\n";
-                        found=true;
-                }   
-        }
-        if(found==false)
-        content+="Este estudiante no tiene retiro\n";
-        found=false;
-    }
+
     }
 
-    Paragraph retiro = new Paragraph("Lista de retiro \n\n"+content,
+    public void createPDF(File newPDF) throws DocumentException, FileNotFoundException, ListException {
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("ReporteRetiro.pdf"));
+        String content = "";
+        document.open();
+        // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
+        DeEnrollment deR = null;
+        Student st = null;
+        boolean found = false;
+        if (util.Utility.getRetiros().isEmpty() == true) {
+            content += "No hay retiros hechas por estudiantes\n";
+        } else if (util.Utility.getEstudiantes().isEmpty() == true) {
+            content += "No estudiantes matriculados\n";
+        } else {
+            for (int k = 1; k <= util.Utility.getEstudiantes().size(); k++) {
+                st = (Student) util.Utility.getEstudiantes().getNode(k).data;
+                content += "\n" + st.getFirstname() + " " + st.getLastname() + "\n";
+                for (int i = 1; i <= util.Utility.getRetiros().size(); i++) {
+                    deR = (DeEnrollment) util.Utility.getRetiros().getNode(i).data;
+                    if (deR.getStudentID().equals(st.getStudentID())) {
+                        content += util.Utility.getRetiros().getNode(i).data + "\n";
+                        found = true;
+                    }
+                }
+                if (found == false) {
+                    content += "Este estudiante no tiene retiro\n";
+                }
+                found = false;
+            }
+        }
+
+        Paragraph retiro = new Paragraph("Lista de retiro \n\n" + content,
                 FontFactory.getFont("arial",
                         12,
                         Font.BOLD,
                         BaseColor.BLACK
-                        ));
-    document.add(retiro);
-    document.addTitle("Lista de cursos retirados");
-    document.addKeywords("Java, PDF, Lista de Cursos Retirados");
-    document.addAuthor("Projecto Algoritmos");
-    document.addCreator("Grupo No.11");
-    document.close();
-}
+                ));
+        document.add(retiro);
+        document.addTitle("Lista de cursos retirados");
+        document.addKeywords("Java, PDF, Lista de Cursos Retirados");
+        document.addAuthor("Projecto Algoritmos");
+        document.addCreator("Grupo No.11");
+        document.close();
+    }
 
-    
-private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-    ColorUIResource backgroundUI = new ColorUIResource(0x023c4f);
+    private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        ColorUIResource backgroundUI = new ColorUIResource(0x023c4f);
         ColorUIResource textUI = new ColorUIResource(0xFFFAFA);
         ColorUIResource controlBackgroundUI = new ColorUIResource(0x023c4f);
         ColorUIResource infoBackgroundUI = new ColorUIResource(0x023c4f);
@@ -168,54 +169,55 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
         UIManager.put("info", infoUI);
         UIManager.put("nimbusInfoBlue", infoBackgroundUI);
         UIManager.put("nimbusBase", controlBackgroundUI);
-        
+
         UIManager.put("nimbusBlueGrey", controlBackgroundUI);
         UIManager.put("nimbusFocus", focusUI);
-          for (UIManager.LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
-        if ("Nimbus".equals(lafInfo.getName())) {
-            UIManager.setLookAndFeel(lafInfo.getClassName());
-            break;
-        }
-        
-          }
-    try {
-        SwingUtilities.invokeAndWait(new Runnable() {
-            @Override
-            public void run() {
-                swingController = new SwingController();
-                swingController.setIsEmbeddedComponent(true);
-                PropertiesManager properties = new PropertiesManager(System.getProperties(),
-                        ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
-                properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
-                properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
-                properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
-                ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
-                new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-               
-                swingController.getDocumentViewController().setAnnotationCallback(
-                        new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
-                SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
-                viewerPanel = factory.buildViewerPanel();
-                viewerPanel.setForeground(Color.red);
-                factory.buildToolToolBar().setOpaque(true);    
-                viewerPanel.revalidate();
-                SwingNode swingNode = new SwingNode();
-                swingNode.setContent(viewerPanel);
-                borderPane.setCenter(swingNode);
-                swingController.setToolBarVisible(false);
-                swingController.setUtilityPaneVisible(false);
+        for (UIManager.LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(lafInfo.getName())) {
+                UIManager.setLookAndFeel(lafInfo.getClassName());
+                break;
             }
-        });
-        
-    } catch (InvocationTargetException   ex) {
-        Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    swingController = new SwingController();
+                    swingController.setIsEmbeddedComponent(true);
+                    PropertiesManager properties = new PropertiesManager(System.getProperties(),
+                            ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE));
+                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
+                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_ROTATE, "false");
+                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_TOOL, "false");
+                    properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.25");
+                    properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
+                    properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
+                    ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
+                    new FontPropertiesManager(properties, System.getProperties(), messageBundle);
+
+                    swingController.getDocumentViewController().setAnnotationCallback(
+                            new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
+                    SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
+                    viewerPanel = factory.buildViewerPanel();
+                    viewerPanel.setForeground(Color.red);
+                    factory.buildToolToolBar().setOpaque(true);
+                    viewerPanel.revalidate();
+                    SwingNode swingNode = new SwingNode();
+                    swingNode.setContent(viewerPanel);
+                    borderPane.setCenter(swingNode);
+                    swingController.setToolBarVisible(false);
+                    swingController.setUtilityPaneVisible(false);
+                }
+            });
+
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
-}
-     private void openDocument(String document) {
+    private void openDocument(String document) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -224,6 +226,7 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
             }
         });
     }
+
     public String loadPDF(String adresse) throws IOException {
         if (!adresse.toLowerCase().endsWith("pdf")) {
             return null;
@@ -233,15 +236,15 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
         String suffix = adresse.substring(adresse.lastIndexOf("."),
                 adresse.length());
         File temp = null;
-    try {
+        try {
             InputStream input = new URL(adresse).openStream();
             temp = File.createTempFile(fileName, suffix);
             temp.deleteOnExit();
             Files.copy(input, Paths.get(temp.toURI()),
                     StandardCopyOption.REPLACE_EXISTING);
-    } catch (MalformedURLException ex) {
-  Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return temp.getAbsolutePath();
     }
 
@@ -318,4 +321,4 @@ private void createViewer(BorderPane borderPane) throws InterruptedException, Cl
 //         
 //    }
 //}
-    }
+}
