@@ -223,7 +223,11 @@ public class FXMLSecurityController implements Initializable {
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) btn_acept.getScene().getWindow();
                         stage.setScene(scene);
-                    }    
+                    }else{
+                        Alert a = new Alert(Alert.AlertType.ERROR);
+                        a.setHeaderText("El usuario o contraseña es incorrecto");
+                        a.showAndWait();
+                   }   
                 }
             }else{
                 Alert a = new Alert(Alert.AlertType.ERROR);
