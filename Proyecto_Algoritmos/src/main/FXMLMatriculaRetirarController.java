@@ -100,10 +100,9 @@ public class FXMLMatriculaRetirarController implements Initializable {
     studNum = (cBoxStud.getSelectionModel().getSelectedIndex())+1;
     stud = (Student)util.Utility.getEstudiantes().getNode(studNum).data;
 
-         this.txtFieldStudID.setVisible(false);
+         this.cBoxStud.setVisible(false);
          this.puTxt.setVisible(false);
-         this.btnEnter.setVisible(false);
-         this.tableView.setVisible(true);
+      this.tableView.setVisible(true);
          this.btnDeenrollment.setVisible(true);
     
     if(this.tableView.getColumns().isEmpty()){
