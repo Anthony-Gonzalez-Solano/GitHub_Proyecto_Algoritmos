@@ -288,7 +288,7 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
             }
         });
         // Used to debug SMTP issues
-        session.setDebug(true);
+        //session.setDebug(true);
         try {
             // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);

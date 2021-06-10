@@ -58,9 +58,9 @@ public class FXMLMatriculaRetirarController implements Initializable {
     private DeEnrollment deR;
     private int index;
     private String cursos;
+    private int studNum;
     @FXML
     private Label puTxt;
-    @FXML
     private TextField txtFieldStudID;
     @FXML
     private Button btnEnter;
@@ -70,6 +70,8 @@ public class FXMLMatriculaRetirarController implements Initializable {
     private Button btnDeenrollment;
     @FXML
     private Label Label;
+    @FXML
+    private ComboBox<String> cBoxStud;
 
     /**
      * Initializes the controller class.
@@ -77,37 +79,33 @@ public class FXMLMatriculaRetirarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        txt =new FileTXT();
-    }    
+       puTxt.setText("Escoga estudiante");
+       Student aux;
+       String stud;
+        try {
 
-    @FXML
-    private void btnEnter(ActionEvent event) throws ListException {
-    String studId = this.txtFieldStudID.getText();
-    boolean findStud = false;
-    Student aux;
-    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
-            aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-            if(studId.equals(aux.getStudentID())){
-                findStud=true;
-                stud=aux;
+            for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
+                aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
+                cBoxStud.getItems().add(aux.toString());
             }
-    }
-    if (txtFieldStudID.getText().isEmpty()) {
+
+        } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("No debe dejar campos vacios");
+            a.setHeaderText("Lista vacia");
             a.showAndWait();
-        } 
-     else if(findStud==false){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
-            a.showAndWait();
-     }
-     else{
+        }
+    }    
+    @FXML
+    private void cBoxStud(ActionEvent event) throws ListException {
+    studNum = (cBoxStud.getSelectionModel().getSelectedIndex())+1;
+    stud = (Student)util.Utility.getEstudiantes().getNode(studNum).data;
+
          this.txtFieldStudID.setVisible(false);
          this.puTxt.setVisible(false);
          this.btnEnter.setVisible(false);
          this.tableView.setVisible(true);
          this.btnDeenrollment.setVisible(true);
-    }
+    
     if(this.tableView.getColumns().isEmpty()){
             column1=new TableColumn<>("Course");
             column1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
@@ -244,7 +242,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
             }
         });
         // Used to debug SMTP issues
-        session.setDebug(true);
+        //session.setDebug(true);
         try {
             // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
@@ -262,6 +260,8 @@ public class FXMLMatriculaRetirarController implements Initializable {
             mex.printStackTrace();
         }
     }
+
+
     
 }
 
