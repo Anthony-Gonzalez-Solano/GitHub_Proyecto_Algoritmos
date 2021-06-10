@@ -16,6 +16,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;// librerias para manejar expresiones regulares
 import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
@@ -100,7 +102,35 @@ public class FXMLAgregarEstudianteController implements Initializable {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-        } else {
+        } else if(!util.Utility.getEstudiantes().isEmpty()){
+            try {
+                Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(), // obtener la fecha ingresada en el datePicker
+                        this.datePickerEstudiante.getValue().getMonthValue(),//obtener mes
+                        this.datePickerEstudiante.getValue().getDayOfMonth());//dia
+                Student s = new Student(Integer.parseInt(this.textFieldId.getText()), this.textFieldLastName.getText(), this.textFieldFirstName.getText(), cal.getTime(), this.textFieldPhone.getText(), this.textFieldEmail.getText(), this.textFieldAdress.getText(), comboCarrera.getSelectionModel().getSelectedItem().getId());// objeto estudiante, pasamos los valores de los texfield y coboBox
+                util.Utility.getEstudiantes().add(s);
+                this.textFieldAdress.setText("");
+                this.textFieldEmail.setText("");
+                this.textFieldFirstName.setText("");
+                this.textFieldPhone.setText("");
+                this.textFieldId.setText("");
+                this.textFieldLastName.setText("");
+                datePickerEstudiante.getEditor().clear(); //limpiamos los comboBox
+                comboCarrera.getSelectionModel().clearSelection();
+                sendEmail(s);
+                txt.writeFile("estudiantes.txt", s.secondToString()); // escribimos en el TXT
+                txt.writeFile("Users.txt", s.getStudentID() + "," + util.Utility.binaryCodify("-"));
+                
+                // this.txtMessage.setVisible(true);
+                
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setHeaderText("Estudiante agregado correctamente");
+                a.showAndWait();
+                autoID++; // aumenta el id
+            } catch (ListException ex) {
+                Logger.getLogger(FXMLAgregarEstudianteController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
             Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(), // obtener la fecha ingresada en el datePicker
                     this.datePickerEstudiante.getValue().getMonthValue(),//obtener mes
                     this.datePickerEstudiante.getValue().getDayOfMonth());//dia

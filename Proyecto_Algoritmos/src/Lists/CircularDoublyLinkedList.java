@@ -156,10 +156,12 @@ public class CircularDoublyLinkedList {
             }
         }
         last.next = first;
-        first.prev = last;
-        
-        if(first ==last && util.Utility.equals(first.data, element))
-            clear();    
+        if(first==null){
+            last=null;
+        }else{
+            first.prev = last;
+        }
+           
     }
 
     public Object removeFirst() throws ListException {

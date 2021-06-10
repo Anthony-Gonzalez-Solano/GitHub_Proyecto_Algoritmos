@@ -81,20 +81,22 @@ public class FXMLRemoverCarreraController implements Initializable {
                         if (textFieldDescription.getText().equalsIgnoreCase(c2.getDescription())) {//verifica si existe la carrera
                             exist2 = true;
                         }
-                        for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
-                            Course c3 = (Course) util.Utility.getCursos().getNode(j).data;
-                            if (c3.getCareerID() == c.getId()) {// si el id de carrera en el curso seleccionado es igual al ingresado lo pone en verdadero 
-                                career = true;
+                        if(!util.Utility.getCursos().isEmpty()){
+                            for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
+                                Course c3 = (Course) util.Utility.getCursos().getNode(j).data;
+                                if (c3.getCareerID() == c.getId()) {// si el id de carrera en el curso seleccionado es igual al ingresado lo pone en verdadero 
+                                    career = true;
+                                }
                             }
-
                         }
                     }
-                    for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
-                        Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                        if (Integer.parseInt(textFieldId.getText()) == s2.getCareerID()) {//verificar si hay un estudiante en esta carrera
-                            student = true;
+                    if(!util.Utility.getEstudiantes().isEmpty()){
+                        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
+                            Student s2 = (Student) util.Utility.getEstudiantes().getNode(i).data;
+                            if (Integer.parseInt(textFieldId.getText()) == s2.getCareerID()) {//verificar si hay un estudiante en esta carrera
+                                student = true;
+                            }
                         }
-
                     }
                     if (student == false) {
                         if (career == false) {

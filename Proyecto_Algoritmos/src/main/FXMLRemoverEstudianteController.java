@@ -89,12 +89,14 @@ public class FXMLRemoverEstudianteController implements Initializable {
                         if (s2.getLastname().equalsIgnoreCase(textFieldLastName.getText())) { //compara los nombres para ver si existen
                             lastName = true;
                         }
+                        if(!util.Utility.getMatriculas().isEmpty()){
                             for (int j = 1; j <= util.Utility.getMatriculas().size(); j++) {
                                 Enrollment e = (Enrollment) util.Utility.getMatriculas().getNode(j).data;
                                 if (e.getStudentID().equalsIgnoreCase(s.getStudentID())) {
                                     exist = true;
                                 }
                             }
+                        }    
                     }
 
                     if (exist == false) {

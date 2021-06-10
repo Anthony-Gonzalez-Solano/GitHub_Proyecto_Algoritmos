@@ -85,10 +85,12 @@ public class FXMLAgregarHorarioController implements Initializable {
                 Course c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(c.getCareerID()==id){
                     boolean tf=false;
-                for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
+                    if(!util.Utility.getHorarios().isEmpty()){
+                        for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                         TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(j).data;
                         if(c.getId().equals(tt.getCourseID()))
                             tf=true;
+                    }
                     }
                     if(tf==false)
                         CB_Course.getItems().add((Course)util.Utility.getCursos().getNode(i).data);
@@ -122,12 +124,14 @@ public class FXMLAgregarHorarioController implements Initializable {
                     schedule1, schedule2);
                 boolean register = false;
                 try {
-                    for (int i = 1; i <= util.Utility.getHorarios().size(); i++) {
+                   if(!util.Utility.getHorarios().isEmpty()){
+                        for (int i = 1; i <= util.Utility.getHorarios().size(); i++) {
                         TimeTable tt2 = (TimeTable)util.Utility.getHorarios().getNode(i).data;
                         if(tt.getCourseID().equals(tt2.getCourseID())){
                             register = true;
                         }
                     }
+                   }
                 } catch (ListException ex) {
                     Logger.getLogger(FXMLAgregarHorarioController.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -80,7 +80,20 @@ public class FXMLCursosAgregarController implements Initializable {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-        } else {
+        } else if(util.Utility.getCursos().isEmpty()){
+            Course c = new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()), comboCursos.getSelectionModel().getSelectedItem().getId());//creamos objeto tipo curso
+                
+             util.Utility.getCursos().add(c);
+
+            this.txt.writeFile("cursos.txt", c.secondToString());// escribimos en los txt
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Curso agregado correctamente");
+            a.showAndWait();
+            textFieldCreditos.setText("");
+            textFieldId.setText("");
+            textFieldNombre.setText("");
+            comboCursos.getSelectionModel().clearSelection();//limpiamos
+        }else{    
             try {
              
                 Course c = new Course(this.textFieldId.getText(), this.textFieldNombre.getText(), Integer.parseInt(this.textFieldCreditos.getText()), comboCursos.getSelectionModel().getSelectedItem().getId());//creamos objeto tipo curso

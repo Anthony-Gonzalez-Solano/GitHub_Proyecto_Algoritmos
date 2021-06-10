@@ -94,14 +94,16 @@ public class FXMLRemoverHorarioController implements Initializable {
 
     @FXML
     private void btnRemove(ActionEvent event) {
-        if(!util.Utility.getMatriculas().isEmpty()){
+        if(!util.Utility.getHorarios().isEmpty()){
             boolean tf = false;
             if(index>=0){
                 try {
-                    for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
-                        Enrollment e = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
-                        if(e.getCourseID().equals(pTT.getCourseID())){
-                            tf=true;
+                    if(!util.Utility.getMatriculas().isEmpty()){
+                        for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
+                            Enrollment e = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
+                            if(e.getCourseID().equals(pTT.getCourseID())){
+                                tf=true;
+                            }
                         }
                     }
                 } catch (ListException ex) {

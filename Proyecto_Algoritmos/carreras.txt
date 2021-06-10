@@ -1,7 +1,1 @@
-Ninguna,0
-Fisiologo,2
-Ingles,9
-Diseño,6
-Deporte,14
-Agronomia,3
-Informatica Empresarial,1
+informatica,1

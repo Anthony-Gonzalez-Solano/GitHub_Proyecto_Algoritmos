@@ -68,13 +68,14 @@ public class FXMLRemoverCursosController implements Initializable {
                           c = (Course) util.Utility.getCursos().getNode(i).data;
                       
                         }
-                        for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
-                            TimeTable t = (TimeTable) util.Utility.getHorarios().getNode(j).data;
-                            if (t.getCourseID().equalsIgnoreCase(c.getId())) { //verificar  si existe un horario para este curso
-                                exist = true;
+                        if(!util.Utility.getHorarios().isEmpty()){
+                            for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
+                                TimeTable t = (TimeTable) util.Utility.getHorarios().getNode(j).data;
+                                if (t.getCourseID().equalsIgnoreCase(c.getId())) { //verificar  si existe un horario para este curso
+                                    exist = true;
+                                }
                             }
                         }
-
                     }
 
                     if (exist == false) {// si no existe un horario, se remueve
@@ -115,10 +116,10 @@ public class FXMLRemoverCursosController implements Initializable {
                     a.showAndWait();
                 }
 
-            } catch (NullPointerException e) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setHeaderText("Error inesperado");
-                a.showAndWait();
+           // } catch (NullPointerException e) {
+//                Alert a = new Alert(Alert.AlertType.ERROR);
+//                a.setHeaderText("Error inesperado");
+//                a.showAndWait();
             } catch (ListException ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("La lista esta vacia");

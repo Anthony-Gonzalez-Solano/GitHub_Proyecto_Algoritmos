@@ -66,7 +66,17 @@ public class FXMLAgregarCarreraController implements Initializable {
             textFieldDescription.setText("");
             textFieldId.setText("");
 
-        } else {
+        }else if(util.Utility.getCarreras().isEmpty()){
+            Career c = new Career(this.textFieldDescription.getText(), Integer.parseInt(this.textFieldId.getText()));
+             util.Utility.getCarreras().add(c);
+            txt.writeFile("carreras.txt", c.secondToString());// escribimos en los txt
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Carrera agregada correctamente");
+            a.showAndWait();
+            textFieldId.setText("");
+            this.textFieldDescription.setText("");
+        } 
+        else {
 
             try {
 
@@ -129,11 +139,11 @@ public class FXMLAgregarCarreraController implements Initializable {
                 textFieldDescription.setText("");
                 textFieldId.setText("");
             } catch (ListException ex) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setHeaderText("La lista esta vacia");
-                a.showAndWait();
-                textFieldDescription.setText("");
-                textFieldId.setText("");
+//                Alert a = new Alert(Alert.AlertType.ERROR);
+//                a.setHeaderText("La lista esta vacia");
+//                a.showAndWait();
+//                textFieldDescription.setText("");
+//                textFieldId.setText("");
             }
         }
     }
