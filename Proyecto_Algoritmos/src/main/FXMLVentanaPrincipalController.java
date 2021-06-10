@@ -91,6 +91,8 @@ public class FXMLVentanaPrincipalController implements Initializable {
     private MenuItem MI_Reportes_Matricula_student;
     @FXML
     private MenuItem MI_Reportes_Retiros_student;
+    @FXML
+    private MenuItem MI_RemoverHorarios;
 
     /**
      * Initializes the controller class.
@@ -264,6 +266,11 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Reportes_Retiros_student(ActionEvent event) {
+    }
+
+    @FXML
+    private void MI_RemoverHorarios(ActionEvent event) {
+        loadPage("FXMLRemoverHorario");
     }
 
 

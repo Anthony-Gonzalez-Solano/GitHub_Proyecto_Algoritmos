@@ -40,6 +40,7 @@
             <Menu fx:id="M_horarios" mnemonicParsing="false" text="Horarios">
               <items>
                 <MenuItem fx:id="MI_Horarios" mnemonicParsing="false" onAction="#MI_Horarios" text="Agregar Horario" />
+                  <MenuItem fx:id="MI_RemoverHorarios" mnemonicParsing="false" onAction="#MI_RemoverHorarios" text="Remover Horario" />
               </items>
             </Menu>
             <Menu fx:id="M_maricula" mnemonicParsing="false" text="Matricula">

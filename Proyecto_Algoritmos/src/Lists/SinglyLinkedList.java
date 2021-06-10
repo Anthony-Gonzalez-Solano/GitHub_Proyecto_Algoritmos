@@ -126,9 +126,9 @@ public class SinglyLinkedList {
                 //desenlazo o desconecto el nodo
                 prev.next = aux.next;
             }
-            if(aux==null&&util.Utility.equals(aux.data, element)){
-                prev.next = aux.next;
-            }
+//            if(aux!=null&&util.Utility.equals(aux.data, element)){
+//                prev.next = aux.next;
+//            }
         }
     }
 

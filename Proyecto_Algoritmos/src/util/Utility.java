@@ -101,6 +101,10 @@ public class Utility {
                   case "enrollment":
                       Enrollment e1 =(Enrollment)a;Enrollment e2=(Enrollment)b;
                       return e1.getiD()==e2.getiD() && e1.getCourseID().equals(e2.getCourseID()) && e1.getStudentID().equals(e2.getStudentID());
+                  case "timetable":
+                      TimeTable tt1 = (TimeTable)a; TimeTable tt2 = (TimeTable)b;
+                      return tt1.getCourseID().equals(tt2.getCourseID()) && tt1.getPeriod().equals(tt2.getPeriod()) && 
+                              tt1.getSchedule1().equals(tt2.getSchedule1()) && tt1.getSchedule2().equals(tt2.getSchedule2());
         }
         
         return false; //en cualquier otro caso
@@ -113,6 +117,7 @@ public class Utility {
         if(a instanceof Student && b instanceof Student)return "Student";
         if(a instanceof Course && b instanceof Course)return "Course";
         if(a instanceof Enrollment && b instanceof Enrollment)return "enrollment";
+        if(a instanceof TimeTable && b instanceof TimeTable)return "timetable";
         return "unknown"; //desconocido
     }
     
