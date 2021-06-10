@@ -8,10 +8,13 @@ package main;
 import Lists.ListException;
 import domain.Career;
 import domain.Student;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;// librerias para manejar expresiones regulares
 import java.util.regex.Pattern;
@@ -27,6 +30,16 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import util.FileTXT;
 
 /**
@@ -109,7 +122,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                         }
 
                         if (exist == false && exist2 == false) { // si no existen se agregan a la lista
-
+                            
                             util.Utility.getEstudiantes().add(s);
                             this.textFieldAdress.setText("");
                             this.textFieldEmail.setText("");
@@ -119,7 +132,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                             this.textFieldLastName.setText("");
                             datePickerEstudiante.getEditor().clear(); //limpiamos los comboBox
                             comboCarrera.getSelectionModel().clearSelection();
-
+                            sendEmail(s);
                             txt.writeFile("estudiantes.txt", s.secondToString()); // escribimos en el TXT
                             txt.writeFile("Users.txt", s.getStudentID() + "," + util.Utility.binaryCodify("-"));
 
@@ -231,5 +244,88 @@ public class FXMLAgregarEstudianteController implements Initializable {
             }
          });
     }
+    public void sendEmail(Student s) throws ListException{
+    // Recipient's email ID needs to be mentioned.
+        String to = "adriure11@hotmail.com";
 
+        // Sender's email ID needs to be mentioned
+        String from = "xx.ucrfake.xx@gmail.com";
+
+        // Assuming you are sending email from through gmails smtp
+        String host = "smtp.gmail.com";
+
+        // Get system properties
+        Properties properties = System.getProperties();
+
+        // Setup mail server
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+
+        // Get the Session object.// and pass 
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+
+            protected PasswordAuthentication getPasswordAuthentication() {
+
+                return new PasswordAuthentication("xx.ucrfake.xx@gmail.com", "UCRfake123");
+
+            }
+
+        });
+        //session.setDebug(true);
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+            // Set Subject: header field
+            message.setSubject("Bienvenido "+s.getFirstname()+" "+s.getLastname()+
+                                " a la universidad de Costa Rica!");
+
+            Multipart multipart = new MimeMultipart();
+
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+
+            MimeBodyPart textPart = new MimeBodyPart();
+            String careerName="";
+            for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
+                Career c = (Career) util.Utility.getCarreras().getNode(i).data;
+                 if(c.getId()==s.getCareerID())
+                        careerName=c.getDescription();
+                     }
+            
+            try {
+
+                File f =new File("C:\\Users\\ExtremeTech\\Documents\\NetBeansProjects\\GitHub_Proyecto_Algoritmos\\Proyecto_Algoritmos\\Escudo.png");
+
+                attachmentPart.attachFile(f);
+                textPart.setText("Carne: "+s.getStudentID()+"\nId: "+s.getId()+"\nNombre: "+s.getFirstname()+" "+s.getLastname()
+                        + "\nNumero de telefono: "+s.getPhoneNumber()+"\nEmail: "+s.getEmail()+"\nDireccion: "+s.getAddress()+"\nCarrera: "+careerName);
+                multipart.addBodyPart(textPart);
+                multipart.addBodyPart(attachmentPart);
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+            message.setContent(multipart);
+
+            System.out.println("sending...");
+            // Send message
+            Transport.send(message);
+            System.out.println("Sent message successfully....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+
+    }
 }
+
