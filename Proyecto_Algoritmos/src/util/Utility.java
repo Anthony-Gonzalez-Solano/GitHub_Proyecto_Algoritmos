@@ -48,21 +48,6 @@ public class Utility {
         //return 1+random.nextInt(bound);
         return low+(int) Math.floor(Math.random()*(higth-low)); 
     }
-    
-    public static String format(double value){
-        return new DecimalFormat("###,###,###,###.##")
-                .format(value);
-    }
-    
-    public static String $format(double value){
-        return new DecimalFormat("$###,###,###,###.##")
-                .format(value);
-    }
-     public static String perFormat(double value){
-         //#,##0.00 '%'
-        return new DecimalFormat("#,##0.00'%'")
-                .format(value);
-    }
      
     public static boolean ValidarMail(String email) {
 
@@ -78,6 +63,16 @@ public class Utility {
 
         Matcher mather = pattern.matcher(email);
         return mather.find();// retorna si es valido o no 
+    }
+    
+    public static String randomPass(){
+        String result = "";
+        for (int i = 0; i < 8; i++) {
+            int rnd = (int) (Math.random() * 52); // or use Random or whatever
+            char base = (rnd < 26) ? 'A' : 'a';
+            result+=(char) (base + rnd % 26);
+        }
+        return result;
     }
 
     public static boolean equals(Object a, Object b) {
@@ -105,6 +100,9 @@ public class Utility {
                       TimeTable tt1 = (TimeTable)a; TimeTable tt2 = (TimeTable)b;
                       return tt1.getCourseID().equals(tt2.getCourseID()) && tt1.getPeriod().equals(tt2.getPeriod()) && 
                               tt1.getSchedule1().equals(tt2.getSchedule1()) && tt1.getSchedule2().equals(tt2.getSchedule2());
+                  case "security":
+                      Security sc1 = (Security)a; Security sc2 = (Security)b; 
+                      return sc1.getUser().equals(sc2.getUser()) && sc1.getPassword().equals(sc2.getPassword());
         }
         
         return false; //en cualquier otro caso
@@ -118,6 +116,7 @@ public class Utility {
         if(a instanceof Course && b instanceof Course)return "Course";
         if(a instanceof Enrollment && b instanceof Enrollment)return "enrollment";
         if(a instanceof TimeTable && b instanceof TimeTable)return "timetable";
+        if(a instanceof Security && b instanceof Security)return "security";
         return "unknown"; //desconocido
     }
     
@@ -148,17 +147,6 @@ public class Utility {
         return false; //en cualquier otro caso
     }
 
-    public static int getAge(Date birthday) {
-        Calendar c1 = Calendar.getInstance();
-        Calendar c2 = Calendar.getInstance();
-        c2.setTime(birthday);
-        return c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR);
-    }
-    
-    
-    
-    
-    
     //-------------------------------------------Metodos para las listas -------------------------------------------------------
     private static CircularLinkedList listUsers = new CircularLinkedList();
     private static DoublyLinkedList listCarreras = new DoublyLinkedList();
@@ -187,7 +175,7 @@ public class Utility {
     public static void setIntro(Student s){introStudent = s;}
     public static Student getIntro(){return introStudent;}
     
-    public static void fillList(){
+    public static void fillList(){  //metodo para cargar todas las listas necesarios al iniciar
         FileTXT file = new FileTXT();
         ArrayList<String> list = new ArrayList<>();
         
@@ -255,18 +243,18 @@ public class Utility {
             }
     }
 }
-    public static String binaryCodify(String dato){
+    public static String binaryCodify(String dato){ //codifica un string
         String code="";
-        int[] numberCode=new int[dato.length()];
+        int[] numberCode=new int[dato.length()];//hacemos un vector del tamaño del string
         for (int i = 0; i < dato.length(); i++) {
-            numberCode[i] = dato.charAt(i);
+            numberCode[i] = dato.charAt(i); //llenamos el vector con los chars del string 
         }
-        for (int i = 0; i < numberCode.length; i++) {
+        for (int i = 0; i < numberCode.length; i++) { // convertimos el codigo ASCCI de cada char a un numero binario invertido
             while(numberCode[i]!=0){
                     code += numberCode[i]%2+"";
                     numberCode[i]=numberCode[i]/2;
             }
-            code+="0@";
+            code+="0@";//agregamos la divicion entre los numeros binarios
         }
         code+="end";
         return code;
@@ -274,7 +262,7 @@ public class Utility {
     
     public static String desBinaryCodify(String binary){
         String text="";
-        String[] binaryText = binary.split("@");
+        String[] binaryText = binary.split("@"); // dividimos el string para cada binario
         int[] decimalText = new int[binaryText.length-1];
         
         
@@ -282,10 +270,11 @@ public class Utility {
             String aux = "";
             for (int j = 0; j < binaryText[i].length(); j++) {
                 decimalText[i] += Integer.parseInt(binaryText[i].charAt(j)+"")*(Math.pow(2, j));
+                //convertimos el binario en un numero decimal
             }
         }
         for (int i = 0; i < decimalText.length; i++) {
-            text += (char)decimalText[i];
+            text += (char)decimalText[i]; // de decimal lo pasamos a char
         }
         return text;
     }

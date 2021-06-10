@@ -65,13 +65,13 @@ public class FXMLRemoverHorarioController implements Initializable {
        Tcol_schedule1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
        Tcol_schedule2.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
        
-       if(util.Utility.getHorarios().isEmpty()){
+       if(util.Utility.getHorarios().isEmpty()){ // verificamos si hay horarios
            Alert a = new Alert(Alert.AlertType.ERROR);
            a.setHeaderText("no hay horarios registrados");
            a.showAndWait();
        }else{
            try {
-               for (int i = 1; i <= util.Utility.getHorarios().size(); i++) {
+               for (int i = 1; i <= util.Utility.getHorarios().size(); i++) { //si los hay lso cargamos en la tabla
                    list = new ArrayList<>();
                    TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(i).data;
                    for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
@@ -98,7 +98,7 @@ public class FXMLRemoverHorarioController implements Initializable {
             boolean tf = false;
             if(index>=0){
                 try {
-                    if(!util.Utility.getMatriculas().isEmpty()){
+                    if(!util.Utility.getMatriculas().isEmpty()){ // revisamos que el curso seleccionado, no tenga una matricula
                         for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
                             Enrollment e = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
                             if(e.getCourseID().equals(pTT.getCourseID())){
@@ -109,7 +109,7 @@ public class FXMLRemoverHorarioController implements Initializable {
                 } catch (ListException ex) {
                     Logger.getLogger(FXMLRemoverHorarioController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if(tf==false){
+                if(tf==false){ //si no la tiene, se suprime el horario
                     Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                     a.setHeaderText("¿Esta seguro que quiere remover el estudiante?");
                     ButtonType yes = new ButtonType("Sí");
@@ -120,9 +120,9 @@ public class FXMLRemoverHorarioController implements Initializable {
                     Optional<ButtonType> option = a.showAndWait(); 
                     if (option.get() == yes) {
                         try {
-                            txt.removeElement("horarios.txt", pTT);
-                            util.Utility.getHorarios().remove(pTT);
-                            T_horarios.getItems().remove(index-1);
+                            txt.removeElement("horarios.txt", pTT); //removemos del txt
+                            util.Utility.getHorarios().remove(pTT);//removemos de la lista
+                            T_horarios.getItems().remove(index-1);// y removemos de la tabla
                             index=-1;
 
                             a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -152,9 +152,11 @@ public class FXMLRemoverHorarioController implements Initializable {
     @FXML
     private void T_horarios(MouseEvent event) {
         index = T_horarios.getSelectionModel().getSelectedIndex()+1;
+        //tomamos el indice de la tabla + 1, que corresponde al indice del mismo objeto en la lista
         try {
             if(index>0){
                 pTT = (TimeTable)util.Utility.getHorarios().getNode(index).data;
+                //cargamos el objeto para removerlo despues
             }
         } catch (ListException ex) {
             Logger.getLogger(FXMLRemoverHorarioController.class.getName()).log(Level.SEVERE, null, ex);

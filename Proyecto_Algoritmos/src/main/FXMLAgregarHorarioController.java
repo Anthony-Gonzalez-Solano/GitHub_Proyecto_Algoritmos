@@ -56,6 +56,7 @@ public class FXMLAgregarHorarioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            //cargamos las careras
             for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
                 CB_Carrer.getItems().add((Career)util.Utility.getCarreras().getNode(i).data);
             }
@@ -64,6 +65,7 @@ public class FXMLAgregarHorarioController implements Initializable {
             a.setHeaderText("No hay carreras registradas");
             a.showAndWait();
         }
+        //cargamos los combobox
         CB_Date_Schedule1.getItems().addAll("Lunes - L","Martes - M","Miercoles - K","Jueves - J","Viernes - V");
         CB_Date_Schedule2.getItems().addAll("Lunes - L","Martes - M","Miercoles - K","Jueves - J","Viernes - V");
         CB_HourStar_Schedule1.getItems().addAll("7,AM","8,AM","9,AM","10,AM","11,AM","12,PM","1,PM","2,PM","3,PM","4,PM","5,PM","6,PM","7,PM","8,PM","9,PM");
@@ -79,9 +81,9 @@ public class FXMLAgregarHorarioController implements Initializable {
         int id = 0;
         if(CB_Carrer.getSelectionModel().getSelectedItem()!=null){
             id = CB_Carrer.getSelectionModel().getSelectedItem().getId();
-        }
+        } // obetenemos el id de carrera selecionado
         try {
-            for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+            for (int i = 1; i <= util.Utility.getCursos().size(); i++) { // caragamos  los cursos que esten en la carrera que no tengan horarios
                 Course c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(c.getCareerID()==id){
                     boolean tf=false;
@@ -113,10 +115,10 @@ public class FXMLAgregarHorarioController implements Initializable {
         if(CB_Carrer.getSelectionModel().getSelectedItem()!=null && CB_Course.getSelectionModel().getSelectedItem()!=null && CB_Cicle.getSelectionModel().getSelectedItem()!= null){
             if(CB_Date_Schedule1.getSelectionModel().getSelectedItem()!=null && CB_HourStar_Schedule1.getSelectionModel().getSelectedItem()!=null && CB_HourDnd_Schedule1.getSelectionModel().getSelectedItem()!=null && 
             CB_Date_Schedule2.getSelectionModel().getSelectedItem()!=null && CB_HourStar_Schedule2.getSelectionModel().getSelectedItem()!=null && CB_HourEnd_Schedule2.getSelectionModel().getSelectedItem()!=null){
-                    
+                 // revisamos que todo esta correctamente seleccionado   
                 String schedule1 = dayswitch(CB_Date_Schedule1.getSelectionModel().getSelectedItem())+"-"+CB_HourStar_Schedule1.getSelectionModel().getSelectedItem()+"-"+
                 CB_HourDnd_Schedule1.getSelectionModel().getSelectedItem();
-
+                //usamos el metodo datswitch para crear l string de horarios
                 String schedule2 = dayswitch(CB_Date_Schedule2.getSelectionModel().getSelectedItem())+"-"+CB_HourStar_Schedule2.getSelectionModel().getSelectedItem()+"-"+
                 CB_HourEnd_Schedule2.getSelectionModel().getSelectedItem();
                 
@@ -135,8 +137,8 @@ public class FXMLAgregarHorarioController implements Initializable {
                 } catch (ListException ex) {
                     Logger.getLogger(FXMLAgregarHorarioController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if(register==false){
-                    if(!confirm(schedule1, schedule2)){
+                if(register==false){ //si no esta registrado confirmamos que no haya choques de horario
+                    if(!confirm(schedule1, schedule2)){//si no hay choques, registramos el horarios
                         util.Utility.getHorarios().add(tt);
                         FileTXT txt = new FileTXT();
                         txt.writeFile("horarios.txt", tt.toString());
@@ -176,10 +178,10 @@ public class FXMLAgregarHorarioController implements Initializable {
     
     public boolean confirm(String s1, String s2){
         boolean shock = false;
-        String[] sc1 = s1.split("-");
+        String[] sc1 = s1.split("-"); //hacemos explit para tener los distintos aspectos del horario
         String[] sc2 = s2.split("-");
         
-        String[] aux = sc2[1].split(",");
+        String[] aux = sc2[1].split(",");              //rebisamos si las horas son de la tarde o mañana
         int S2star = Integer.parseInt(aux[0]);
         if(aux[1].equals("PM") && !"12".equals(aux[0])) 
             S2star = S2star*100;
@@ -204,7 +206,7 @@ public class FXMLAgregarHorarioController implements Initializable {
         Alert b = new Alert(Alert.AlertType.ERROR);
         b.setHeaderText("hay un choque entre los horarios");
         if(sc1[0].equals(sc2[0])){   
-            if(S2star <= S1star && S1star <= S2end){
+            if(S2star <= S1star && S1star <= S2end){ // revisamos los casos de choques
                 shock=true;}
             if(S2star <= S1end && S1end <= S2end){
                 shock=true;}
@@ -232,7 +234,7 @@ public class FXMLAgregarHorarioController implements Initializable {
         }
         if(shock==true)
             b.showAndWait();
-        return shock;
+        return shock; // si no hay choques retorna false
     }
     public String dayswitch(String s){
         switch(s){

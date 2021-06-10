@@ -134,10 +134,6 @@ public class CircularLinkedList {
             
             if(util.Utility.equals(aux.data, element)){
                 //desenlazo o desconecto el nodo
-                prev.next = aux.next;
-            }
-            //debo asegurarme que last apunte al ultimo nodo
-            if(aux == last&&util.Utility.equals(aux.data, element)){
                 last = prev;
             }
         }

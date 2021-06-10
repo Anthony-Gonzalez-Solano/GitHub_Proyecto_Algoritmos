@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Line?>
@@ -11,7 +12,7 @@
 
 <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLVentanaPrincipalController">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar opacity="0.88" BorderPane.alignment="CENTER">
         <menus>
           <Menu fx:id="M_carreras" mnemonicParsing="false" text="Carreras">
             <items>
@@ -66,6 +67,15 @@
                   <MenuItem fx:id="MI_Reportes_Matricula_student" mnemonicParsing="false" onAction="#MI_Reportes_Matricula_student" text="Reporte de Matricula" />
                   <MenuItem fx:id="MI_Reportes_Retiros_student" mnemonicParsing="false" onAction="#MI_Reportes_Retiros_student" text="Reporte de Retiro de Cursos" />
                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Opciones">
+              <items>
+                <MenuItem fx:id="Mi_Options_close" mnemonicParsing="false" onAction="#Mi_Options_close" text="Cerrar seción">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="ESCAPE" control="UP" meta="ANY" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="Mi_Options_finish" mnemonicParsing="false" onAction="#Mi_Options_finish" text="Cerrar programa" />
+              </items>
             </Menu>
         </menus>
       </MenuBar>

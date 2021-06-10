@@ -8,6 +8,7 @@ package main;
 import domain.Security;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,11 +17,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -93,6 +97,10 @@ public class FXMLVentanaPrincipalController implements Initializable {
     private MenuItem MI_Reportes_Retiros_student;
     @FXML
     private MenuItem MI_RemoverHorarios;
+    @FXML
+    private MenuItem Mi_Options_close;
+    @FXML
+    private MenuItem Mi_Options_finish;
 
     /**
      * Initializes the controller class.
@@ -309,7 +317,8 @@ public class FXMLVentanaPrincipalController implements Initializable {
 
     @FXML
     private void MI_Reportes_Matricula_student(ActionEvent event) {
-        loadPage("FXMLReporteMatricula_Student");
+            loadPage("FXMLReporteMatricula_Student");
+        
     }
 
     @FXML
@@ -324,6 +333,44 @@ public class FXMLVentanaPrincipalController implements Initializable {
            a.showAndWait();
         }else{
             loadPage("FXMLRemoverHorario");
+        }
+    }
+
+    @FXML
+    private void Mi_Options_close(ActionEvent event) {
+         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setHeaderText("¿Esta seguro que quiere Cerrar la seción?");
+        ButtonType yes = new ButtonType("Sí");
+        ButtonType no = new ButtonType("No");
+        a.getButtonTypes().clear();
+        a.getButtonTypes().addAll(yes,no);
+
+        Optional<ButtonType> option = a.showAndWait(); 
+        if (option.get() == yes) {
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("FXMLSecurity.fxml"));
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) bp.getScene().getWindow();
+            stage.setScene(scene);
+        }
+    }
+
+    @FXML
+    private void Mi_Options_finish(ActionEvent event) {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setHeaderText("¿Esta seguro que quiere Finalizar el programa?");
+        ButtonType yes = new ButtonType("Sí");
+        ButtonType no = new ButtonType("No");
+        a.getButtonTypes().clear();
+        a.getButtonTypes().addAll(yes,no);
+
+        Optional<ButtonType> option = a.showAndWait(); 
+        if (option.get() == yes) {
+            System.exit(0);
         }
     }
 }
