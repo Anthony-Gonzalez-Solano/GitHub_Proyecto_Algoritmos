@@ -155,7 +155,6 @@ public class FXMLRemoverHorarioController implements Initializable {
         try {
             if(index>0){
                 pTT = (TimeTable)util.Utility.getHorarios().getNode(index).data;
-                System.out.println(pTT.toString());
             }
         } catch (ListException ex) {
             Logger.getLogger(FXMLRemoverHorarioController.class.getName()).log(Level.SEVERE, null, ex);

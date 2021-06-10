@@ -84,7 +84,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
         try {
             txt = new FileTXT();
 
-            for (int i = 1; i < util.Utility.getCarreras().size(); i++) {//recorremos lista carreras para agregarlos al comboBox
+            for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {//recorremos lista carreras para agregarlos al comboBox
                 comboCarrera.getItems().add((Career) util.Utility.getCarreras().getNode(i).data); //casteamos para agregarlas
             }
         } catch (ListException ex) {
@@ -102,7 +102,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
-        } else if(!util.Utility.getEstudiantes().isEmpty()){
+        } else if(util.Utility.getEstudiantes().isEmpty()){
             try {
                 Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(), // obtener la fecha ingresada en el datePicker
                         this.datePickerEstudiante.getValue().getMonthValue(),//obtener mes
@@ -115,13 +115,11 @@ public class FXMLAgregarEstudianteController implements Initializable {
                 this.textFieldPhone.setText("");
                 this.textFieldId.setText("");
                 this.textFieldLastName.setText("");
-                datePickerEstudiante.getEditor().clear(); //limpiamos los comboBox
+                datePickerEstudiante.getEditor().setText(""); //limpiamos los comboBox
                 comboCarrera.getSelectionModel().clearSelection();
                 sendEmail(s);
                 txt.writeFile("estudiantes.txt", s.secondToString()); // escribimos en el TXT
                 txt.writeFile("Users.txt", s.getStudentID() + "," + util.Utility.binaryCodify("-"));
-                
-                // this.txtMessage.setVisible(true);
                 
                 Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                 a.setHeaderText("Estudiante agregado correctamente");
@@ -145,10 +143,9 @@ public class FXMLAgregarEstudianteController implements Initializable {
                             if (Integer.parseInt(textFieldId.getText()) == (s2.getId())) { //validar no haya estudiantes iguales
                                 exist = true;
                             }
-                            if (textFieldEmail.getText().equals(s2.getEmail())) { // validar que no haya corres iguales
+                            if (s.getEmail().equals(s2.getEmail())) { // validar que no haya corres iguales
                                 exist2 = true;
                             }
-
                         }
 
                         if (exist == false && exist2 == false) { // si no existen se agregan a la lista
@@ -160,7 +157,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
                             this.textFieldPhone.setText("");
                             this.textFieldId.setText("");
                             this.textFieldLastName.setText("");
-                            datePickerEstudiante.getEditor().clear(); //limpiamos los comboBox
+                            datePickerEstudiante.getEditor().setText(""); //limpiamos los comboBox
                             comboCarrera.getSelectionModel().clearSelection();
                             sendEmail(s);
                             txt.writeFile("estudiantes.txt", s.secondToString()); // escribimos en el TXT
@@ -276,7 +273,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
     }
     public void sendEmail(Student s) throws ListException{
     // Recipient's email ID needs to be mentioned.
-        String to = "adriure11@hotmail.com";
+        String to = s.getEmail();
 
         // Sender's email ID needs to be mentioned
         String from = "xx.ucrfake.xx@gmail.com";
@@ -332,7 +329,7 @@ public class FXMLAgregarEstudianteController implements Initializable {
             
             try {
 
-                File f =new File("C:\\Users\\ExtremeTech\\Documents\\NetBeansProjects\\GitHub_Proyecto_Algoritmos\\Proyecto_Algoritmos\\Escudo.png");
+                File f =new File("Escudo.png");
 
                 attachmentPart.attachFile(f);
                 textPart.setText("Carne: "+s.getStudentID()+"\nId: "+s.getId()+"\nNombre: "+s.getFirstname()+" "+s.getLastname()
