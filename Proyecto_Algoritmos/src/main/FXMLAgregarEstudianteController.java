@@ -71,8 +71,6 @@ public class FXMLAgregarEstudianteController implements Initializable {
     @FXML
     private Button btnAgregar;
     @FXML
-    private Text txtMessage;
-    @FXML
     private ComboBox<Career> comboCarrera;
 
     /**
@@ -97,12 +95,14 @@ public class FXMLAgregarEstudianteController implements Initializable {
 
     @FXML
     private void btnAgregar(ActionEvent event) {
+        String dato[]= datePickerEstudiante.getEditor().getText().split("/");
 // validacion de ho haber campos vacios
         if (textFieldAdress.getText().isEmpty() || comboCarrera.getSelectionModel().isEmpty() || textFieldEmail.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldLastName.getText().isEmpty() || textFieldPhone.getText().isEmpty() || textFieldFirstName.getText().isEmpty() || datePickerEstudiante.getEditor().getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else if(util.Utility.getEstudiantes().isEmpty()){
+            boolean date=false;
             try {
                 Calendar cal = new GregorianCalendar(this.datePickerEstudiante.getValue().getYear(), // obtener la fecha ingresada en el datePicker
                         this.datePickerEstudiante.getValue().getMonthValue(),//obtener mes

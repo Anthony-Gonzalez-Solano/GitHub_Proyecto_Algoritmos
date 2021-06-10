@@ -19,6 +19,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import util.FileTXT;
@@ -37,6 +39,12 @@ public class FXMLRemoverCursosController implements Initializable {
     private TextField textFieldNombre;
     @FXML
     private Button btnRemover;
+    @FXML
+    private Label txtId;
+    @FXML
+    private Label txtNombre;
+    @FXML
+    private ComboBox<Course> comboCursos;
 
     /**
      * Initializes the controller class.
@@ -45,30 +53,41 @@ public class FXMLRemoverCursosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         txt = new FileTXT();//creamos txt
+        try {
+
+            for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
+
+                comboCursos.getItems().add((Course) util.Utility.getCursos().getNode(i).data);
+
+            }//recorremos la lista de cursos para agregarlas al comboBox, para poder modificarlas
+
+        } catch (ListException ex) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Lista vacia");
+            a.showAndWait();
+            textFieldNombre.setText("");
+            textFieldId.setText("");
+        }
     }
 
     @FXML
     private void btnRemover(ActionEvent event) {
 
-        if (textFieldId.getText().isEmpty() || textFieldNombre.getText().isEmpty()) {// validamos campos vacios
+        if (comboCursos.getSelectionModel().getSelectedIndex()==-1) {// validamos campos vacios
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No debe dejar campos vacios");
             a.showAndWait();
         } else {
             try {
                 boolean exist = false;// variale para verificar si existe un horario asociado al curso a remover
-               
-                Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), 0, 0); // objeto curso  
+
+//                Course c = new Course(textFieldId.getText(), textFieldNombre.getText(), 0, 0); // objeto curso  
+                  Course c= (Course)comboCursos.getSelectionModel().getSelectedItem();
                 if (!util.Utility.getCursos().isEmpty()) { // si no esta vacia procede a hacer el ciclo y sino mandara error
 
                     for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-                        Course c2 = (Course) util.Utility.getCursos().getNode(i).data;//casteamos, para obtener los datos de la lista cursos
-
-                        if (util.Utility.equals(c2,c )) { // si los datos son iguales, c se iguala al dato de la lista
-                          c = (Course) util.Utility.getCursos().getNode(i).data;
-                      
-                        }
-                        if(!util.Utility.getHorarios().isEmpty()){
+//                  
+                        if (!util.Utility.getHorarios().isEmpty()) {
                             for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                                 TimeTable t = (TimeTable) util.Utility.getHorarios().getNode(j).data;
                                 if (t.getCourseID().equalsIgnoreCase(c.getId())) { //verificar  si existe un horario para este curso
@@ -79,31 +98,29 @@ public class FXMLRemoverCursosController implements Initializable {
                     }
 
                     if (exist == false) {// si no existe un horario, se remueve
-                        if (util.Utility.getCursos().contains(c) == true) {//verifica si esta contenido en la lista
-                            
+               
+
                             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
                             a.setHeaderText("¿Esta seguro que quiere remover la carrera?");
                             ButtonType yes = new ButtonType("Sí");
                             ButtonType no = new ButtonType("No");
                             a.getButtonTypes().clear();
-                            a.getButtonTypes().addAll(yes,no);
+                            a.getButtonTypes().addAll(yes, no);
 
-                            Optional<ButtonType> option = a.showAndWait(); 
+                            Optional<ButtonType> option = a.showAndWait();
                             if (option.get() == yes) {
-                                txt.removeElement("cursos.txt", c.secondToString());// se remueve en el Txt
+                                txt.removeElement("cursos.txt", comboCursos.getSelectionModel().getSelectedItem().secondToString());// se remueve en el Txt
                                 util.Utility.getCursos().remove(c);// se remueve
-
+                                int x = comboCursos.getSelectionModel().getSelectedIndex();//obtener el indice
+                                comboCursos.getItems().remove(x);//removemos el elemento
+                                comboCursos.getSelectionModel().clearSelection();//limpiamos el comBox
+                            
                                 Alert a2 = new Alert(Alert.AlertType.INFORMATION);
                                 a2.setHeaderText("El curso ha sido eliminado corectamente");
                                 a2.showAndWait();
-                                textFieldId.setText("");
-                                textFieldNombre.setText("");
+
                             }
-                        } else {
-                            Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("El curso ingresado no esta registrado");
-                            a.showAndWait();
-                        }
+                     
                     } else {
                         Alert a = new Alert(Alert.AlertType.ERROR);
                         a.setHeaderText("Este curso no se puede eliminar\n Este curso ya tiene un horario establecido");
@@ -116,10 +133,10 @@ public class FXMLRemoverCursosController implements Initializable {
                     a.showAndWait();
                 }
 
-           // } catch (NullPointerException e) {
-//                Alert a = new Alert(Alert.AlertType.ERROR);
-//                a.setHeaderText("Error inesperado");
-//                a.showAndWait();
+                 } catch (NullPointerException e) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Error inesperado");
+                a.showAndWait();
             } catch (ListException ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("La lista esta vacia");
@@ -127,5 +144,15 @@ public class FXMLRemoverCursosController implements Initializable {
             }
         }
 
+    }
+
+    @FXML
+    private void comboCursos(ActionEvent event) {
+        if (comboCursos.getSelectionModel().getSelectedIndex() != -1) { // evitar errores cuando se activa el evento del comboBox, porque tomaba datos vacios
+          
+            btnRemover.setVisible(true);
+      
+
+        }
     }
 }
