@@ -152,40 +152,46 @@ public class FXMLSecurityController implements Initializable {
     private void btn_acept_student(ActionEvent event) {
         try {
             if(!tf_canet.getText().isEmpty() && !tf_Password_Student.getText().isEmpty()){ // verificamos quen ohaya espacios en blanco
+                Security s = null;
+                boolean tf=false;
                 for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
-                    Security s = (Security)util.Utility.getUsers().getNode(i).data;
+                    s = (Security)util.Utility.getUsers().getNode(i).data;
                     if(tf_canet.getText().equals(s.getUser())){ // verificamos que el usuario existe
                         if(!s.getPassword().equals("-")){ // revisams si tiene contraseña si no hay que ponele una
-                            if(tf_canet.getText().equals(s.getUser()) && tf_Password_Student.getText().equals(s.getPassword())){ // revisamos que los datos de usuario son correctos
-                                
-                                for (int j = 1; j <= util.Utility.getEstudiantes().size(); j++) {
-                                    Student st = (Student)util.Utility.getEstudiantes().getNode(j).data;
-                                    if(st.getStudentID().equals(tf_canet.getText())){
-                                        util.Utility.setIntro(st); //guardamos el estudiante con el que se esta ingresando
-                                    }
-                                }
-                                Parent root = null;            // cargamos el XFMLVentanaPrincipal
-                                try {
-                                    root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
-                                } catch (IOException ex) {
-                                    Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                Scene scene = new Scene(root);
-                                Stage stage = (Stage) btn_acept.getScene().getWindow();
-                                stage.setScene(scene);
-                            }else{
-                                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                                a.setHeaderText("La contrseña o Carnet es incorrecto");
-                                a.showAndWait();  
-                            }
-                        }else{
-                            Alert a = new Alert(Alert.AlertType.ERROR);
-                            a.setHeaderText("El Carnet ingresado esta registrado, pero sin contraseña");
-                            a.setContentText("Cancele e ingrese ¨Primero Ingreso¨ y registre su contraseña");
-                            a.showAndWait();  
+                            tf=true;
+                            break;
                         }
                     }
                 }
+                if(tf==true){
+                    if(tf_canet.getText().equals(s.getUser()) && tf_Password_Student.getText().equals(s.getPassword())){ // revisamos que los datos de usuario son correctos
+
+                        for (int j = 1; j <= util.Utility.getEstudiantes().size(); j++) {
+                            Student st = (Student)util.Utility.getEstudiantes().getNode(j).data;
+                            if(st.getStudentID().equals(tf_canet.getText())){
+                                util.Utility.setIntro(st); //guardamos el estudiante con el que se esta ingresando
+                            }
+                        }
+                        Parent root = null;            // cargamos el XFMLVentanaPrincipal
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("FXMLVentanaPrincipal.fxml"));
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLSecurityController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) btn_acept.getScene().getWindow();
+                        stage.setScene(scene);
+                        }else{
+                        Alert a = new Alert(Alert.AlertType.INFORMATION);
+                        a.setHeaderText("El usuario o contraseña es incorecto");;
+                        a.showAndWait();  
+                        }
+                }else{
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setHeaderText("El usuario no existe o\n el usuari no poseee contraseña");
+                    a.setContentText("si es su primera consulta, ingrese a ¨Primer Ingreso¨ y registre una");
+                    a.showAndWait();  
+                }   
             }else{
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("No debe dejar espacios en blanco");
@@ -208,11 +214,15 @@ public class FXMLSecurityController implements Initializable {
     private void btn_acept_admin(ActionEvent event) {
         try {
             if(!tf_password.getText().isEmpty() || !tf_user.getText().isEmpty()){ // revisamos que los epacios no esten vacios
+                boolean tf = false;
                 for (int i = 1; i <= util.Utility.getUsers().size(); i++) {
 
                     Security s2 = (Security)util.Utility.getUsers().getNode(i).getData(); //revisamos si el usuario ingresado es correcto
                     Security s1 = new Security(tf_user.getText(), tf_password.getText());
-                   if(s1.equals(s2)){
+                   if(s1.equals(s2))
+                       tf=true;
+                }
+                if(tf==true){
                         util.Utility.setIntro(null);  //ponemos null indicando que entramos como admin
                         Parent root = null;  // cargamos el FXMLVentanaPrincipal
                         try {
@@ -223,12 +233,13 @@ public class FXMLSecurityController implements Initializable {
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) btn_acept.getScene().getWindow();
                         stage.setScene(scene);
-                    }else{
+                }else{
                         Alert a = new Alert(Alert.AlertType.ERROR);
                         a.setHeaderText("El usuario o contraseña es incorrecto");
                         a.showAndWait();
-                   }   
-                }
+                    
+                }  
+                
             }else{
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("No deje espacios en blanco");
