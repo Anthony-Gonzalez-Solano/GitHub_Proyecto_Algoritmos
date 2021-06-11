@@ -201,10 +201,10 @@ public class FXMLReporteMatriculaController implements Initializable {
                     properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
                     properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
                     ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
-                    FontPropertiesManager fontPropertiesManager = new FontPropertiesManager(properties, System.getProperties(), messageBundle);
+                    new FontPropertiesManager(properties, System.getProperties(), messageBundle);
                     
                     swingController.getDocumentViewController().setAnnotationCallback(
-                            new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
+                    new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
                     SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
                     viewerPanel = factory.buildViewerPanel();
                     viewerPanel.setForeground(Color.red);
@@ -256,77 +256,4 @@ public class FXMLReporteMatriculaController implements Initializable {
     }
 }
 
-//    @FXML
-//    private void btnEnter(ActionEvent event) throws ListException {
-//    String studId = this.TxtFieldStudId.getText();
-//    boolean findStud = false;
-//    boolean findEnrollment = false;
-//    Student aux;
-//    Alert a = new Alert(Alert.AlertType.ERROR);
-//      DialogPane dialogPane = a.getDialogPane();
-//// root
-//    dialogPane.setStyle("-fx-background-color: #02475e;");
-//
-//// 1. Grid
-//    // remove style to customize header
-//    dialogPane.getStyleClass().remove("alert");
-//
-//    GridPane grid = (GridPane)dialogPane.lookup(".header-panel"); 
-//    grid.setStyle("-fx-background-color: cadetblue; "
-//            + "-fx-font-style: italic;"+"-fx-font-size: 24px; "+"-fx-font-color: #e2e2e2;");
-//
-//// 2. ContentText with just a Label
-//    dialogPane.lookup(".content.label").setStyle("-fx-font-size: 24px; "
-//            + "-fx-font-weight: bold; -fx-fill: blue;");
-//
-//// 3- ButtonBar
-//    ButtonBar buttonBar = (ButtonBar)a.getDialogPane().lookup(".button-bar");
-//    buttonBar.setStyle("-fx-font-size: 24px;"
-//            + "-fx-background-color: 687980;");
-//    buttonBar.getButtons().forEach(b->b.setStyle("-fx-font-family: \"Andalus\";"));
-//        for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
-//            Enrollment m=(Enrollment)util.Utility.getMatriculas().getNode(i).data;
-//                if(this.TxtFieldStudId.getText().equals(m.getStudentID()))
-//                    findEnrollment=true;
-//        }
-//        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
-//            aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
-//            if(this.TxtFieldStudId.getText().equals(aux.getStudentID())){
-//                findStud=true;
-//                stud=aux;
-//            }
-//        }
-//    if(util.Utility.getMatriculas().isEmpty()){            
-//            a.setHeaderText("No hay matriculas");
-//            a.showAndWait();
-//    }else if(TxtFieldStudId.getText().isEmpty()){           
-//            a.setHeaderText("No debe dejar campos vacios");
-//            a.showAndWait();
-//    }else if(findStud==false){        
-//            a.setHeaderText("Estudiante con id "+studId+" no ha sido encontrado");
-//            a.showAndWait();
-//     }else if(findEnrollment==false){           
-//            a.setHeaderText("No hay matricula para este estudiante");
-//            a.showAndWait();
-//     }else{
-//         this.TxtFieldStudId.setVisible(false);
-//         this.bp.setVisible(true);
-//         this.putTxt.setVisible(false);
-//         this.btnEnter.setVisible(false);
-//         File stud = new File("estudiantes.txt");
-//        try {            
-//            createPDF(stud);
-////            createViewer(bp);
-//            openDocument("ReporteMatricula.pdf");
-//        } catch (DocumentException ex) {
-//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ListException ex) {
-//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//         
-//    }
-//    
-//}
 

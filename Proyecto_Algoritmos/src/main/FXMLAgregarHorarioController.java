@@ -238,10 +238,10 @@ public class FXMLAgregarHorarioController implements Initializable {
     }
     public String dayswitch(String s){
         switch(s){
-            case "Miercoles":
+            case "Miercoles - K":
                 s = "K";
                 break;
-            case "Martes":
+            case "Martes - M":
                 s = "M";
                 break;
             default:

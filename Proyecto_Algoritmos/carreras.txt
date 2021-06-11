@@ -1,1 +1,3 @@
-gdgdfgdfg,1
+Bachillerato en informatica empresarial,1
+Enfermeria,2
+ingeniería Civil,3

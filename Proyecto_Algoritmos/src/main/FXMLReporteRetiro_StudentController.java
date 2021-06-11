@@ -5,15 +5,6 @@
  */
 package main;
 
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.ColorUIResource;
-import org.icepdf.ri.common.SwingController;
-import org.icepdf.ri.common.SwingViewBuilder;
-import org.icepdf.ri.util.FontPropertiesManager;
-import org.icepdf.ri.util.PropertiesManager;
 import Lists.ListException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -22,7 +13,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import domain.Course;
+import domain.DeEnrollment;
 import domain.Enrollment;
 import domain.Student;
 import java.awt.Color;
@@ -41,39 +32,55 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
+import org.icepdf.ri.common.SwingController;
+import org.icepdf.ri.common.SwingViewBuilder;
+import org.icepdf.ri.util.FontPropertiesManager;
+import org.icepdf.ri.util.PropertiesManager;
 
 /**
  * FXML Controller class
  *
  * @author Adrian Ureña Moraga <Agitor Lucens V>
  */
-
-
-public class FXMLReporteMatricula_StudentController implements Initializable {
+public class FXMLReporteRetiro_StudentController implements Initializable {
 
     private static String pdfPath;
-    private Student stud;
     private SwingController swingController;
     private JComponent viewerPanel;
     private util.FileTXT txt;
+    private Student stud;
     @FXML
-    private AnchorPane ap;
+    private TextField txtFieldId;
+    @FXML
+    private Text putTxt;
     @FXML
     private BorderPane bp;
+    @FXML
+    private Button btnEnter;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.txtFieldId.setVisible(false);
+        this.btnEnter.setVisible(false);
         this.bp.setVisible(true);
         try {
             createViewer(bp);
@@ -81,64 +88,56 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
 
             createPDF(stud);
 //            createViewer(bp);
-            openDocument("ReporteMatricula.pdf");
-
+            openDocument("ReporteRetiro.pdf");
         } catch (InterruptedException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteRetiro_StudentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteRetiro_StudentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ListException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteRetiro_StudentController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     public void createPDF(File newPDF) throws DocumentException, FileNotFoundException, ListException {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream("ReporteMatricula.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("ReporteRetiro.pdf"));
         String content = "";
         document.open();
         // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
-        Enrollment eR = null;
+        DeEnrollment deR = null;
         Student st = util.Utility.getIntro();
         boolean found = false;
-        if (util.Utility.getMatriculas().isEmpty() == true) {
-            content += "No hay matriculas hechas por estudiantes\n";
+        if (util.Utility.getRetiros().isEmpty() == true) {
+            content += "No hay retiros hechas por estudiantes\n";
         } else if (util.Utility.getEstudiantes().isEmpty() == true) {
             content += "No estudiantes matriculados\n";
         } else {
-                content += "\n" + st.getFirstname() + " " + st.getLastname()+" ("+st.getStudentID()+")"+ "\n";
-                for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
-                    eR = (Enrollment) util.Utility.getMatriculas().getNode(i).data;
-                    if (eR.getStudentID().equals(st.getStudentID())) {
-
-                        
-                        for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
-                            Course c = (Course) util.Utility.getCursos().getNode(j).data;
-                            if (c.getId().equals(eR.getCourseID())) {
-                                content += c.getName()+ ","+eR.getSchedule()+"   "+ util.Utility.dateFormat(eR.getDate())+"\n";
-                                found = true;
-                            }
-                        }
-
+                content += "\n" + st.getFirstname() + " " + st.getLastname() + "("+st.getStudentID()+")" +"\n";
+                for (int i = 1; i <= util.Utility.getRetiros().size(); i++) {
+                    deR = (DeEnrollment) util.Utility.getRetiros().getNode(i).data;
+                    if (deR.getStudentID().equals(st.getStudentID())) {
+                        content += deR.getCourseID()+ ","+deR.getSchedule()+"   "+ util.Utility.dateFormat(deR.getDate())+"\n";
+                        found = true;
                     }
                 }
                 if (found == false) {
-                    content += "Este estudiante no tiene matriculas\n";
+                    content += "Este estudiante no tiene retiro\n";
                 }
                 found = false;
         }
-        Paragraph retiro = new Paragraph("Lista de matriculas \n\n" + content,
+
+        Paragraph retiro = new Paragraph("Lista de retiro \n\n" + content,
                 FontFactory.getFont("arial",
                         12,
                         Font.BOLD,
@@ -148,7 +147,7 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
         document.addTitle("Lista de cursos retirados");
         document.addKeywords("Java, PDF, Lista de Cursos Retirados");
         document.addAuthor("Projecto Algoritmos");
-        document.addCreator("Grupo No.3");
+        document.addCreator("Grupo No.11");
         document.close();
     }
 
@@ -170,7 +169,7 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
 
         UIManager.put("nimbusBlueGrey", controlBackgroundUI);
         UIManager.put("nimbusFocus", focusUI);
-        for (LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
+        for (UIManager.LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(lafInfo.getName())) {
                 UIManager.setLookAndFeel(lafInfo.getClassName());
                 break;
@@ -193,9 +192,9 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
                     properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
                     ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
                     new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-                    
+
                     swingController.getDocumentViewController().setAnnotationCallback(
-                    new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
+                            new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
                     SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
                     viewerPanel = factory.buildViewerPanel();
                     viewerPanel.setForeground(Color.red);
@@ -210,7 +209,7 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
             });
 
         } catch (InvocationTargetException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -241,10 +240,82 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
             Files.copy(input, Paths.get(temp.toURI()),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return temp.getAbsolutePath();
     }
+
+//    @FXML
+//    private void btnEnter(ActionEvent event) throws ListException {
+//    boolean findStud = false;
+//    boolean findEnrollment=false;
+//    Student aux;
+//    
+//    Alert a = new Alert(Alert.AlertType.ERROR);
+//      DialogPane dialogPane = a.getDialogPane();
+//// root
+//    dialogPane.setStyle("-fx-background-color: #02475e;");
+//
+//// 1. Grid
+//    // remove style to customize header
+//    dialogPane.getStyleClass().remove("alert");
+//
+//    GridPane grid = (GridPane)dialogPane.lookup(".header-panel"); 
+//    grid.setStyle("-fx-background-color: cadetblue; "
+//            + "-fx-font-style: italic;"+"-fx-font-size: 24px; "+"-fx-font-color: #e2e2e2;");
+//
+//// 2. ContentText with just a Label
+//    dialogPane.lookup(".content.label").setStyle("-fx-font-size: 24px; "
+//            + "-fx-font-weight: bold; -fx-fill: blue;");
+//
+//// 3- ButtonBar
+//    ButtonBar buttonBar = (ButtonBar)a.getDialogPane().lookup(".button-bar");
+//    buttonBar.setStyle("-fx-font-size: 24px;");
+//    buttonBar.getButtons().forEach(b->b.setStyle("-fx-font-family: \"Andalus\";"));
+//    
+//    for (int i = 1; i <= util.Utility.getRetiros().size(); i++) {
+//            DeEnrollment m=(DeEnrollment)util.Utility.getRetiros().getNode(i).data;
+//                if(this.txtFieldId.getText().equals(m.getStudentID()))
+//                    findEnrollment=true;
+//        }
+//        for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++){
+//            aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
+//            if(this.txtFieldId.getText().equals(aux.getStudentID())){
+//                findStud=true;
+//                stud=aux;
+//            }
+//        }
+//    if(util.Utility.getRetiros().isEmpty()){
+//            a.setHeaderText("No hay retiros");
+//            a.showAndWait();
+//    }else if(txtFieldId.getText().isEmpty()){
+//            a.setHeaderText("No debe dejar campos vacios");
+//            a.showAndWait();
+//    }else if(findStud==false){
+//            a.setHeaderText("Estudiante con id "+txtFieldId.getText()+" no ha sido encontrado");
+//            a.showAndWait();
+//     }else if(findEnrollment==false){
+//            a.setHeaderText("No hay retiro para este estudiante");
+//            a.showAndWait();
+//     }else{
+//         this.txtFieldId.setVisible(false);
+//         this.bp.setVisible(true);
+//         this.putTxt.setVisible(false);
+//         this.btnEnter.setVisible(false);
+//         File stud = new File("estudiantes.txt");
+//        try {
+//            
+//            createPDF(stud);
+////            createViewer(bp);
+//            openDocument("ReporteRetiro.pdf");
+//        } catch (DocumentException ex) {
+//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ListException ex) {
+//            Logger.getLogger(FXMLReporteMatriculaController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//         
+//    }
+//}
 }
-
-

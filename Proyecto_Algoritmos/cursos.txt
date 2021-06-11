@@ -1,6 +1,9 @@
-12,sdfs,21,1
-10a,prueva,12000,1
-1231321,sdfsdf,4,1
-54654,sdfsdfsfsf111,4,1
-sdfsdf,sdfsdfdfgdf,456,1
-464654,sdfsdfdsfffff,4,1
+IF1300,Introduccion a la computacion e informatica,4,1
+IF1400,Logica para informaticos,2,1
+IF2000,Programacion I,4,1
+S1100,Masaje Terapéutico,5,2
+S5400,Primero auxilios y RCP,4,2
+S1220,Masaje infantil,2,2
+XE-0156,Introducción a la Economía,4,3
+IC-0401,Estatíca,4,3
+IC-0711,Transportes,3,3
