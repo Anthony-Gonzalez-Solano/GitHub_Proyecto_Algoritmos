@@ -47,11 +47,12 @@ import util.FileTXT;
  * @author ExtremeTech
  */
 public class FXMLMatriculaRetirarController implements Initializable {
-    private TableColumn <List<String>,String>column1;
-    private TableColumn <List<String>,String>column2;
-    private TableColumn <List<String>,String>column3;
-    private TableColumn <List<String>,String>column4;
-    private TableColumn <List<String>,String>column5;
+
+    private TableColumn<List<String>, String> column1;
+    private TableColumn<List<String>, String> column2;
+    private TableColumn<List<String>, String> column3;
+    private TableColumn<List<String>, String> column4;
+    private TableColumn<List<String>, String> column5;
     private util.FileTXT txt;
     private List list;
     private Student stud;
@@ -78,14 +79,14 @@ public class FXMLMatriculaRetirarController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       txt =new FileTXT();
-       puTxt.setText("Escoga estudiante");
-       Student aux;
-       String stud;
+        txt = new FileTXT();
+        puTxt.setText("Escoga estudiante");
+        Student aux;
+        String stud;
         try {
 
             for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
-                aux = (Student)util.Utility.getEstudiantes().getNode(i).data;
+                aux = (Student) util.Utility.getEstudiantes().getNode(i).data;
                 cBoxStud.getItems().add(aux.toString());
             }
 
@@ -94,105 +95,109 @@ public class FXMLMatriculaRetirarController implements Initializable {
             a.setHeaderText("Lista vacia");
             a.showAndWait();
         }
-    }    
+    }
+
     @FXML
     private void cBoxStud(ActionEvent event) throws ListException {
-    studNum = (cBoxStud.getSelectionModel().getSelectedIndex())+1;
-    stud = (Student)util.Utility.getEstudiantes().getNode(studNum).data;
+        studNum = (cBoxStud.getSelectionModel().getSelectedIndex()) + 1;
+        stud = (Student) util.Utility.getEstudiantes().getNode(studNum).data;
 
-         this.cBoxStud.setVisible(false);
-         this.puTxt.setVisible(false);
-      this.tableView.setVisible(true);
-         this.btnDeenrollment.setVisible(true);
-    
-    if(this.tableView.getColumns().isEmpty()){
-            column1=new TableColumn<>("Course");
+        this.cBoxStud.setVisible(false);
+        this.puTxt.setVisible(false);
+        this.tableView.setVisible(true);
+        this.btnDeenrollment.setVisible(true);
+
+        if (this.tableView.getColumns().isEmpty()) {
+            column1 = new TableColumn<>("Course");
             column1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
-            column2=new TableColumn<>("Course ID");
+            column2 = new TableColumn<>("Course ID");
             column2.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
-            column3=new TableColumn<>("Student ID");
+            column3 = new TableColumn<>("Student ID");
             column3.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
-            column4=new TableColumn<>("Schedule");
+            column4 = new TableColumn<>("Schedule");
             column4.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
-            column5=new TableColumn<>("Date");
+            column5 = new TableColumn<>("Date");
             column5.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(4)));
-            this.tableView.getColumns().addAll(column1,column2,column3,column4,column5);//agregar columnas
-    }
-    
+            this.tableView.getColumns().addAll(column1, column2, column3, column4, column5);//agregar columnas
+        }
+
         tableView.getItems().clear();
         tableView.setPlaceholder(new Label("No hay cursos para retirar"));
-        Course  c=null;
-        Enrollment e=null;
-        boolean check=false;
-        if(util.Utility.getMatriculas().isEmpty()){
+        Course c = null;
+        Enrollment e = null;
+        boolean check = false;
+        if (util.Utility.getMatriculas().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("No hay matriculas hechas");
             a.showAndWait();
-        }else{
-                for(int i = 1; i <= util.Utility.getMatriculas().size(); i++){
-                    list = new ArrayList();
-                    e =(Enrollment)util.Utility.getMatriculas().getNode(i).data;
-                    if(e.getStudentID().equals(stud.getStudentID())){
+        } else {
+            for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
+                list = new ArrayList();
+                e = (Enrollment) util.Utility.getMatriculas().getNode(i).data;
+                if (e.getStudentID().equals(stud.getStudentID())) {
                     for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
-                        c = (Course)util.Utility.getCursos().getNode(j).data;
-                        if(e.getCourseID().equals(c.getId())){
+                        c = (Course) util.Utility.getCursos().getNode(j).data;
+                        if (e.getCourseID().equals(c.getId())) {
                             list.add(c.getName());
-                            list.add(e.getCourseID()); 
+                            list.add(e.getCourseID());
                             list.add(e.getStudentID());
                             list.add(e.getSchedule());
                             list.add(String.valueOf(util.Utility.dateFormat(e.getDate())));
-                            
-                            check=true;
+
+                            check = true;
                         }//end if 
                     }//end for
-                     
-                    }
-                
-                if(check==true){
-                    tableView.getItems().add(list);
-                    check=false;
+
                 }
-        }
+
+                if (check == true) {
+                    tableView.getItems().add(list);
+                    check = false;
+                }
+            }
         }
     }
 
     @FXML
     private void btnDeenrollment(ActionEvent event) throws ListException {
-        
-        if(Label.getText().isEmpty()){
-        Alert a = new Alert(Alert.AlertType.ERROR);
+
+        if (Label.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Necesita escoger un curso");
             a.showAndWait();
-        }else{
-            
+        } else {
+
             Alert a = new Alert(Alert.AlertType.CONFIRMATION);
             a.setHeaderText("¿Esta seguro que quiere retirar el curso?");
             ButtonType yes = new ButtonType("Sí");
             ButtonType no = new ButtonType("No");
             a.getButtonTypes().clear();
-            a.getButtonTypes().addAll(yes,no);
-            
-            Optional<ButtonType> option = a.showAndWait(); 
+            a.getButtonTypes().addAll(yes, no);
+
+            Optional<ButtonType> option = a.showAndWait();
             if (option.get() == yes) {
-                String id="";
+                String id = "";
+                String name = "";
                 for (int i = 1; i <= util.Utility.getCursos().size(); i++) {
-                        Course c = (Course)util.Utility.getCursos().getNode(i).data;
-                        if(c.getCareerID()==stud.getCareerID()&&c.getName().equals(column1.getCellData(index)))
-                                id=c.getId();                         
+                    Course c = (Course) util.Utility.getCursos().getNode(i).data;
+                    if (c.getCareerID() == stud.getCareerID() && c.getName().equals(column1.getCellData(index))) {
+                        id = c.getId();
+                        name = c.getName();
+                    }
                 }
                 Date date = new Date();
-                this.deR=new DeEnrollment(date,stud.getStudentID(),id,column4.getCellData(index));
-                Enrollment eR=null;//new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
+                this.deR = new DeEnrollment(date, stud.getStudentID(), name, column4.getCellData(index));
+                Enrollment eR = null;//new Enrollment(date,stud.getStudentID(),id,column4.getCellData(index));
                 for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
-                    Enrollment eR2 = (Enrollment)util.Utility.getMatriculas().getNode(i).data;
-                    if(eR2.getCourseID().equals(id)&& eR2.getStudentID().equals(stud.getStudentID())){
-                        eR=eR2;
+                    Enrollment eR2 = (Enrollment) util.Utility.getMatriculas().getNode(i).data;
+                    if (eR2.getCourseID().equals(id) && eR2.getStudentID().equals(stud.getStudentID())) {
+                        eR = eR2;
                     }
                 }
                 txt.writeFile("retiro.txt", deR.toString());
                 util.Utility.getRetiros().add(deR);
-                txt.removeElement("matricula.txt",eR);
-                        System.out.println(eR);
+                txt.removeElement("matricula.txt", eR);
+               // System.out.println(eR);
                 util.Utility.getMatriculas().remove(eR);
                 btnEmail();
                 this.tableView.getSelectionModel().clearSelection();
@@ -201,25 +206,26 @@ public class FXMLMatriculaRetirarController implements Initializable {
             }
         }
     }
+
     @FXML
     private void tableViewAction(MouseEvent event) {
         Label.setText("");
-        try{
-        if(!list.isEmpty())
-        index = tableView.getSelectionModel().getSelectedIndex();
-        
-           
-           cursos=column1.getCellData(index)+" "+column2.getCellData(index)+" "+column4.getCellData(index);
-           if(!column1.getCellData(index).equals(""))
-            Label.setText(cursos+" ");
-          
+        try {
+            if (!list.isEmpty()) {
+                index = tableView.getSelectionModel().getSelectedIndex();
+            }
+
+            cursos = column1.getCellData(index) + " " + column2.getCellData(index) + " " + column4.getCellData(index);
+            if (!column1.getCellData(index).equals("")) {
+                Label.setText(cursos + " ");
+            }
+
         } catch (NullPointerException npe) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Necesita escoger un curso");
             a.showAndWait();
         }
     }
-    
 
     private void btnEmail() {
         String to = stud.getEmail();
@@ -250,9 +256,9 @@ public class FXMLMatriculaRetirarController implements Initializable {
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Set Subject: header field
-            message.setSubject("Proceso de retiro completado "+stud.getFirstname()+" "+stud.getLastname());
+            message.setSubject("Proceso de retiro completado " + stud.getFirstname() + " " + stud.getLastname());
             // Now set the actual message
-            message.setText("Curso Retirado:\nId curso: "+deR.getCourseID()+"\nNombre de curso: "+cursos+"\nHorario: " +deR.getSchedule()+"\nFecha de matricula: "+util.Utility.dateFormat(deR.getDate()));
+            message.setText("Curso Retirado:\nId curso: " + deR.getCourseID() + "\nNombre de curso: " + cursos + "\nHorario: " + deR.getSchedule() + "\nFecha de matricula: " + util.Utility.dateFormat(deR.getDate()));
             // Send message
             Transport.send(message);
         } catch (MessagingException mex) {
@@ -260,7 +266,4 @@ public class FXMLMatriculaRetirarController implements Initializable {
         }
     }
 
-
-    
 }
-

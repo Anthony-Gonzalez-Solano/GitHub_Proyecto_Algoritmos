@@ -125,11 +125,11 @@ public class FXMLReporteRetiroController implements Initializable {
         } else {
             for (int k = 1; k <= util.Utility.getEstudiantes().size(); k++) {
                 st = (Student) util.Utility.getEstudiantes().getNode(k).data;
-                content += "\n" + st.getFirstname() + " " + st.getLastname() + "\n";
+                content += "\n" + st.getFirstname() + " " + st.getLastname() + "("+st.getStudentID()+")" +"\n";
                 for (int i = 1; i <= util.Utility.getRetiros().size(); i++) {
                     deR = (DeEnrollment) util.Utility.getRetiros().getNode(i).data;
                     if (deR.getStudentID().equals(st.getStudentID())) {
-                        content += util.Utility.getRetiros().getNode(i).data + "\n";
+                        content += deR.getCourseID()+ ","+deR.getSchedule()+"   "+ util.Utility.dateFormat(deR.getDate())+"\n";
                         found = true;
                     }
                 }

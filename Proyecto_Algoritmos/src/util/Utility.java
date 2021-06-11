@@ -23,8 +23,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.mail.internet.ParseException;
 
 /**
  *
@@ -75,6 +78,7 @@ public class Utility {
         return result;
     }
 
+    
     public static boolean equals(Object a, Object b) {
         switch(instanceOf(a, b)){
             case "integer":
