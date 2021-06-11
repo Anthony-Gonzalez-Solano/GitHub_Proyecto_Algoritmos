@@ -243,8 +243,8 @@ public class FXMLMatriculaNuevaController implements Initializable {
     labelCursos.setText("");
     tableView.getItems().remove(index);
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setHeaderText("Se a matriculado correctamente");
-            a.setContentText("Se le a emviado un correo al estudiante");
+            a.setHeaderText("Se ha matriculado correctamente");
+            a.setContentText("Se le ha enviado un correo al estudiante");
             a.showAndWait(); 
             index=-1;
             this.cBoxCourse.getItems().clear();

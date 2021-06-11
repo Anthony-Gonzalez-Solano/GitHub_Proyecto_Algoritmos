@@ -41,16 +41,9 @@ public class FXMLRemoverCarreraController implements Initializable {
     private util.FileTXT txt;
     @FXML
     private Button btnRemover;
-    @FXML
-    private TextField textFieldDescription;
-    @FXML
     private TextField textFieldId;
     @FXML
     private ComboBox<Career> comboCarreras;
-    @FXML
-    private Label txtDescripcion;
-    @FXML
-    private Label txtId;
 
     /**
      * Initializes the controller class.
@@ -86,8 +79,7 @@ public class FXMLRemoverCarreraController implements Initializable {
         } else {
             Career c = new Career(comboCarreras.getSelectionModel().getSelectedItem().getDescription(), comboCarreras.getSelectionModel().getSelectedItem().getId());
             try {
-                boolean exist = false;// variable  para ver si existe el id de carrera
-                boolean exist2 = false;// verificar la descripcion de la carrera
+           
                 boolean student = false;// verificar el id estudiante
                 boolean career = false;// verificar id carrera de cursos
                 if (!util.Utility.getCarreras().isEmpty()) {
@@ -133,8 +125,7 @@ public class FXMLRemoverCarreraController implements Initializable {
                                 int x = comboCarreras.getSelectionModel().getSelectedIndex(); // tomamos el valor del indice
                                 comboCarreras.getItems().remove(x); // se remueve
                                 comboCarreras.getSelectionModel().clearSelection();//limpiamos el comboBox
-//                                    textFieldDescription.setText("");
-//                                    textFieldId.setText("");
+
 
                                 Alert a2 = new Alert(Alert.AlertType.CONFIRMATION);
                                 a2.setHeaderText("Carrera eliminada correctamente");
@@ -163,27 +154,23 @@ public class FXMLRemoverCarreraController implements Initializable {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("La lista esta vacia");
                 a.showAndWait();
-                textFieldId.setText("");
-                textFieldDescription.setText("");
+      
             } catch (NumberFormatException es) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Ingrese solo numeros en los campos correspondientes");
                 a.showAndWait();
-                textFieldId.setText("");
-                textFieldDescription.setText("");
+           
 
             } catch (NullPointerException epx) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Error inesperado. Intente de nuevo");
                 a.showAndWait();
-                textFieldId.setText("");
-                textFieldDescription.setText("");
+             
 
             }
         }
     }
 
-    @FXML
     private void numericID(KeyEvent event) {
         textFieldId.textProperty().addListener(new ChangeListener<String>() {
             @Override

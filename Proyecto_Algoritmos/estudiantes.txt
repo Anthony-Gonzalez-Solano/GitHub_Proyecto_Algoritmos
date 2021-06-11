@@ -5,5 +5,3 @@
 354,0005,sdfds,xfds,21/04/2006,2423,gfs@gmail.com,dsfs,1
 323,0006,hvh,sdd,25/07/2000,232,h@gmail.com,sd,1
 3232,0007,sds,sds,29/06/2000,424,f@gmail.com,sdds,1
-242,0009,ffff,dfds,01/06/2000,3223,fsssssss@gmail.com,gffff,1
-7575,0010,fdd,dfd,01/06/2000,789977,r@gmail.com,dfdf,1
