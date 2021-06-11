@@ -133,10 +133,10 @@ public class FXMLModificarCursosController implements Initializable {
                     textFieldNombre.setText("");
                     textFieldCredits.setText("");
                 }
-//            } catch (NullPointerException epe) {
-//                Alert a = new Alert(Alert.AlertType.ERROR);
-//                a.setHeaderText("Error inesperado");
-//                a.showAndWait();
+            } catch (NullPointerException epe) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("Error inesperado");
+                a.showAndWait();
             } catch (ListException ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setHeaderText("Lista vacia");

@@ -43,10 +43,6 @@ public class FXMLCursosAgregarController implements Initializable {
     private TextField textFieldCreditos;
     @FXML
     private TextField textFieldId;
-    @FXML
-    private Text txtError;
-    @FXML
-    private Text txtMessage;
 
     /**
      * Initializes the controller class.

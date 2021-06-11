@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@tema%20Oscuro.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLCursosAgregarController">
    <children>
@@ -14,8 +13,6 @@
       <TextField fx:id="textFieldNombre" layoutX="63.0" layoutY="123.0" />
       <TextField fx:id="textFieldCreditos" layoutX="60.0" layoutY="200.0" onKeyPressed="#numericCredits" onKeyTyped="#numericCredits" />
       <TextField fx:id="textFieldId" layoutX="60.0" layoutY="52.0" />
-      <Text fx:id="txtError" layoutX="326.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="96.13671875" />
-      <Text fx:id="txtMessage" layoutX="14.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Curso agregado" visible="false" wrappingWidth="160.13671875" />
       <Label layoutX="23.0" layoutY="23.0" text="ID" />
       <Label layoutX="23.0" layoutY="97.0" text="Nombre" />
       <Label layoutX="21.0" layoutY="174.0" text="Creditos" />

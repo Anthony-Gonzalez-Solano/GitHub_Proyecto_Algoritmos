@@ -32,17 +32,12 @@ import util.FileTXT;
  */
 public class FXMLAgregarCarreraController implements Initializable {
 
-    public static DoublyLinkedList list = new DoublyLinkedList();
-    private Career career;
-    private String description;
-    private int id;
+  
     private util.FileTXT txt;
     @FXML
     private TextField textFieldDescription;
     @FXML
     private TextField textFieldId;
-    @FXML
-    private Text txtMessage;
     @FXML
     private Button btnAgregar;
 
@@ -139,11 +134,11 @@ public class FXMLAgregarCarreraController implements Initializable {
                 textFieldDescription.setText("");
                 textFieldId.setText("");
             } catch (ListException ex) {
-//                Alert a = new Alert(Alert.AlertType.ERROR);
-//                a.setHeaderText("La lista esta vacia");
-//                a.showAndWait();
-//                textFieldDescription.setText("");
-//                textFieldId.setText("");
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setHeaderText("La lista esta vacia");
+                a.showAndWait();
+                textFieldDescription.setText("");
+                textFieldId.setText("");
             }
         }
     }
