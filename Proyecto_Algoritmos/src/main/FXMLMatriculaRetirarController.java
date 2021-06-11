@@ -112,7 +112,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
             column1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
             column2 = new TableColumn<>("Course ID");
             column2.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
-            column3 = new TableColumn<>("Student ID");
+            column3 = new TableColumn<>("Period");
             column3.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
             column4 = new TableColumn<>("Schedule");
             column4.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
@@ -139,8 +139,14 @@ public class FXMLMatriculaRetirarController implements Initializable {
                         c = (Course) util.Utility.getCursos().getNode(j).data;
                         if (e.getCourseID().equals(c.getId())) {
                             list.add(c.getName());
-                            list.add(e.getCourseID());
-                            list.add(e.getStudentID());
+                            list.add(c.getId());
+                            for (int k = 1; k <= util.Utility.getHorarios().size(); k++) {
+                                TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(k).data;
+                                if(tt.getCourseID().equals(c.getId())){
+                                    list.add(tt.getPeriod());
+                                    break;
+                                }
+                            }
                             list.add(e.getSchedule());
                             list.add(String.valueOf(util.Utility.dateFormat(e.getDate())));
 

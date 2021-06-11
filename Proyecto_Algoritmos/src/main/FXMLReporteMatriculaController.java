@@ -5,6 +5,15 @@
  */
 package main;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
+import org.icepdf.ri.common.SwingController;
+import org.icepdf.ri.common.SwingViewBuilder;
+import org.icepdf.ri.util.FontPropertiesManager;
+import org.icepdf.ri.util.PropertiesManager;
 import Lists.ListException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -33,12 +42,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.Initializable;
-
-/**
- * FXML Controller class
- *
- * @author Adrian Ureña Moraga <Agitor Lucens V>
- */
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -46,15 +49,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.ColorUIResource;
-import org.icepdf.ri.common.SwingController;
-import org.icepdf.ri.common.SwingViewBuilder;
-import org.icepdf.ri.util.FontPropertiesManager;
-import org.icepdf.ri.util.PropertiesManager;
+
+/**
+ * FXML Controller class
+ *
+ * @author Adrian Ureña Moraga <Agitor Lucens V>
+ */
+
 
 public class FXMLReporteMatriculaController implements Initializable {
 
@@ -200,8 +201,8 @@ public class FXMLReporteMatriculaController implements Initializable {
                     properties.setBoolean(PropertiesManager.PROPERTY_SHOW_STATUSBAR_VIEWMODE, Boolean.FALSE);
                     properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
                     ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
-                    new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-
+                    FontPropertiesManager fontPropertiesManager = new FontPropertiesManager(properties, System.getProperties(), messageBundle);
+                    
                     swingController.getDocumentViewController().setAnnotationCallback(
                             new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
                     SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);

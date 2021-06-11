@@ -184,6 +184,14 @@ public class FXMLMatriculaNuevaController implements Initializable {
          for (int i = 1; i <= util.Utility.getMatriculas().size(); i++){
              Enrollment e=(Enrollment)util.Utility.getMatriculas().getNode(i).data;
              if(e.getStudentID().equals(stud.getStudentID())){
+                 TimeTable tt=null;
+                 for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
+                    tt = (TimeTable)util.Utility.getHorarios().getNode(j).data;
+                    if(e.getCourseID().equals(tt.getCourseID()))
+                        break;
+                 }
+                 if(column2.getCellData(tableView.getSelectionModel().getSelectedIndex()).equals(tt.getPeriod())){
+                 
                         String split[]=cBoxCourse.getSelectionModel().getSelectedItem().split("-");
                         String split2[]=e.getSchedule().split("-");
                         if(split[0].equals(split2[0])){
@@ -199,23 +207,32 @@ public class FXMLMatriculaNuevaController implements Initializable {
                         String cS2[]=crashSchedule2.split(",");
                         String cS3[]=crashSchedule3.split(",");
                         String cS4[]=crashSchedule4.split(",");
-                        if(cS[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour1=Integer.valueOf(cS[0])+12;
-                        else if(cS2[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour2=Integer.valueOf(cS2[0])+12;
-                        else if(cS3[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour3=Integer.valueOf(cS3[0])+12;
-                        else if(cS4[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour4=Integer.valueOf(cS4[0])+12;
-                        {
-                            hour1=Integer.valueOf(cS[0]);
-                            hour2=Integer.valueOf(cS2[0]);
-                            hour3=Integer.valueOf(cS3[0]);
-                            hour4=Integer.valueOf(cS4[0]);
-                        }
-                        if(hour1<=hour3||hour2>=hour4)
+                        
+                        hour1=Integer.parseInt(cS[0]);
+                        hour2=Integer.parseInt(cS2[0]);
+                        hour3=Integer.parseInt(cS3[0]);
+                        hour4=Integer.parseInt(cS4[0]);
+                          
+                        
+                        if(cS[1].equals("PM")&&!(Integer.parseInt(cS[0])==12))
+                            hour1=Integer.parseInt(cS[0])+12;
+                        if(cS2[1].equals("PM")&&!(Integer.parseInt(cS2[0])==12))
+                            hour2=Integer.parseInt(cS2[0])+12;
+                        if(cS3[1].equals("PM")&&!(Integer.parseInt(cS3[0])==12))
+                            hour3=Integer.parseInt(cS3[0])+12;
+                        if(cS4[1].equals("PM")&&!(Integer.parseInt(cS4[0])==12))
+                            hour4=Integer.parseInt(cS4[0])+12;
+                        
+                        if(hour1<=hour3 && hour3<=hour2)
                             crash=true;
-             }
+                        if(hour1<=hour4 && hour4<=hour2)
+                            crash=true;
+                        if(hour3<=hour1 && hour1<=hour4)
+                            crash=true;
+                        if(hour3<=hour2 && hour2<=hour4)
+                            crash=true;
+                        }
+                }
              }                    
          }
         }
@@ -236,7 +253,7 @@ public class FXMLMatriculaNuevaController implements Initializable {
     
     this.eR=new Enrollment(date,stud.getStudentID(),id,cBoxCourse.getSelectionModel().getSelectedItem());
     util.Utility.getMatriculas().add(eR);
-    txt.writeFile("matricula.txt", eR.toString());
+    txt.writeFile("matricula:txt", eR.toString());
     btnEmail();
     this.tableView.getSelectionModel().clearSelection();
     cBoxCourse.getSelectionModel().clearSelection();
