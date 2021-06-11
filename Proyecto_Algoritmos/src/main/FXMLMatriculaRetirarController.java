@@ -84,19 +84,16 @@ public class FXMLMatriculaRetirarController implements Initializable {
         Student aux;
         String stud;
         try {
-
             for (int i = 1; i <= util.Utility.getEstudiantes().size(); i++) {
                 aux = (Student) util.Utility.getEstudiantes().getNode(i).data;
-                cBoxStud.getItems().add(aux.toString());
+                cBoxStud.getItems().add(aux.toString());//se pone un combobox con la lista de estudiantes y desde ahi la lista de retiros posibles
             }
-
         } catch (ListException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Lista vacia");
             a.showAndWait();
         }
     }
-
     @FXML
     private void cBoxStud(ActionEvent event) throws ListException {
         studNum = (cBoxStud.getSelectionModel().getSelectedIndex()) + 1;
@@ -138,7 +135,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
                     for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
                         c = (Course) util.Utility.getCursos().getNode(j).data;
                         if (e.getCourseID().equals(c.getId())) {
-                            list.add(c.getName());
+                            list.add(c.getName());//se consigue el nombre del curso
                             list.add(c.getId());
                             for (int k = 1; k <= util.Utility.getHorarios().size(); k++) {
                                 TimeTable tt = (TimeTable)util.Utility.getHorarios().getNode(k).data;
@@ -147,7 +144,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
                                     break;
                                 }
                             }
-                            list.add(e.getSchedule());
+                            list.add(e.getSchedule());// se recorren diferentes lista y se valida si la informacion pertenece a la carrera del estudiante y se agrega a la lista
                             list.add(String.valueOf(util.Utility.dateFormat(e.getDate())));
 
                             check = true;
@@ -157,7 +154,7 @@ public class FXMLMatriculaRetirarController implements Initializable {
                 }
 
                 if (check == true) {
-                    tableView.getItems().add(list);
+                    tableView.getItems().add(list);//se agregan a la tabla solamente si el curso llega a cambiar el valor de la variable "check"
                     check = false;
                 }
             }
@@ -200,11 +197,13 @@ public class FXMLMatriculaRetirarController implements Initializable {
                         eR = eR2;
                     }
                 }
+                //se retira y se agrega a la lista de retiros
                 txt.writeFile("retiro.txt", deR.toString());
                 util.Utility.getRetiros().add(deR);
+                //se elimina de la lista de matricula
                 txt.removeElement("matricula.txt", eR);
-               // System.out.println(eR);
                 util.Utility.getMatriculas().remove(eR);
+                //se manda correo
                 btnEmail();
                 this.tableView.getSelectionModel().clearSelection();
                 Label.setText("");
@@ -223,8 +222,8 @@ public class FXMLMatriculaRetirarController implements Initializable {
 
             cursos = column1.getCellData(index) + " " + column2.getCellData(index) + " " + column4.getCellData(index);
             if (!column1.getCellData(index).equals("")) {
-                Label.setText(cursos + " ");
-            }
+                Label.setText(cursos + " ");//cuando se hace click en la table se manda el indice de la posicion del objeto seleccionado y con ello se extrae los datos de las columnas
+            }                               
 
         } catch (NullPointerException npe) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -235,37 +234,30 @@ public class FXMLMatriculaRetirarController implements Initializable {
 
     private void btnEmail() {
         String to = stud.getEmail();
-        // Mention the Sender's email address
+        // cuenta desde la cual se manda el correo
         String from = "xx.ucrfake.xx@gmail.com";
-        // Mention the SMTP server address. Below Gmail's SMTP server is being used to send email
+        //se usa SMTP ya que para mandar un mensaje se necesita un servidor, y este es gratuito
         String host = "smtp.gmail.com";
-        // Get system properties
         Properties properties = System.getProperties();
-        // Setup mail server
+        // Setup server
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.auth", "true");
-        // Get the Session object.// and pass username and password
+        // autentifica la cuenta que va a mandar el mensaje
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("xx.ucrfake.xx@gmail.com", "UCRfake123");
-            }
-        });
-        // Used to debug SMTP issues
-        //session.setDebug(true);
+            }});
         try {
-            // Create a default MimeMessage object.
+            //instancia del mensaje
             MimeMessage message = new MimeMessage(session);
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-            // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            // Set Subject: header field
+            // contenido del mensaje
             message.setSubject("Proceso de retiro completado " + stud.getFirstname() + " " + stud.getLastname());
-            // Now set the actual message
             message.setText("Curso Retirado:\nId curso: " + deR.getCourseID() + "\nNombre de curso: " + cursos + "\nHorario: " + deR.getSchedule() + "\nFecha de matricula: " + util.Utility.dateFormat(deR.getDate()));
-            // Send message
+            // se manda el mensaje
             Transport.send(message);
         } catch (MessagingException mex) {
             mex.printStackTrace();

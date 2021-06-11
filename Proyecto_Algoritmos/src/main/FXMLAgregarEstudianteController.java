@@ -278,11 +278,9 @@ public class FXMLAgregarEstudianteController implements Initializable {
                 }
             });
         }
-
         @FXML
         private void numericAddress
-        (KeyEvent event
-        
+        (KeyEvent event  
             ) {
         textFieldPhone.textProperty().addListener(new ChangeListener<String>() {
                 @Override
@@ -309,58 +307,35 @@ public class FXMLAgregarEstudianteController implements Initializable {
                     }
                 }
             });
-        }
-
-    
-
+        } 
     public void sendEmail(Student s) throws ListException {
-        // Recipient's email ID needs to be mentioned.
         String to = s.getEmail();
-
-        // Sender's email ID needs to be mentioned
+        // cuenta desde la cual se manda el correo
         String from = "xx.ucrfake.xx@gmail.com";
-
-        // Assuming you are sending email from through gmails smtp
+        //se usa SMTP ya que para mandar un mensaje se necesita un servidor, y este es gratuito
         String host = "smtp.gmail.com";
-
-        // Get system properties
         Properties properties = System.getProperties();
-
-        // Setup mail server
+        // Setup server
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.auth", "true");
-
-        // Get the Session object.// and pass 
+        // autentifica la cuenta que va a mandar el mensaje
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-
             protected PasswordAuthentication getPasswordAuthentication() {
-
                 return new PasswordAuthentication("xx.ucrfake.xx@gmail.com", "UCRfake123");
-
-            }
-
-        });
-        //session.setDebug(true);
+            }});
         try {
-            // Create a default MimeMessage object.
+            //instancia del mensaje
             MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            // Set Subject: header field
+           //titulo del mensaje
             message.setSubject("Bienvenido " + s.getFirstname() + " " + s.getLastname()
                     + " a la universidad de Costa Rica!");
-
             Multipart multipart = new MimeMultipart();
-
             MimeBodyPart attachmentPart = new MimeBodyPart();
-
             MimeBodyPart textPart = new MimeBodyPart();
             String careerName = "";
             for (int i = 1; i <= util.Utility.getCarreras().size(); i++) {
@@ -369,29 +344,22 @@ public class FXMLAgregarEstudianteController implements Initializable {
                     careerName = c.getDescription();
                 }
             }
-
             try {
-
+                //pone imagen, escudo de la Universidad de Costa Rica
                 File f = new File("Escudo.png");
-
+                //contenido del mensaje
                 attachmentPart.attachFile(f);
+                //contenido del mensaje: informacion del estudiante
                 textPart.setText("Carne: " + s.getStudentID() + "\nId: " + s.getId() + "\nNombre: " + s.getFirstname() + " " + s.getLastname()
                         + "\nNumero de telefono: " + s.getPhoneNumber() + "\nEmail: " + s.getEmail() + "\nDireccion: " + s.getAddress() + "\nCarrera: " + careerName);
                 multipart.addBodyPart(textPart);
                 multipart.addBodyPart(attachmentPart);
-
             } catch (IOException e) {
-
                 e.printStackTrace();
-
             }
-
             message.setContent(multipart);
-
-            System.out.println("sending...");
-            // Send message
+            // manda mensaje
             Transport.send(message);
-            System.out.println("Sent message successfully....");
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }

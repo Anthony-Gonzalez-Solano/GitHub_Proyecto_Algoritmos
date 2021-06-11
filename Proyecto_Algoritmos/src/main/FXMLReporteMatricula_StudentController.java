@@ -76,10 +76,10 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.bp.setVisible(true);
         try {
-            createViewer(bp);
+            createViewer(bp);//se genera el lector, se pone aqui ya que en otro lado genera una exception
             File stud = new File("estudiantes.txt");
 
-            createPDF(stud);
+            createPDF(stud);//se crea el pdf
 //            createViewer(bp);
             openDocument("ReporteMatricula.pdf");
 
@@ -108,10 +108,11 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
         PdfWriter.getInstance(document, new FileOutputStream("ReporteMatricula.pdf"));
         String content = "";
         document.open();
-        // AQUÍ COMPLETAREMOS NUESTRO CÓDIGO PARA GENERAR EL PDF
+        //aqui se genera el contenido del pdf
         Enrollment eR = null;
         Student st = util.Utility.getIntro();
         boolean found = false;
+        //si no hay matriculas o estudiantes se pone un mensaje pero se espera que el usuario no lo vea
         if (util.Utility.getMatriculas().isEmpty() == true) {
             content += "No hay matriculas hechas por estudiantes\n";
         } else if (util.Utility.getEstudiantes().isEmpty() == true) {
@@ -121,8 +122,7 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
                 for (int i = 1; i <= util.Utility.getMatriculas().size(); i++) {
                     eR = (Enrollment) util.Utility.getMatriculas().getNode(i).data;
                     if (eR.getStudentID().equals(st.getStudentID())) {
-
-                        
+                        //se recorren las listas validando que la matriculas pertenesca al estudiante y se agrega al String
                         for (int j = 1; j <= util.Utility.getCursos().size(); j++) {
                             Course c = (Course) util.Utility.getCursos().getNode(j).data;
                             if (c.getId().equals(eR.getCourseID())) {
@@ -130,21 +130,23 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
                                 found = true;
                             }
                         }
-
                     }
                 }
                 if (found == false) {
                     content += "Este estudiante no tiene matriculas\n";
+                    //si no tiene matriculas se pone este mensaje
                 }
                 found = false;
         }
+        //se controla el tamaño,tipo y color de la letra
         Paragraph retiro = new Paragraph("Lista de matriculas \n\n" + content,
                 FontFactory.getFont("arial",
                         12,
                         Font.BOLD,
                         BaseColor.BLACK
                 ));
-        document.add(retiro);
+        document.add(retiro);//se agrega el contenido
+        //metadatos
         document.addTitle("Lista de cursos retirados");
         document.addKeywords("Java, PDF, Lista de Cursos Retirados");
         document.addAuthor("Projecto Algoritmos");
@@ -153,6 +155,7 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
     }
 
     private void createViewer(BorderPane borderPane) throws InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+        //se usa LookAndFeel para establecer el estilo y color ya que es un componente Java Swing
         ColorUIResource backgroundUI = new ColorUIResource(0x023c4f);
         ColorUIResource textUI = new ColorUIResource(0xFFFAFA);
         ColorUIResource controlBackgroundUI = new ColorUIResource(0x023c4f);
@@ -193,7 +196,7 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
                     properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_PAGENAV, "false");
                     ResourceBundle messageBundle = ResourceBundle.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE);
                     new FontPropertiesManager(properties, System.getProperties(), messageBundle);
-                    
+                    //se genera el lector
                     swingController.getDocumentViewController().setAnnotationCallback(
                     new org.icepdf.ri.common.MyAnnotationCallback(swingController.getDocumentViewController()));
                     SwingViewBuilder factory = new SwingViewBuilder(swingController, properties);
@@ -208,7 +211,6 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
                     swingController.setUtilityPaneVisible(false);
                 }
             });
-
         } catch (InvocationTargetException ex) {
             Logger.getLogger(FXMLReporteMatricula_StudentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -224,7 +226,6 @@ public class FXMLReporteMatricula_StudentController implements Initializable {
             }
         });
     }
-
     public String loadPDF(String adresse) throws IOException {
         if (!adresse.toLowerCase().endsWith("pdf")) {
             return null;

@@ -98,11 +98,11 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
              List list = new ArrayList();
             c = (Course)util.Utility.getCursos().getNode(i).data;
                 if(stud.getCareerID()==c.getCareerID()){
-                        list.add(c.getName());
+                        list.add(c.getName());//se consigue el nombre del curso
                     for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
                         TimeTable tt=(TimeTable)util.Utility.getHorarios().getNode(j).data;
                         if(tt.getCourseID().equals(c.getId())){
-                            list.add(tt.getPeriod()); 
+                            list.add(tt.getPeriod()); // se recorren diferentes lista y se valida si la informacion pertenece a la carrera del estudiante y se agrega a la lista
                             list.add(tt.getSchedule1());
                             list.add(tt.getSchedule2());
                             check=true;
@@ -117,7 +117,7 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
                     }
                 }
                 if(check==true){
-                    tableView.getItems().add(list);
+                    tableView.getItems().add(list);//se llena la talba
                     check=false;
                 }
         }
@@ -150,17 +150,12 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
     private void cBoxCourse(ActionEvent event) throws ListException {
         String scheduleSelect = cBoxCourse.getSelectionModel().getSelectedItem();
         if(index>=0){
-            labelCursos.setText(cursos+" "+scheduleSelect);
-        }
-        
+            labelCursos.setText(cursos+" "+scheduleSelect);//se pone el el label el curso seleccionado en el combobox
+        }      
     }
     @FXML
     private void cBoxStud(ActionEvent event) throws ListException {
-    
- 
     }
-
-    
     @FXML
     private void btnEnrollment(ActionEvent event) throws ListException {
         boolean crash=false;
@@ -169,9 +164,16 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
          for (int i = 1; i <= util.Utility.getMatriculas().size(); i++){
              Enrollment e=(Enrollment)util.Utility.getMatriculas().getNode(i).data;
              if(e.getStudentID().equals(stud.getStudentID())){
-                        String split[]=cBoxCourse.getSelectionModel().getSelectedItem().split("-");
-                        String split2[]=e.getSchedule().split("-");
-                        if(split[0].equals(split2[0])){
+                 TimeTable tt=null;
+             for (int j = 1; j <= util.Utility.getHorarios().size(); j++) {
+                    tt = (TimeTable)util.Utility.getHorarios().getNode(j).data;
+                    if(e.getCourseID().equals(tt.getCourseID()))
+                        break;
+                 }
+                        if(column2.getCellData(tableView.getSelectionModel().getSelectedIndex()).equals(tt.getPeriod())){//se valida que el curso este en el periodo           
+                        String split[]=cBoxCourse.getSelectionModel().getSelectedItem().split("-");//se consigue el horario desde el combobobox y se divide entre tres: 1. dia. 2.primer horario. 3. segundo horario 
+                        String split2[]=e.getSchedule().split("-");//se consigue el horario desde la lista y se divide entre tres: 1. dia. 2.primer horario. 3. segundo horario 
+                        if(split[0].equals(split2[0])){//esta posicion del arreglo tiene el dia y se asegura que en el dia no hayan choches de horario
                         String crashSchedule=split[1];
                         String crashSchedule2=split[2];
                         String crashSchedule3=split2[1];
@@ -180,29 +182,39 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
                         int hour2=0;
                         int hour3=0;
                         int hour4=0;
-                        String cS[]=crashSchedule.split(",");
+                        String cS[]=crashSchedule.split(",");//los horarios se dividen entre la hora de entrada y salida
                         String cS2[]=crashSchedule2.split(",");
                         String cS3[]=crashSchedule3.split(",");
                         String cS4[]=crashSchedule4.split(",");
-                        if(cS[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour1=Integer.valueOf(cS[0])+12;
-                        else if(cS2[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour2=Integer.valueOf(cS2[0])+12;
-                        else if(cS3[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour3=Integer.valueOf(cS3[0])+12;
-                        else if(cS4[1].equals("PM")&&!(Integer.valueOf(cS[0])==12))
-                            hour4=Integer.valueOf(cS4[0])+12;
-                        {
-                            hour1=Integer.valueOf(cS[0]);
-                            hour2=Integer.valueOf(cS2[0]);
-                            hour3=Integer.valueOf(cS3[0]);
-                            hour4=Integer.valueOf(cS4[0]);
-                        }
-                        if(hour1<=hour3||hour2>=hour4)
+                        
+                        hour1=Integer.parseInt(cS[0]);
+                        hour2=Integer.parseInt(cS2[0]);
+                        hour3=Integer.parseInt(cS3[0]);
+                        hour4=Integer.parseInt(cS4[0]);
+                          
+                        
+                        if(cS[1].equals("PM")&&!(Integer.parseInt(cS[0])==12))//se pasan las horas a 24 horas
+                            hour1=Integer.parseInt(cS[0])+12;
+                        if(cS2[1].equals("PM")&&!(Integer.parseInt(cS2[0])==12))
+                            hour2=Integer.parseInt(cS2[0])+12;
+                        if(cS3[1].equals("PM")&&!(Integer.parseInt(cS3[0])==12))
+                            hour3=Integer.parseInt(cS3[0])+12;
+                        if(cS4[1].equals("PM")&&!(Integer.parseInt(cS4[0])==12))
+                            hour4=Integer.parseInt(cS4[0])+12;
+                        
+                        if(hour1<=hour3 && hour3<=hour2)//se valida que las horas no chocen
                             crash=true;
-             }
-             }                    
-         }
+                        if(hour1<=hour4 && hour4<=hour2)
+                            crash=true;
+                        if(hour3<=hour1 && hour1<=hour4)
+                            crash=true;
+                        if(hour3<=hour2 && hour2<=hour4)
+                            crash=true;
+                            }
+                        }
+                    }
+                }                    
+            }
         }
         if(crash==false){
         if(labelCursos.getText().isEmpty()){
@@ -218,11 +230,11 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
                 }
     }
     Date date = new Date();
-    
+    //se matricula
     this.eR=new Enrollment(date,stud.getStudentID(),id,cBoxCourse.getSelectionModel().getSelectedItem());
     util.Utility.getMatriculas().add(eR);
     txt.writeFile("matricula.txt", eR.toString());
-    btnEmail();
+    btnEmail();//se manda correo
     this.tableView.getSelectionModel().clearSelection();
     cBoxCourse.getSelectionModel().clearSelection();
     labelCursos.setText("");
@@ -241,49 +253,42 @@ public class FXMLMatriculaNueva_StudentController implements Initializable {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Horario chochan. Escoga otro horario");
             a.showAndWait(); 
-         }   
+            
         }else{
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setHeaderText("Escoga un curso");
             a.showAndWait(); 
         }
-}
-    
+
+    }
     private void btnEmail() {
         String to = stud.getEmail();
-        // Mention the Sender's email address
+        // cuenta desde la cual se manda el correo
         String from = "xx.ucrfake.xx@gmail.com";
-        // Mention the SMTP server address. Below Gmail's SMTP server is being used to send email
+        //se usa SMTP ya que para mandar un mensaje se necesita un servidor, y este es gratuito
         String host = "smtp.gmail.com";
-        // Get system properties
         Properties properties = System.getProperties();
-        // Setup mail server
+        // Setup server
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.auth", "true");
-        // Get the Session object.// and pass username and password
+        // autentifica la cuenta que va a mandar el mensaje
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("xx.ucrfake.xx@gmail.com", "UCRfake123");
-            }
-        });
-        // Used to debug SMTP issues
-        //session.setDebug(true);
+            }});
         try {
-            // Create a default MimeMessage object.
+            //instancia del mensaje
             MimeMessage message = new MimeMessage(session);
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-            // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            // Set Subject: header field
+            // contenido del mensaje
             message.setSubject("Proceso de matricula completado "+stud.getFirstname()+" "+stud.getLastname());
             String content = "Curso matriculado:\nId curso: "+eR.getCourseID()+"\nNombre de curso: "+cursos+"\nHorario: " +eR.getSchedule()+"\nFecha de matricula: "+util.Utility.dateFormat(eR.getDate());
-            
-            // Now set the actual message
+            // se pone el contenido en el mensaje
             message.setText(content);
-            // Send message
+            // se manda el mensaje
             Transport.send(message);
         } catch (MessagingException mex) {
             mex.printStackTrace();
